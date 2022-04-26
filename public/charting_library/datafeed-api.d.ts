@@ -228,7 +228,7 @@ export interface MarkCustomColor {
 export interface PeriodParams {
 	from: number;
 	to: number;
-	countBack: number;
+	// countBack: number;
 	firstDataRequest: boolean;
 }
 export interface QuoteErrorData {
