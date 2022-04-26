@@ -1,0 +1,77 @@
+{
+  "compilerOptions": {
+    "types": ["jest", "node"],
+    "lib": [
+      "es2017",
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmit": true,
+    "noImplicitAny": false,
+    "jsx": "react",
+    //set absolute path
+    "baseUrl": ".",
+    "paths": {
+      "~components/*": [
+        "./src/components/*"
+      ],
+      "~pages/*": [
+        "./src/pages/*"
+      ],
+      "~store": [
+        "src/store/index.ts"
+      ],
+      "~store/*": [
+        "src/store/*"
+      ],
+      "~utils": [
+        "src/utils/index.ts"
+      ],
+      "~utils/*": [
+        "src/utils/*"
+      ],
+      "~hooks": [
+        "src/hooks/index.ts"
+      ],
+      "~css/*": [
+        "src/css/*.css"
+      ],
+      "~svg/*": [
+        "src/svg/*.tsx"
+      ],
+      "~breakpoints": [
+        "src/css/breakpoints.ts"
+      ],
+    },
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "classnameTransform": "dashes",
+          "customMatcher": "\\.m\\.css$",
+          "customRenderer": "./myRenderer.js",
+          "dotenvOptions": {},
+          "postCssOptions": {},
+          "rendererOptions": {}
+        }
+      }
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}

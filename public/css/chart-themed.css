@@ -1,0 +1,7 @@
+.theme-dark:root {
+	--tv-color-pane-background: #0F1A30;
+}
+
+.theme-dark body {
+	background-color: #0F1A30 !important;
+}

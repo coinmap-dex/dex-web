@@ -1,0 +1,51 @@
+{
+    "token":"token",
+    "transaction":"transaction",
+    "price":"price",
+    "amount":"amount",
+    "total":"total",
+    "holder":{
+        "title":"holder"
+    },
+    "shark":{
+        "title":"shark moves",
+        "totalBalance":"Tổng token 100 ví cá mập",
+        "totalTransactionHighValue":"Hành vi các ví ảnh hưởng mạnh tới giá token.",
+        "totalTransaction":"Hành vi 100 ví cá mập"
+    },
+    "volume":{
+        "title":"volume",
+        "totalTransaction":"Tổng số lượng giao dịch",
+        "totalAmountBuyByNewWallet":"Tổng tiền mua từ ví mới",
+        "totalAmountSell":"Tổng tiền bán ra"
+    },
+    "pool":{
+        "title":"pool",
+        "totalAmount":"Tổng tiền Pool",
+        "price":"Giá Token"
+    },
+    "tokenomics":{
+        "circulatingSupply":"circulating supply",
+        "maxSupply":"max supply",
+        "totalSupply":"total supply"
+    },
+    "rating":{
+        "title":"rating",
+        "coingecko":"coingecko",
+        "coinmarketcap":"coinmarketcap",
+        "pool":"pool"
+    },
+    "social":{
+        "title":"social network",
+        "telegram":"telegram",
+        "twitter":"twitter"
+    },
+    "wallets":{
+        "title1":"Các ví giao dịch nhiều nhất",
+        "title2":"Các ví lợi nhuận nhiều nhất theo usd",
+        "title3":"Các ví lợi nhuận nhiều nhất theo %",
+        "telegram":"telegram",
+        "twitter":"twitter"
+    }
+    
+}
