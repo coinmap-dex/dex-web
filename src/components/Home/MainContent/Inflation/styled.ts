@@ -14,6 +14,7 @@ export const InflattionNumber = styled.div`
     font-size: 1.255rem;
     text-align: right;
     margin-bottom: 2rem;
+    margin-right: 2rem;
 `;
 export const InflattionButton = styled.button`
     color:#fff;

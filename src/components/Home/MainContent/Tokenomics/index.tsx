@@ -23,7 +23,7 @@ const Tokenomics = () => {
                 Bitcoin
             </Label>
             <S.TokenomicsAudit>
-                Audits:
+                <div>Audits:</div>
                 <S.TokenomicsAuditIconLink href={data?.audits}>
                     <img src="./images/audit.png" />
                     <AuditIcon />

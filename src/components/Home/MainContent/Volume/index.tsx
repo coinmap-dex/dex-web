@@ -13,7 +13,6 @@ import {
     Bar,
 } from "recharts";
 import { formatDateXAxis, formatYAxisNumber } from '~utils';
-import { useTranslation } from 'react-i18next';
 import { t } from 'i18next';
 import { useGetVolumeQuery } from '~store/modules/home/api';
 import { useAppSelector } from '~hooks';

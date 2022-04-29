@@ -156,6 +156,7 @@ export class UDFCompatibleDatafeedBase {
         }
     }
     resolveSymbol(symbolName, onResolve, onError, extension) {
+        var _a;
         logMessage('Resolve requested');
         const currencyCode = extension && extension.currencyCode;
         const unitId = extension && extension.unitId;
@@ -166,7 +167,7 @@ export class UDFCompatibleDatafeedBase {
         }
         if (!this._configuration.supports_group_request) {
             const params = {
-                symbol: symbolName,
+                symbol: (_a = symbolName === null || symbolName === void 0 ? void 0 : symbolName.split(/[:/]/)) === null || _a === void 0 ? void 0 : _a[0],
             };
             if (currencyCode !== undefined) {
                 params.currencyCode = currencyCode;

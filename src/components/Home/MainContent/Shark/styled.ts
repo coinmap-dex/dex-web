@@ -1,6 +1,7 @@
 import { ResponsiveContainer } from "recharts";
 import { Row } from "sezy-design";
 import styled from "styled-components";
+import breakpoints from '~breakpoints';
 
 export const lengend = styled(Row)`
     width:calc(100% - 5rem);
@@ -29,4 +30,7 @@ export const lengendItem = styled.div`
 
 export const SharkChartWrapper = styled(ResponsiveContainer)`
     margin: 1.8rem 0;
+    @media ${breakpoints.sm} {
+        max-height: 46rem;
+    }
 `;

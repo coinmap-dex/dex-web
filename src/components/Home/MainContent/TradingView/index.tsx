@@ -1,5 +1,5 @@
 import React from 'react'
-
+import S from './styled'
 import {
 	widget,
 	ChartingLibraryWidgetOptions,
@@ -42,7 +42,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 
 	constructor(props) {
 		super(props);
-		this.state = {tvWidget: null};
+		this.state = { tvWidget: null };
 	}
 
 	static defaultProps: Omit<ChartContainerProps, 'container'> = {
@@ -68,7 +68,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 		if (!this.ref.current) {
 			return;
 		}
-		
+
 		const widgetOptions: ChartingLibraryWidgetOptions = {
 			symbol: this.props.symbol,
 			// BEWARE: no trailing slash is expected in feed URL
@@ -127,7 +127,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 			});
 		});
 
-		this.setState({tvWidget});
+		this.setState({ tvWidget });
 	}
 
 	componentDidUpdate(prevProps: Readonly<Partial<ChartContainerProps>>) {
@@ -136,7 +136,9 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 				this.state.tvWidget.setSymbol(
 					this.props.symbol ?? DEFAULT_SYMBOL,
 					this.props.interval ?? 'D' as ResolutionString,
-					() => console.log('updated symbol', this.props.symbol ?? DEFAULT_SYMBOL)
+					() => {
+						console.log('updated symbol', this.props.symbol ?? DEFAULT_SYMBOL)
+					}
 				);
 			}
 		}
@@ -145,23 +147,20 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 	componentWillUnmount(): void {
 		if (this.state.tvWidget !== null) {
 			this.state.tvWidget.remove();
-			this.setState({tvWidget : null});
+			this.setState({ tvWidget: null });
 		}
 	}
 
 	render(): JSX.Element {
 		return (
-			<div
+			<S.Wrapper
 				ref={this.ref}
-				style={{
-					height: "100%",
-				}}
 			/>
 		);
 	}
 }
 
-const mapStateToProps = (state)  => ({
+const mapStateToProps = (state) => ({
 	symbol: `${state?.home?.contract}~0` ?? DEFAULT_SYMBOL
 });
 

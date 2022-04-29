@@ -36,6 +36,9 @@ export const Pools = styled.div`
     font-size:1.5rem;
     text-transform:uppercase;
     margin-bottom:3.5rem;
+    @media ${breakpoints.sm}{
+      margin-bottom: auto;
+    }
 `;
 export const Pool = styled.div`
     margin:2rem 0;
@@ -52,8 +55,9 @@ export const Pool = styled.div`
 `;
 
 export const PoolChart = styled(ResponsiveContainer)`
-    height:30rem !important;
-    @media ${breakpoints.sm}{
-        height:100% !important;
+    height: 30rem !important;
+    @media ${breakpoints.sm} {
+        height: 100% !important;
+        max-height: 28rem;
     }
 `;

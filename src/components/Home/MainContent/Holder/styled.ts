@@ -1,5 +1,6 @@
 import { ResponsiveContainer } from "recharts";
 import styled from "styled-components";
+import breakpoints from '~breakpoints';
 
 export const lengend = styled.div`
     width:calc(100% - 5rem);
@@ -27,4 +28,7 @@ export const lengendItem = styled.span`
 
 export const HolderChartWrapper = styled(ResponsiveContainer)`
     margin: 1.8rem 0;
+    @media ${breakpoints.sm} {
+        max-height: 30rem;
+    }
 `;

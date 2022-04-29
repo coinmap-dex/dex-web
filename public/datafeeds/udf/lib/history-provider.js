@@ -5,8 +5,9 @@ export class HistoryProvider {
         this._requester = requester;
     }
     getBars(symbolInfo, resolution, periodParams) {
+        var _a, _b;
         const requestParams = {
-            symbol: symbolInfo.ticker || '',
+            symbol: ((_b = (_a = symbolInfo.ticker) === null || _a === void 0 ? void 0 : _a.split(/[:/]/)) === null || _b === void 0 ? void 0 : _b[0]) || '',
             resolution: resolution,
             from: periodParams.from,
             to: periodParams.to,

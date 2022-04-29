@@ -272,7 +272,7 @@ export class UDFCompatibleDatafeedBase implements IExternalDatafeed, IDatafeedQu
 
 		if (!this._configuration.supports_group_request) {
 			const params: RequestParams = {
-				symbol: symbolName,
+                symbol: symbolName?.split(/[:/]/)?.[0],
 			};
 			if (currencyCode !== undefined) {
 				params.currencyCode = currencyCode;

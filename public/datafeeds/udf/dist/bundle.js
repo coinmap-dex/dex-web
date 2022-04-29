@@ -25,8 +25,9 @@
             this._requester = requester;
         }
         getBars(symbolInfo, resolution, periodParams) {
+            var _a, _b;
             const requestParams = {
-                symbol: symbolInfo.ticker || '',
+                symbol: ((_b = (_a = symbolInfo.ticker) === null || _a === void 0 ? void 0 : _a.split(/[:/]/)) === null || _b === void 0 ? void 0 : _b[0]) || '',
                 resolution: resolution,
                 from: periodParams.from,
                 to: periodParams.to,
@@ -565,6 +566,7 @@
             }
         }
         resolveSymbol(symbolName, onResolve, onError, extension) {
+            var _a;
             const currencyCode = extension && extension.currencyCode;
             const unitId = extension && extension.unitId;
             function onResultReady(symbolInfo) {
@@ -572,7 +574,7 @@
             }
             if (!this._configuration.supports_group_request) {
                 const params = {
-                    symbol: symbolName,
+                    symbol: (_a = symbolName === null || symbolName === void 0 ? void 0 : symbolName.split(/[:/]/)) === null || _a === void 0 ? void 0 : _a[0],
                 };
                 if (currencyCode !== undefined) {
                     params.currencyCode = currencyCode;

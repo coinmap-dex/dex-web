@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Label, Table } from 'sezy-design'
 import Arrow from 'sezy-design/components/icon/solid/arrow'
 import _ from 'lodash';
-import * as  S from './styled';
+import S from './styled';
 import * as MS from '../styled';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '~hooks';
@@ -17,6 +17,10 @@ const TokenTransaction = () => {
     });
 
     const tableColumns = getTableColumns(t('price'), t('amount'), t('total'));
+
+    const transactionData = [...(data?.transaction || [])]?.reverse();
+    const lastPrice = transactionData?.[0];
+    const secondPrice = transactionData?.[1];
     return <>
         {/* <S.Title size='l'>{t('token')} {t('transaction')}</S.Title> */}
         <MS.MainContentTitleBox>
@@ -27,19 +31,18 @@ const TokenTransaction = () => {
         <S.HeaderTable type='nude' columns={tableColumns as any} />
         <S.HighLightDataWrapper>
             <S.HighlightData>
-                <S.HighlightDataMain data-type='up' >
-                    <Label>${data?.price?.toFixed(5)}</Label>
-                    <Arrow size='s' direction='up' />
+                <S.HighlightDataMain data-type={priceDirectionMapper[+(lastPrice?.price > secondPrice?.price)]} >
+                    <Label>${lastPrice?.price?.toFixed(5)}</Label>
+                    <Arrow size='s' direction={priceDirectionMapper[+(lastPrice?.price > secondPrice?.price)] as any} />
                 </S.HighlightDataMain>
-                <S.HighlightDataSub>${data?.price?.toFixed(5)}</S.HighlightDataSub>
+                <S.HighlightDataSub>${secondPrice?.price?.toFixed(5)}</S.HighlightDataSub>
             </S.HighlightData>
             <S.MoreWrapper>
                 <Label>More</Label>
-                <ArrowIcon/>
+                <ArrowIcon />
             </S.MoreWrapper>
         </S.HighLightDataWrapper>
-        <S.DataTable1 type='nude' columns={tableColumns as any} data={data?.buyOrder} hasHeader={false} />
-        <S.DataTable2 type="nude" columns={tableColumns as any} data={data?.sellOrder} hasHeader={false} />
+        <S.DataTable type='nude' columns={tableColumns as any} data={convertTransactionData(transactionData)} hasHeader={false} />
     </>
 }
 
@@ -58,6 +61,23 @@ const getTableColumns = (price, amount, total) => [
         align: 'right'
     }
 ];
+
+const convertTransactionData = (transactionData) => transactionData?.map(d => ({
+    ...d,
+    price: {
+        children: d.price,
+        style: {
+            color: transactionPriceColorMapper[d.type],
+        },
+    }
+}));
+
+const transactionPriceColorMapper = {
+    SELL: '#EC6649',
+    BUY: '#26E1CD',
+}
+
+const priceDirectionMapper = ['down', 'up']
 
 const tableData = [
     {

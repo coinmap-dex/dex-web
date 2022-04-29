@@ -150,7 +150,7 @@ export const ContactInfoMarketCap = styled.div`
     font-size:1.5rem;
     margin:0.8rem 0;
     @media ${breakpoints.sm}{
-        font-size:2.3rem;
+        font-size: 1.8rem;
     }
     &>span:last-child{
         color:#ffb733;

@@ -58,7 +58,7 @@ export class HistoryProvider {
 
 	public getBars(symbolInfo: LibrarySymbolInfo, resolution: string, periodParams: PeriodParamsWithOptionalCountback): Promise<GetBarsResult> {
 		const requestParams: RequestParams = {
-			symbol: symbolInfo.ticker || '',
+			symbol: symbolInfo.ticker?.split(/[:/]/)?.[0] || '',
 			resolution: resolution,
 			from: periodParams.from,
 			to: periodParams.to,

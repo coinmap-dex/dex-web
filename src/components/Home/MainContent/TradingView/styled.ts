@@ -1,4 +1,7 @@
 import styled from "styled-components";
 
-export const TokenTransaction = styled.div`
-`;
+export default {
+    Wrapper: styled.div`
+        height: 100%;
+    `,
+};

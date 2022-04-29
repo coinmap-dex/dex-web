@@ -216,7 +216,7 @@ export const TokenInfoPriceData = styled(Label)`
     margin-right:0.5rem;
     line-height:0;
     @media ${breakpoints.sm}{
-        width: 11rem;
+        width: 14rem;
     }
 `;
 
@@ -233,7 +233,7 @@ export const TokenInfoPriceData1 = styled(Label)`
         font-size:2.4rem;
         height: 2.6rem;
         line-height: 2.6rem;
-        width: 18rem;
+        width: 10rem;
     }
 `;
 
@@ -247,7 +247,7 @@ export const TokenInfoPriceData2 = styled(Label)`
         font-size:1.4rem;
         height: 2rem;
         line-height: 2rem;
-        width: 13rem;
+        width: 10rem;
     }
 `;
 

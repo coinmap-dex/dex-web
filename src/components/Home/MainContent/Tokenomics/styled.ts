@@ -32,8 +32,14 @@ export const TokenomicsContentOther = styled.div`
     }
 `;
 export const TokenomicsAudit = styled.div`
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
+    &>div {
+        font-size: 1.6rem;
+        font-weight: normal;
+        padding-top: 1.5rem;
+        margin-right: 0.5rem;
+    }
 `;
 
 export const TokenomicsAuditIconLink = styled.a`
@@ -51,8 +57,8 @@ export const TokenomicsAuditIconLink = styled.a`
     }
     &>svg{
         position:absolute;
-        top: 0.6rem;
-        right: 0.5rem;
-        width: 1.1rem;
+        top: 0.8rem;
+        right: 0.8rem;
+        width: 1.5rem;
     }
 `;

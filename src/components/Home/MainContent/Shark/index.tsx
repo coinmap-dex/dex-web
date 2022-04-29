@@ -207,11 +207,11 @@ const Shark = () => {
 }
 
 const convertSharkData = (data) => {
-    const max = data.reduce(function (p, v) {
+    const max = data?.reduce(function (p, v) {
         return (p.totalBalance > v.totalBalance ? p : v);
-    })
+    }, 0);
 
-    return data.map((d, i) => ({
+    return data?.map((d, i) => ({
         ...d,
         totalBalance: d.totalBalance / max.totalBalance * 100,
     })).map((d, i) => ({
