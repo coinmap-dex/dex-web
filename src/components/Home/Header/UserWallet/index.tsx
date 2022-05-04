@@ -66,10 +66,10 @@ const UserWallet = () => {
     };
 
     const initializeWeb3 = async () => {
-        if (!(window as any).ethereum) {
-            window.alert('Please install MetaMask first.');
-            return;
-        }
+        // if (!(window as any).ethereum) {
+        //     window.alert('Please install MetaMask first.');
+        //     return;
+        // }
 
         // if (!web3) {
         //     try {
