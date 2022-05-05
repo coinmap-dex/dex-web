@@ -4,7 +4,6 @@ import _ from 'lodash';
 import * as  S from './styled';
 import Currencies from './Currencies';
 import UserWallet from './UserWallet';
-import { useParams } from 'react-router-dom';
 
 const Header = () => {
     const grid = 3;
@@ -19,7 +18,7 @@ const Header = () => {
                     <Currencies />
                 </Col>
                 <S.HeaderUserWalletCol grid={5} gutter={{ sm: 4 }}>
-                    <UserWallet />
+                    {/* <UserWallet /> */}
                 </S.HeaderUserWalletCol>
             </S.HeaderRow>
         </S.HeaderSection>

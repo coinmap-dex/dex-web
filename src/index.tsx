@@ -6,20 +6,14 @@ import Home from "~components/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const App = (): React.ReactElement => {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-
-  // }, []);
   return (
     <I18nextProvider i18n={i18n}>
-
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/:address/*" element={<Home />} />
         </Routes>
       </BrowserRouter>
-      
     </I18nextProvider>
   )
 }
