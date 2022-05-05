@@ -148,6 +148,7 @@ export default {
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx', ".css"],
     alias: {
+      '~configs': path.resolve(__dirname, 'configs/'),
       '~components': path.resolve(__dirname, 'src/components/'),
       '~pages': path.resolve(__dirname, 'src/pages/'),
       '~store': path.resolve(__dirname, 'src/store/'),

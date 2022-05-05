@@ -1,11 +1,11 @@
 {
-  "name": "dex-web",
+  "name": "micro-frontend-shell",
   "version": "1.0.1",
   "description": "",
   "main": "src/index.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/coinmap-dex/dex-web"
+    "url": "git+https://github.com/lthtv8/micro-frontend-shell.git"
   },
   "author": "HoangLy94 <lthtv8@gmail.com>",
   "license": "MIT",
@@ -16,8 +16,12 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@ethersproject/contracts": "^5.6.0",
+    "@ethersproject/units": "^5.6.0",
     "@reduxjs/toolkit": "^1.8.0",
     "@types/web3": "^1.2.2",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
     "axios": "^0.26.0",
     "classnames": "^2.3.1",
     "core-js": "^3.21.1",
@@ -33,7 +37,7 @@
     "react-i18next": "^11.15.5",
     "react-redux": "^7.2.4",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^6.3.0",
     "react-router-redux": "^4.0.8",
     "react-scripts": "^5.0.0",
     "recharts": "^2.1.9",
@@ -137,6 +141,7 @@
       "\\.(css|less)$": "jest-css-modules-transform",
       "\\.(png|gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js",
       "^~/(.*)$": "<rootDir>/src/$1",
+      "^~configs/(.*)$": "<rootDir>/configs/$1",
       "^~components/(.*)$": "<rootDir>/src/$1",
       "^~pages/(.*)$": "<rootDir>/src/pages/$1",
       "^~store$": "<rootDir>/src/store/index.ts",
@@ -150,8 +155,8 @@
     }
   },
   "bugs": {
-    "url": "https://github.com/coinmap-dex/dex-web/issues"
+    "url": "https://github.com/lthtv8/micro-frontend-shell/issues"
   },
-  "homepage": "https://github.com/coinmap-dex/dex-web#readme",
+  "homepage": "https://github.com/lthtv8/micro-frontend-shell#readme",
   "keywords": []
 }

@@ -22,6 +22,9 @@
     //set absolute path
     "baseUrl": ".",
     "paths": {
+      "~configs/*": [
+        "./configs/*"
+      ],
       "~components/*": [
         "./src/components/*"
       ],
