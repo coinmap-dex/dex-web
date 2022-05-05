@@ -106,7 +106,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 			},
 			loading_screen: { backgroundColor: '#0F1A30' },
 			custom_css_url: '../css/chart-themed.css',
-			// load_last_chart: false,
+			load_last_chart: false,
 		};
 
 		const tvWidget = new widget(widgetOptions);

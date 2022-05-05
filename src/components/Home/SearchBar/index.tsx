@@ -6,31 +6,41 @@ import { useAppDispatch, useAppSelector } from '~hooks';
 import { setContract } from '~store/modules/home';
 import { useGetSearchMutation } from '~store/modules/home/api';
 import SearchSuggestion from '../Suggestion';
+import { useParams } from 'react-router-dom';
 
 const SearchBar = () => {
     const dispatch = useAppDispatch();
+    const { address } = useParams();
     const contract = useAppSelector(state => state.home.contract);
-    const [requestSearch, { error: searchError }] = useGetSearchMutation();
+    const [requestSearch, { isLoading: isSearchLoading }] = useGetSearchMutation();
     const [suggetionData, setSuggestionData] = useState([]);
+    const [suggetionVisible, setSuggestionVisible] = useState(false);
     const searchInputRef: any = React.useRef(null);
     React.useEffect(() => {
-        searchInputRef.current && (searchInputRef.current.value = contract);
-    }, [contract]);
+        searchInputRef.current && (searchInputRef.current.value = address ?? contract);
+    }, []);
 
     return (
         <S.Wrapper>
             <S.Search
                 placeholder='Search'
                 ref={searchInputRef}
-                postfix={<S.SearchIcon/>}
+                postfix={<S.SearchIcon />}
                 onKeyUp={_.debounce(async (e) => {
                     const keyword = e.target.value;
                     const isToken = keyword.match(/^0x([A-Fa-f0-9]{40})$/);
-                    isToken && dispatch(setContract(keyword));
-                    !isToken && setSuggestionData(((await requestSearch(keyword)) as any).data);
+                    if (isToken) {
+                        dispatch(setContract(keyword));
+                        window.history.replaceState({}, '', `/${keyword}`);
+                    }
+
+                    setSuggestionVisible(true);
+                    const searchResult = ((await requestSearch(keyword)) as any).data;
+                    setSuggestionData(searchResult);
+                    !searchResult?.length && setSuggestionVisible(false);
                 }, 500)}
             />
-            {suggetionData.length > 0 && <SearchSuggestion data={suggetionData} setData={setSuggestionData}/>}
+            {suggetionVisible && <SearchSuggestion data={suggetionData} setData={setSuggestionData} setVisible={setSuggestionVisible} isLoading={isSearchLoading} />}
         </S.Wrapper>
     )
 }
