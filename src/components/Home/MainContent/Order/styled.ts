@@ -1,4 +1,4 @@
-import { Input, Range, Select } from "sezy-design";
+import { Button, Input, Range, Select } from "sezy-design";
 import styled from "styled-components";
 
 export default {
@@ -155,7 +155,7 @@ export default {
             font-size:1.1rem;
         }
     `,
-    OrderBoxSubmitButton: styled.button`
+    SubmitOrder: styled(Button)`
         width:100%;
         height: 5.6rem;
         background: #50B6D4;

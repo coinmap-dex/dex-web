@@ -14,8 +14,11 @@ import core from "~configs/core";
 import Web3 from 'web3';
 import { amountToBN } from '~utils';
 import axios from "axios";
+import { useForm } from 'react-hook-form';
 
 const Order = () => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const contract = useAppSelector(state => state.home.contract)
     const orderToken = useAppSelector(state => state.home.orderToken)
     // const { data, isLoading, error } = useGetVolumeQuery(contract);
@@ -37,10 +40,11 @@ const Order = () => {
     const context = useWeb3React();
     const { account, library } = context;
 
-    const [pay, setPayAmount] = useState(1);
-    const [buy, setBuyAmount] = useState(1);
-    const [payToken, setPayToken] = useState(tokenList.tokens[4].address);
-    const [buyToken, setBuyToken] = useState(tokenList.tokens[1].address);
+    const [pay, setPayAmount] = useState(0);
+    const [buy, setBuyAmount] = useState(0);
+    const [payToken, setPayToken] = useState(tokenList.tokens[1].address);
+    const [buyToken, setBuyToken] = useState(tokenList.tokens.find(v => v.symbol === orderToken)?.address);
+
     const { approve, isApproved } = useToken(payToken);
 
     const [pendingTx, setPendingTx] = useState(false);
@@ -52,6 +56,12 @@ const Order = () => {
         })
     });
 
+    const handleApproveClick = async formData => {
+        setPendingTx(true)
+        await approve()
+        setPendingTx(false)
+    }
+    
     return (
         <>
             <S.OrderTitleBox>
@@ -75,7 +85,13 @@ const Order = () => {
                 <S.OrderBoxDetail>
                     <div>
                         <span>Avbl - </span>
-                        <S.TokenSelect placeholder='Select' type='nude'>
+                        <S.TokenSelect
+                            placeholder='Select'
+                            type='nude'
+                            onChange={v => {
+                                console.log(v);
+                            }}
+                        >
                             {
                                 tokenList?.tokens?.map((v, k) => (
                                     <Option value={v.address} active={v.symbol === 'WBNB'}>{v.symbol}</Option>
@@ -107,11 +123,13 @@ const Order = () => {
                     <S.OrderBoxInput
                         valueType='number'
                         size='l'
-                        postfix={<S.OrderBoxPriceCounter>
-                            <MinusIcon />
-                            <span />
-                            <PlusIcon />
-                        </S.OrderBoxPriceCounter>}
+                        postfix={(
+                            <S.OrderBoxPriceCounter>
+                                <MinusIcon />
+                                <span />
+                                <PlusIcon />
+                            </S.OrderBoxPriceCounter>
+                        )}
                     />
                 </S.OrderBoxInputWrapper>
                 <S.OrderBoxRangeWrapper>
@@ -152,29 +170,32 @@ const Order = () => {
                 </S.OrderBoxInputWrapper>
                 {
                     isApproved
-                        ? <button
-                            className={`button is-info is-fullwidth ${pendingTx ? "is-loading" : ""}`}
-                            disabled={pay <= 0 || buy <= 0 || payToken == buyToken}
-                            onClick={async () => {
-                                setPendingTx(true)
-                                const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
-                                const salt = Web3.utils.randomHex(32);
-                                const payAmount = amountToBN(pay, payToken).toString();
-                                const buyAmount = amountToBN(buy, buyToken).toString();
-                                const sig = await library.provider.request(signData(account, payToken, buyToken, payAmount, buyAmount, deadline, salt))
-                                await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken, buyToken, payAmount, buyAmount, deadline, salt, sig })
-                                setPendingTx(false)
-                            }}>
-                            Submit order
-                        </button>
-                        :
-                        <S.OrderBoxSubmitButton
-                            onClick={async () => {
-                                setPendingTx(true)
-                                await approve()
-                                setPendingTx(false)
-                            }}
-                        >{['Sell', 'Buy'][+isBuyType]} {orderToken} -&gt; BTC</S.OrderBoxSubmitButton>
+                        ? (
+                            <S.SubmitOrder
+                                className={`button is-info is-fullwidth ${pendingTx ? "is-loading" : ""}`}
+                                isLoading={pendingTx}
+                                isDisabled={pay <= 0 || buy <= 0 || payToken == buyToken}
+                                onClick={async () => {
+                                    setPendingTx(true)
+                                    const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
+                                    const salt = Web3.utils.randomHex(32);
+                                    const payAmount = amountToBN(pay, payToken).toString();
+                                    const buyAmount = amountToBN(buy, buyToken).toString();
+                                    const sig = await library.provider.request(signData(account, payToken, buyToken, payAmount, buyAmount, deadline, salt))
+                                    await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken, buyToken, payAmount, buyAmount, deadline, salt, sig })
+                                    setPendingTx(false)
+                                }}>
+                                Submit order
+                            </S.SubmitOrder>
+                        )
+                        : (
+                            <S.SubmitOrder
+                                isLoading={pendingTx}
+                                onClick={handleSubmit(handleApproveClick)}
+                            >
+                                {['Sell', 'Buy'][+isBuyType]} {orderToken} -&gt; BUSD
+                            </S.SubmitOrder>
+                        )
                 }
             </S.OrderBox>
         </>
