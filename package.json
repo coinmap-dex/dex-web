@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@ethersproject/contracts": "^5.6.0",
+    "@ethersproject/providers": "^5.6.5",
     "@ethersproject/units": "^5.6.0",
     "@reduxjs/toolkit": "^1.8.0",
     "@types/web3": "^1.2.2",
@@ -42,7 +43,7 @@
     "react-scripts": "^5.0.0",
     "recharts": "^2.1.9",
     "redux": "^4.1.0",
-    "sezy-design": "^1.6.22",
+    "sezy-design": "^1.6.62",
     "web3": "^1.7.3"
   },
   "devDependencies": {
