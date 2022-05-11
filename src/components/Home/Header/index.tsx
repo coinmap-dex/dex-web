@@ -18,7 +18,7 @@ const Header = () => {
                     <Currencies />
                 </Col>
                 <S.HeaderUserWalletCol grid={5} gutter={{ sm: 4 }}>
-                    {/* <UserWallet /> */}
+                    <UserWallet />
                 </S.HeaderUserWalletCol>
             </S.HeaderRow>
         </S.HeaderSection>

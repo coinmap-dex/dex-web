@@ -8,6 +8,7 @@ import {
 	ResolutionString,
 } from './charting_library';
 import { connect } from 'react-redux';
+import { TRADING_VIEW } from '../../../../constants/trading-view.constants';
 
 export interface ChartContainerProps {
 	symbol: ChartingLibraryWidgetOptions['symbol'];
@@ -34,6 +35,50 @@ function getLanguageFromURL(): LanguageCode | null {
 	const regex = new RegExp('[\\?&]lang=([^&#]*)');
 	const results = regex.exec(location.search);
 	return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' ')) as LanguageCode;
+}
+
+const addCheckApiButton = (tvWidget: IChartingLibraryWidget) => {
+	tvWidget.headerReady().then(() => {
+		const button = tvWidget.createButton();
+		button.setAttribute('title', 'Click to show a notification popup');
+		button.classList.add('apply-common-tooltip');
+		button.addEventListener('click', () => tvWidget.showNoticeDialog({
+			title: 'Notification',
+			body: 'TradingView Charting Library API works correctly',
+			callback: () => {
+				console.log('Noticed!');
+			},
+		}));
+		button.innerHTML = 'Check API';
+	});
+}
+
+const customWidgetPriceScale = (tvWidget: IChartingLibraryWidget) => {
+	tvWidget.activeChart().onDataLoaded().subscribe(null, () => {
+		const minPriceRange: number = tvWidget.activeChart().getPanes()[0].getMainSourcePriceScale()?.getVisiblePriceRange()?.from ?? 0;
+		if (!!minPriceRange) {
+			const priceScale: string = buildPriceScale(minPriceRange);
+			tvWidget.applyOverrides({ 'mainSeriesProperties.minTick': `${priceScale}, 1, false` });
+		}
+	});
+}
+
+const buildPriceScale = (minPriceRange: number) => {
+	const [wholePart, decimalPart] = minPriceRange.toString().split('.');
+	if (Number(wholePart) === 0) {
+		let priceScale = '1';
+		for (let i = 0; i < decimalPart.length; i++) {
+			if (decimalPart.charAt(i) === '0') {
+				priceScale += '0';
+			} else {
+				break;
+			}
+		}
+		if (priceScale !== '1') {
+			return `${priceScale}00`;
+		}
+	}
+	return TRADING_VIEW.DEFAULT_PRICE_SCALE;
 }
 
 const DEFAULT_SYMBOL = '0x4556a6f454f15c4cd57167a62bda65a6be325d1f~0';
@@ -112,19 +157,8 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 		const tvWidget = new widget(widgetOptions);
 
 		tvWidget.onChartReady(() => {
-			tvWidget.headerReady().then(() => {
-				const button = tvWidget.createButton();
-				button.setAttribute('title', 'Click to show a notification popup');
-				button.classList.add('apply-common-tooltip');
-				button.addEventListener('click', () => tvWidget.showNoticeDialog({
-					title: 'Notification',
-					body: 'TradingView Charting Library API works correctly',
-					callback: () => {
-						console.log('Noticed!');
-					},
-				}));
-				button.innerHTML = 'Check API';
-			});
+			customWidgetPriceScale(tvWidget);
+			addCheckApiButton(tvWidget);
 		});
 
 		this.setState({ tvWidget });

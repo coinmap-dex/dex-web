@@ -1,0 +1,3 @@
+export enum TRADING_VIEW {
+    DEFAULT_PRICE_SCALE = '1000'
+}

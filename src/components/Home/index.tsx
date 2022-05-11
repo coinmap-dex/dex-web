@@ -15,16 +15,26 @@ import { Provider } from 'react-redux';
 import { store } from '~store';
 import Footer from './Footer';
 import '../../../polyfills';
+import { Web3Provider } from "@ethersproject/providers";
+import { Web3ReactProvider } from "@web3-react/core";
+
+function getLibrary(provider) {
+    const library = new Web3Provider(provider);
+    library.pollingInterval = 12000;
+    return library;
+}
 
 const Home = () => {
     // const router = useRouter()
     return (
         <Provider store={store}>
-            <Header />
-            <Menu />
-            <TokenHeader />
-            <MainContent />
-            <Footer />
+            <Web3ReactProvider getLibrary={getLibrary}>
+                <Header />
+                <Menu />
+                <TokenHeader />
+                <MainContent />
+                <Footer />
+            </Web3ReactProvider>
         </Provider>
     )
 }

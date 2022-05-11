@@ -1,7 +1,7 @@
 import { Contract } from '@ethersproject/contracts'
 import { useWeb3React } from "@web3-react/core";
 import { useMemo } from 'react';
-import core from '~configs/core.json';
+import core from '~configs/core';
 import { supportedChainIds } from '~configs/connectors';
 import erc20abi from '../utils/erc20abi.json';
 
