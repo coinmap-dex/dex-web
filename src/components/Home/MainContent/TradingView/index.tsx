@@ -9,6 +9,7 @@ import {
 } from './charting_library';
 import { connect } from 'react-redux';
 import { TRADING_VIEW } from '../../../../constants/trading-view.constants';
+import { isMobileScreen } from '~utils/screen.util';
 
 export interface ChartContainerProps {
 	symbol: ChartingLibraryWidgetOptions['symbol'];
@@ -114,6 +115,8 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 			return;
 		}
 
+		const hideLeftToolbarByDefaultFeature = isMobileScreen() ? 'hide_left_toolbar_by_default' : '';
+
 		const widgetOptions: ChartingLibraryWidgetOptions = {
 			symbol: this.props.symbol,
 			// BEWARE: no trailing slash is expected in feed URL
@@ -136,7 +139,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 				'show_object_tree',
 				'header_symbol_search',
 			],
-			// enabled_features: ['study_templates'],
+			enabled_features: [hideLeftToolbarByDefaultFeature],
 			charts_storage_url: this.props.chartsStorageUrl,
 			charts_storage_api_version: this.props.chartsStorageApiVersion,
 			client_id: this.props.clientId,

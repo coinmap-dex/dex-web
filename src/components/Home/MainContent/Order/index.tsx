@@ -17,10 +17,14 @@ import axios from "axios";
 import { useForm } from 'react-hook-form';
 
 const Order = () => {
-
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const contract = useAppSelector(state => state.home.contract)
-    const orderToken = useAppSelector(state => state.home.orderToken)
+    const contract = useAppSelector(state => state.home.contract);
+    const orderToken = useAppSelector(state => state.home.orderToken);
+    const [buyTokenName, setBuyTokenName] = useState(orderToken);
+    useEffect(()=>{
+        setBuyTokenName(orderToken);
+    },[orderToken]);
+
     // const { data, isLoading, error } = useGetVolumeQuery(contract);
     const totalRangeRef = React.useRef<HTMLInputElement>(null);
     const totalRangeLabelRef = React.useRef<HTMLInputElement>(null);
@@ -61,7 +65,7 @@ const Order = () => {
         await approve()
         setPendingTx(false)
     }
-    
+
     return (
         <>
             <S.OrderTitleBox>
@@ -90,11 +94,12 @@ const Order = () => {
                             type='nude'
                             onChange={v => {
                                 console.log(v);
+                                setBuyTokenName(v);
                             }}
                         >
                             {
                                 tokenList?.tokens?.map((v, k) => (
-                                    <Option value={v.address} active={v.symbol === 'WBNB'}>{v.symbol}</Option>
+                                    <Option value={v.symbol} active={v.symbol === 'WBNB'}>{v.symbol}</Option>
                                 ))
                             }
                         </S.TokenSelect>
@@ -105,7 +110,7 @@ const Order = () => {
                     </div>
                 </S.OrderBoxDetail>
                 <S.OrderBoxInputWrapper>
-                    <S.OrderBoxInputLabel>Price {orderToken}/COIN</S.OrderBoxInputLabel>
+                    <S.OrderBoxInputLabel>Price {buyTokenName}/COIN</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         valueType='number'
                         size='l'
@@ -157,7 +162,7 @@ const Order = () => {
                     />
                 </S.OrderBoxRangeWrapper>
                 <S.OrderBoxInputWrapper>
-                    <S.OrderBoxInputLabel>Total {orderToken}</S.OrderBoxInputLabel>
+                    <S.OrderBoxInputLabel>Total {buyTokenName}</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         valueType='number'
                         size='l'
@@ -193,7 +198,7 @@ const Order = () => {
                                 isLoading={pendingTx}
                                 onClick={handleSubmit(handleApproveClick)}
                             >
-                                {['Sell', 'Buy'][+isBuyType]} {orderToken} -&gt; BUSD
+                                {['Sell', 'Buy'][+isBuyType]} {buyTokenName} -&gt; BUSD
                             </S.SubmitOrder>
                         )
                 }

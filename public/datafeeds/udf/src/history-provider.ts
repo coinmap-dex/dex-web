@@ -90,7 +90,7 @@ export class HistoryProvider {
 
 					if (response.s === 'no_data') {
 						meta.noData = true;
-						meta.nextTime = response.nextTime;
+						// meta.nextTime = response.nextTime;
 					} else {
 						const volumePresent = response.v !== undefined;
 						const ohlPresent = response.o !== undefined;

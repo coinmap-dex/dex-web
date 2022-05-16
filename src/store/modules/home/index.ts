@@ -17,8 +17,6 @@ const homeSlice = createSlice({
     reducers: {
         setContract(state, action: PayloadAction<string>) {
             state.contract = action.payload;
-
-            console.log(action.payload);
         },
         setOrderToken(state, action: PayloadAction<string>) {
             state.orderToken = action.payload;

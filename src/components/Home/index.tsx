@@ -11,31 +11,24 @@ import '~css/variables';
 import TokenHeader from './TokenHeader';
 import Menu from './Menu';
 import Header from './Header';
-import { Provider } from 'react-redux';
-import { store } from '~store';
 import Footer from './Footer';
 import '../../../polyfills';
-import { Web3Provider } from "@ethersproject/providers";
-import { Web3ReactProvider } from "@web3-react/core";
-
-function getLibrary(provider) {
-    const library = new Web3Provider(provider);
-    library.pollingInterval = 12000;
-    return library;
-}
+import { useParams } from 'react-router-dom';
+import { setContract } from '~store/modules/home';
+import { useAppDispatch } from '~hooks';
 
 const Home = () => {
-    // const router = useRouter()
+    const { address } = useParams();
+    const dispatch = useAppDispatch();
+    address && dispatch(setContract(address));
     return (
-        <Provider store={store}>
-            <Web3ReactProvider getLibrary={getLibrary}>
-                <Header />
-                <Menu />
-                <TokenHeader />
-                <MainContent />
-                <Footer />
-            </Web3ReactProvider>
-        </Provider>
+        <>
+            <Header />
+            <Menu />
+            <TokenHeader />
+            <MainContent />
+            <Footer />
+        </>
     )
 }
 
