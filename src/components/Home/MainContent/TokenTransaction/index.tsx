@@ -13,7 +13,7 @@ const TokenTransaction = () => {
     const { t } = useTranslation();
     const contract = useAppSelector(state => state.home.contract)
     const { data, isLoading, error } = useGetTransactionQuery(contract, {
-        pollingInterval: +(process.env.POLLING_INTERVAL || 0),
+        pollingInterval: 3000,
     });
 
     const tableColumns = getTableColumns(t('price'), t('amount'), t('total'));
