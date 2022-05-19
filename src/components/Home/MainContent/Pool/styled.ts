@@ -21,6 +21,12 @@ export const lengendItem = styled.span`
         color:#fff;
         white-space:nowrap;
     }
+    >svg.recharts-surface {
+        background: linear-gradient(180deg, #2D149D 0%, #411185 100%);
+        opacity: 0.8;
+        border: 1px solid #284C8B;
+        border-radius: 3px;
+    }
 `;
 
 export const TitleTotalSupply = styled.div`

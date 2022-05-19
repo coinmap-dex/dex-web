@@ -13,8 +13,8 @@ export const lengend = styled(Row)`
 
 export const lengendItem = styled.div`
     color: #000;
-        align-items:center;
-        display:flex;
+    align-items:center;
+    display:flex;
     &>*{
         align-items:center;
         display:flex;
@@ -25,6 +25,14 @@ export const lengendItem = styled.div`
         color:#fff;
         line-height:0.9rem;
         flex:1;
+    }
+    &>div {
+        >svg.recharts-surface {
+            background: #C9A506;
+            opacity: 0.8;
+            border: 1px solid rgba(254, 233, 41, 0.8);
+            border-radius: 3px;
+        }
     }
 `;
 
