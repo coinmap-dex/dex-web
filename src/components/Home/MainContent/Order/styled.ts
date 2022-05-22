@@ -77,6 +77,7 @@ export default {
         margin-top:3rem;
     `,
     TokenSelect: styled(Select)`
+        width:80px;
         display:inline-block;
         & input{
             color:orange;
@@ -85,6 +86,9 @@ export default {
         & svg{
             display:none;
         }
+    `,
+    Balance: styled.div`
+        white-space: nowrap;
     `,
     OrderBoxInputWrapper: styled.div`
         margin-top:0.8rem;

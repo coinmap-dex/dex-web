@@ -4,11 +4,19 @@ import * as  S from './styled';
 import { useGetOverviewQuery } from '~store/modules/home/api';
 import { useAppSelector, useBreakpoint } from '~hooks';
 import Star from '~svg/Star';
+import { setTokenSymbol } from '~store/modules/home';
+import { useDispatch } from 'react-redux';
 
 const TokenDetail = () => {
+    const dispatch = useDispatch();
     const breakpoint = useBreakpoint();
     const contract = useAppSelector(state => state.home.contract)
     const { data, isLoading, error } = useGetOverviewQuery(contract);
+
+    React.useEffect(() => {
+        dispatch(setTokenSymbol(data?.symbol));
+    }, [data?.symbol]);
+
     return (
         <S.TokenInfoDetailCol grid={18} gutter={{ sm: 12, lg: 8, xl: 6 }}>
             <div>
