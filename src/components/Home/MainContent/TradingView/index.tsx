@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { TRADING_VIEW } from '../../../../constants/trading-view.constants';
 import { isMobileScreen } from '~utils/screen.util';
+import {getNumberOnDecimalPartOfPriceAfterZero} from '~utils/trading-view.util';
 
 export interface ChartContainerProps {
 	symbol: ChartingLibraryWidgetOptions['symbol'];
@@ -64,6 +65,8 @@ const customWidgetPriceScale = (tvWidget: IChartingLibraryWidget) => {
 	});
 }
 
+const numberOnDecimalPartOfPriceAfterZero: string = getNumberOnDecimalPartOfPriceAfterZero();
+
 const buildPriceScale = (minPriceRange: number) => {
 	const [wholePart, decimalPart] = minPriceRange.toString().split('.');
 	if (Number(wholePart) === 0) {
@@ -76,7 +79,7 @@ const buildPriceScale = (minPriceRange: number) => {
 			}
 		}
 		if (priceScale !== '1') {
-			return `${priceScale}00`;
+			return `${priceScale}${numberOnDecimalPartOfPriceAfterZero}`;
 		}
 	}
 	return TRADING_VIEW.DEFAULT_PRICE_SCALE;
