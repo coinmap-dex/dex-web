@@ -6,6 +6,7 @@ const tableScrollBarWidth = '6px';
 const tableHeaderPaddingRight = '1.8rem';
 
 const tableWrapperStyle = `
+    margin-bottom: 2rem;
     & th{
         background:#1C2740;
         color:#B9C2D0;
@@ -75,7 +76,7 @@ export default {
     HeaderTable: styled(Table)`
         ${tableWrapperStyle}
         overflow: hidden;
-        padding-bottom: 1.5rem;
+        padding-bottom: 2.6rem;
         & tbody{
             display:none;
         }
@@ -92,7 +93,7 @@ export default {
     HighLightDataWrapper: styled.div`
         display:flex;
         justify-content:space-between;
-        padding:2rem 2rem 1.6rem;
+        padding: 0 2rem 1.6rem 2rem;
     `,
     HighlightData: styled.div`
         display:flex;
