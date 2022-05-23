@@ -119,10 +119,13 @@ export default {
         background: rgba(34, 59, 107, 0.3);
         display:flex;
         justify-content:space-between;
-        &>svg{
+        &>div{
+        }
+        & svg{
             cursor:pointer;
             width:3rem;
             padding:0.8rem;
+            cursor:pointer;
         }
         &>span{
             border-right:1px solid #5B5757;
