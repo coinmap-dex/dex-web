@@ -114,8 +114,8 @@ const Order = () => {
 
         const percentage = buy / balance * 100;
         percentageInputRef.current.value = percentage.toFixed(2);
-        totalRangeRef.current.value = percentage;
-        setPercentageLabel(percentage);
+        totalRangeRef.current.value = percentage
+        setPercentageLabel(percentage.toFixed(2));
         setDisabledApproveButton(pay <= 0 || buy <= 0 || payToken?.address == buyToken?.address);
     }
 
