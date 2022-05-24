@@ -249,8 +249,11 @@ const Order = () => {
                                     setPendingTx(true)
                                     const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
                                     const salt = Web3.utils.randomHex(32);
-                                    const payAmount = amountToBN(amountInputRef.current.value, payToken?.address).toString();
-                                    const buyAmount = amountToBN(totalInputRef.current.value, buyToken?.address).toString();
+
+                                    const pay = amountInputRef.current.value;
+                                    const buy = totalInputRef.current.value;
+                                    const payAmount = amountToBN(isBuyType ? pay : buy, payToken?.address).toString();
+                                    const buyAmount = amountToBN(isBuyType ? buy : pay, buyToken?.address).toString();
                                     const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
                                     await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
                                     setPendingTx(false)
