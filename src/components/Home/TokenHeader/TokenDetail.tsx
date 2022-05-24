@@ -1,28 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Shimmer } from 'sezy-design'
 import * as  S from './styled';
 import { useGetOverviewQuery } from '~store/modules/home/api';
-import { useAppSelector, useBreakpoint } from '~hooks';
+import { useAppSelector, useAxios, useBreakpoint, useCoinmapDex } from '~hooks';
 import Star from '~svg/Star';
 import { setTokenSymbol } from '~store/modules/home';
 import { useDispatch } from 'react-redux';
+import OrderModal from './OrderModal';
 
 const TokenDetail = () => {
     const dispatch = useDispatch();
     const breakpoint = useBreakpoint();
     const contract = useAppSelector(state => state.home.contract)
-    const { data, isLoading, error } = useGetOverviewQuery(contract);
+    const { data: overviewData, isLoading, error } = useGetOverviewQuery(contract);
+    const [isOrderVisible, setOrderVisible] = useState(false);
 
-    React.useEffect(() => {
-        dispatch(setTokenSymbol(data?.symbol));
-    }, [data?.symbol]);
+    useEffect(() => {
+        dispatch(setTokenSymbol(overviewData?.symbol));
+    }, [overviewData?.symbol]);
+
+
+
 
     return (
         <S.TokenInfoDetailCol grid={18} gutter={{ sm: 12, lg: 8, xl: 6 }}>
             <div>
                 <Shimmer isLoading={isLoading}>
                     <S.TokenLogoWrapper>
-                        <img src={data?.image?.small} />
+                        <img src={overviewData?.image?.small} />
                     </S.TokenLogoWrapper>
                 </Shimmer>
                 <S.TokenInfoDetailData>
@@ -30,21 +35,24 @@ const TokenDetail = () => {
                         <S.TokenInfoSymbolWrapper>
                             {
                                 !isLoading && <>
-                                    <S.TokenInfoDetailName1>{data?.symbol}</S.TokenInfoDetailName1>
+                                    <S.TokenInfoDetailName1>{overviewData?.symbol}</S.TokenInfoDetailName1>
                                     <S.TokenInfoDetailName1>/</S.TokenInfoDetailName1>
                                     <S.TokenInfoDetailName2>BNB</S.TokenInfoDetailName2>
 
                                     <S.TokenInfoBSCScan href=''>
                                         <img src="https://i.ibb.co/ygdN0m8/bscscan-2.png" />
                                     </S.TokenInfoBSCScan>
-                                    {breakpoint('sm') && (
-                                        <>
-                                            <S.TokenInfoStar>
-                                                <Star />
-                                            </S.TokenInfoStar>
-                                            <S.TokenInfoMore>View more info</S.TokenInfoMore>
-                                        </>
-                                    )}
+                                    {
+                                        breakpoint('sm') && (
+                                            <>
+                                                <S.TokenInfoStar>
+                                                    <Star />
+                                                </S.TokenInfoStar>
+                                                <S.TokenInfoMore >View more info</S.TokenInfoMore>
+                                                {/* <S.TokenInfoMore onClick={() => setOrderVisible(true)}>View more info</S.TokenInfoMore> */}
+                                            </>
+                                        )
+                                    }
                                 </>
                             }
                         </S.TokenInfoSymbolWrapper>
@@ -53,7 +61,7 @@ const TokenDetail = () => {
                         <S.TokenInfoContractWrapper>
                             {
                                 !isLoading && <>
-                                    <S.TokenInfoDetailFullname>({data?.name})</S.TokenInfoDetailFullname>
+                                    <S.TokenInfoDetailFullname>({overviewData?.name})</S.TokenInfoDetailFullname>
                                     <S.TokenInfoDetailContract>Token contract{breakpoint('sm') ? `: ${contract?.slice(0, 8)}...${contract?.slice(-4)}` : ''}</S.TokenInfoDetailContract>
                                     <S.TokenInfolContractCopyIcon />
                                     <S.TokenInfoDetailContract> - Pair</S.TokenInfoDetailContract>
@@ -64,6 +72,7 @@ const TokenDetail = () => {
                     </Shimmer>
                 </S.TokenInfoDetailData>
             </div>
+            <OrderModal isVisible={isOrderVisible} setVisible={setOrderVisible} />
         </S.TokenInfoDetailCol>
     )
 }

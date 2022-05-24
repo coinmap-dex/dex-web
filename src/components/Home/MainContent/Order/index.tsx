@@ -100,21 +100,14 @@ const Order = () => {
         validateApproveButton();
     }
 
-    const validateOrder = () => {
-        const pay = amountInputRef.current.value;
-        const buy = priceInputRef.current.value * amountInputRef.current.value;
-        totalInputRef.current.value = buy;
-        setDisabledApproveButton(pay <= 0 || buy <= 0 || payToken?.address == buyToken?.address);
-    }
-
     const validateApproveButton = () => {
         const pay = amountInputRef.current.value;
-        const buy = priceInputRef.current.value * amountInputRef.current.value;
+        const buy = amountInputRef.current.value / priceInputRef.current.value;
         totalInputRef.current.value = buy;
 
         const percentage = buy / balance * 100;
         percentageInputRef.current.value = percentage.toFixed(2);
-        totalRangeRef.current.value = percentage
+        totalRangeRef.current.value = percentage;
         setPercentageLabel(percentage.toFixed(2));
         setDisabledApproveButton(pay <= 0 || buy <= 0 || payToken?.address == buyToken?.address);
     }
@@ -209,22 +202,31 @@ const Order = () => {
                         min={0}
                         max={100}
                         onChange={(e) => {
-                            setPercentageLabel(e.target.value)
-                            percentageInputRef.current && (percentageInputRef.current.value = e.target.value);
+                            const percentage = e.target.value / 100;
+                            const payAmount = balance * percentage;
+                            amountInputRef.current.value = Math.round(payAmount);
+                            totalInputRef.current.value = payAmount / priceInputRef.current.value;
+                            percentageInputRef.current.value = e.target.value;
+                            setPercentageLabel(e.target.value);
                         }}
                     />
                     <S.OrderBoxInput
                         ref={percentageInputRef}
                         valueType='number'
                         postfix={<S.OrderBoxInputRangePercentage>%</S.OrderBoxInputRangePercentage>}
-
                         onChange={(e) => {
-                            totalRangeRef.current && (totalRangeRef.current.value = e.value);
+                            const percentage = e.target.value / 100;
+                            const payAmount = balance * percentage;
+                            amountInputRef.current.value = Math.round(payAmount);
+                            totalRangeRef.current.value = percentage;
+                            totalInputRef.current.value = payAmount / priceInputRef.current.value;
+                            totalRangeRef.current.value = e.target.value;
+                            setPercentageLabel(e.target.value);
                         }}
                     />
                 </S.OrderBoxRangeWrapper>
                 <S.OrderBoxInputWrapper>
-                    <S.OrderBoxInputLabel>Total {payToken?.symbol}</S.OrderBoxInputLabel>
+                    <S.OrderBoxInputLabel>Total {buyToken?.symbol}</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         ref={totalInputRef}
                         valueType='number'
@@ -245,12 +247,12 @@ const Order = () => {
                                 isDisabled={isDisabledApproveButton}
                                 onClick={async () => {
                                     setPendingTx(true)
-                                    // const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
-                                    // const salt = Web3.utils.randomHex(32);
-                                    // const payAmount = amountToBN(pay, payToken?.address).toString();
-                                    // const buyAmount = amountToBN(buy, buyToken?.address).toString();
-                                    // const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
-                                    // await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
+                                    const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
+                                    const salt = Web3.utils.randomHex(32);
+                                    const payAmount = amountToBN(amountInputRef.current.value, payToken?.address).toString();
+                                    const buyAmount = amountToBN(totalInputRef.current.value, buyToken?.address).toString();
+                                    const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
+                                    await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
                                     setPendingTx(false)
                                 }}>
                                 Submit order
