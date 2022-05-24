@@ -22,7 +22,8 @@ export const formatYAxisNumber = (number) => {
         return (number / 1000000).toString() + 'M';
     if (number > 1000)
         return (number / 1000).toString() + 'K';
-    return number.toString() + '%';
+    // return number.toString() + '%';
+    return number.toString();
 }
 
 export function getTokenName(address) {

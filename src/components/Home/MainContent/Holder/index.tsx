@@ -14,7 +14,7 @@ import {
 import { Label } from "sezy-design";
 import { t } from "i18next";
 import { useTranslation } from "react-i18next";
-import { formatDateXAxis, formatYAxisNumber } from "~utils";
+import { formatDateXAxis, formatYAxisNumber, thousandSeparator } from "~utils";
 import { useGetHolderQuery } from "~store/modules/home/api";
 import { useAppSelector } from "~hooks";
 
@@ -53,12 +53,15 @@ const Holder = () => {
                         <YAxis
                             width={50}
                             tick={{ fill: "#fff" }}
-                            tickFormatter={formatYAxis(baseNum)}
+                            tickFormatter={formatYAxisNumber(baseNum)}
                         />
                         <Tooltip
                             contentStyle={{ backgroundColor: "#1C2740", border: '0' }}
                             labelStyle={{ display: 'none' }}
                             itemStyle={{ color: "#7C8491" }}
+                            formatter={function (value, name) {
+                                return thousandSeparator(value);
+                            }}
                         />
                         <Bar
                             type="linear"

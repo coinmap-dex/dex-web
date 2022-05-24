@@ -25,7 +25,7 @@ const chartLegend = t => {
                 <svg height="15" width="20">
                     <rect width="20" height="15" stroke="#6E14D7" fill="#6E14D7" />
                 </svg>
-                <span>BNB</span>
+                <span>GWEI</span>
             </MS.TitleLengendItem>
             {/* <InfoIcon/> */}
         </MS.TitleLengend>

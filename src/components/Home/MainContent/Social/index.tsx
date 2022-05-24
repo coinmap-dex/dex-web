@@ -19,7 +19,7 @@ import {
 import { Label } from "sezy-design";
 import { t } from "i18next";
 import { useTranslation } from "react-i18next";
-import { formatDateXAxis, formatYAxisNumber } from "~utils";
+import { formatDateXAxis, formatYAxisNumber, thousandSeparator } from "~utils";
 import { useGetSocialNetworkQuery } from "~store/modules/home/api";
 import { useAppSelector } from "~hooks";
 
@@ -87,6 +87,16 @@ const Shark = () => {
                             tickFormatter={formatDateXAxis}
                         />
                         <YAxis
+                            yAxisId="pool-y-left"
+                            orientation="left"
+                            width={50}
+                            tickMargin={10}
+                            tick={{ fill: "#fff" }}
+                            tickFormatter={formatYAxisNumber}
+                        />
+                        <YAxis
+                            yAxisId="pool-y-right"
+                            orientation="right"
                             width={50}
                             tickMargin={10}
                             tick={{ fill: "#fff" }}
@@ -96,8 +106,12 @@ const Shark = () => {
                             contentStyle={{ backgroundColor: "#1C2740", border: '0' }}
                             labelStyle={{ display: 'none' }}
                             itemStyle={{ color: "#7C8491" }}
+                            formatter={function (value, name) {
+                                return thousandSeparator(value);
+                            }}
                         />
                         <Area
+                            yAxisId="pool-y-left"
                             type="monotone"
                             dataKey="telegram"
                             stroke="#3751FF"
@@ -105,6 +119,7 @@ const Shark = () => {
                             dot={false}
                         />
                         <Area
+                            yAxisId="pool-y-right"
                             type="monotone"
                             dataKey="twitter"
                             stroke="#E935ED"

@@ -12,7 +12,7 @@ import {
     ComposedChart,
     Bar,
 } from "recharts";
-import { formatDateXAxis, formatYAxisNumber } from '~utils';
+import { formatDateXAxis, formatYAxisNumber, thousandSeparator } from '~utils';
 import { t } from 'i18next';
 import { useGetVolumeQuery } from '~store/modules/home/api';
 import { useAppSelector } from '~hooks';
@@ -107,6 +107,9 @@ const Volume = () => {
                             contentStyle={{ backgroundColor: "#1C2740", border: '0' }}
                             labelStyle={{ display: 'none' }}
                             itemStyle={{ color: "#7C8491" }}
+                            formatter={function (value, name) {
+                                return thousandSeparator(value);
+                            }}
                         />
                         {/* <Legend
                         align="center"
