@@ -50,74 +50,78 @@ const Pool = () => {
                 }
             </S.Pools>
             {
-                data?.data &&
-                <S.PoolChart>
-                    <ComposedChart
-                        width={500}
-                        height={300}
-                        data={data.data}
-                        margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
-                        }}
-                    >
-                        <defs>
-                            <linearGradient id="colorTotalAmount" x1="0" y1="0" x2="0" y2="100%">
-                                <stop offset="0%" stopColor="#3B11DD" stopOpacity={0.8} />
-                                <stop offset="100%" stopColor="#610BAF" stopOpacity={0.8} />
-                            </linearGradient>
-                        </defs>
-                        <CartesianGrid vertical={false} strokeWidth={1} strokeOpacity={0.18} />
-                        <XAxis
-                            dataKey="date"
-                            dy={10}
-                            tick={{ fill: "#fff" }}
-                            tickFormatter={formatDateXAxis}
-                        />
-                        <YAxis
-                            yAxisId="pool-y-left"
-                            width={50}
-                            tickMargin={10}
-                            tick={{ fill: "#fff" }}
-                            tickFormatter={formatYAxisNumber}
-                        />
-                        <YAxis
-                            yAxisId="pool-y-right"
-                            orientation="right"
-                            width={50}
-                            tickMargin={10}
-                            tick={{ fill: "#fff" }}
-                            tickFormatter={formatYAxisNumber}
-                        />
-                        <Tooltip
-                            contentStyle={{ backgroundColor: "#1C2740", border: '0' }}
-                            labelStyle={{ display: 'none' }}
-                            itemStyle={{ color: "#7C8491" }}
-                        />
-                        <Legend
-                            align="center"
-                            verticalAlign="bottom"
-                            content={renderCusomizedLegend}
-                        />
-                        <Bar
-                            yAxisId="pool-y-left"
-                            type="linear"
-                            dataKey="totalAmount"
-                            fill="url(#colorTotalAmount)"
-                            stroke="#4484EF"
-                        />
-                        <Line
-                            yAxisId="pool-y-right"
-                            type="linear"
-                            dataKey="price"
-                            stroke="#50B6D4"
-                            fill="#50B6D4"
-                            dot={<CustomizedDot />}
-                        />
-                    </ComposedChart>
-                </S.PoolChart>
+                data?.data && (
+                    <S.PoolChart>
+                        <ComposedChart
+                            width={500}
+                            height={300}
+                            data={data.data}
+                            margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5
+                            }}
+                        >
+                            <defs>
+                                <linearGradient id="colorTotalAmount" x1="0" y1="0" x2="0" y2="100%">
+                                    <stop offset="0%" stopColor="#3B11DD" stopOpacity={0.8} />
+                                    <stop offset="100%" stopColor="#610BAF" stopOpacity={0.8} />
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid vertical={false} strokeWidth={1} strokeOpacity={0.18} />
+                            <XAxis
+                                dataKey="date"
+                                dy={10}
+                                tick={{ fill: "#fff" }}
+                                tickFormatter={formatDateXAxis}
+                            />
+                            <YAxis
+                                yAxisId="pool-y-left"
+                                width={50}
+                                tickMargin={10}
+                                tick={{ fill: "#fff" }}
+                                tickFormatter={formatYAxisNumber}
+                            />
+                            <YAxis
+                                yAxisId="pool-y-right"
+                                orientation="right"
+                                width={50}
+                                tickMargin={10}
+                                tick={{ fill: "#fff" }}
+                                tickFormatter={formatYAxisNumber}
+                            />
+                            <Tooltip
+                                contentStyle={{ backgroundColor: "#1C2740", border: '0' }}
+                                labelStyle={{ display: 'none' }}
+                                itemStyle={{ color: "#7C8491" }}
+                                formatter={function (value, name) {
+                                    return thousandSeparator(value);
+                                }}
+                            />
+                            <Legend
+                                align="center"
+                                verticalAlign="bottom"
+                                content={renderCusomizedLegend}
+                            />
+                            <Bar
+                                yAxisId="pool-y-left"
+                                type="linear"
+                                dataKey="totalAmount"
+                                fill="url(#colorTotalAmount)"
+                                stroke="#4484EF"
+                            />
+                            <Line
+                                yAxisId="pool-y-right"
+                                type="linear"
+                                dataKey="price"
+                                stroke="#50B6D4"
+                                fill="#50B6D4"
+                                dot={<CustomizedDot />}
+                            />
+                        </ComposedChart>
+                    </S.PoolChart>
+                )
             }
         </>
     )

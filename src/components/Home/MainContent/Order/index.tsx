@@ -66,8 +66,8 @@ const Order = () => {
     const [payToken, setPayToken] = useState<any>({});
     const [buyToken, setBuyToken] = useState<any>({});
 
-    const { approve, isApproved, balance: Aaa } = useToken(payToken.address);
-    const balance = 10000;
+    const { approve, isApproved, balance: walletBalance } = useToken(payToken.address);
+    const balance = walletBalance ?? 0;
     const [pendingTx, setPendingTx] = useState(false);
     // const [balance, setBalance] = useState(0)
 

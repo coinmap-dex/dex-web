@@ -13,55 +13,13 @@ import {
     Symbols,
     ComposedChart,
     Bar,
-    ResponsiveContainer
 } from "recharts";
 import { Label } from "sezy-design";
-import moment from "moment";
 import { t } from "i18next";
-import { useTranslation } from "react-i18next";
-import { formatDateXAxis } from "~utils";
+import { formatDateXAxis, thousandSeparator } from "~utils";
 import { useAppSelector } from "~hooks";
 import { useGetSharkQuery } from "~store/modules/home/api";
 import { formatYAxisNumber } from "~utils";
-
-const data = [
-    {
-        "totalBalance": 50213123.5,
-        "totalTransaction": 324792364,
-        "totalTransactionHighValue": 234234234,
-        "date": 1643673600
-    },
-    {
-        "totalBalance": 50213123.5,
-        "totalTransaction": 324792364,
-        "totalTransactionHighValue": 234234234,
-        "date": 1643760000
-    },
-    {
-        "totalBalance": 50213123.5,
-        "totalTransaction": 324792364,
-        "totalTransactionHighValue": 234234234,
-        "date": 1643846400
-    },
-    {
-        "totalBalance": 50213123.5,
-        "totalTransaction": 324792364,
-        "totalTransactionHighValue": 234234234,
-        "date": 1643932800
-    },
-    {
-        "totalBalance": 50213123.5,
-        "totalTransaction": 324792364,
-        "totalTransactionHighValue": 234234234,
-        "date": 1644019200
-    },
-    {
-        "totalBalance": 50213123.5,
-        "totalTransaction": 324792364,
-        "totalTransactionHighValue": 234234234,
-        "date": 1644105600
-    }
-];
 
 const CustomizedDot: FunctionComponent<any> = (props: any) => {
     const { cx, cy, value } = props;
@@ -161,14 +119,22 @@ const Shark = () => {
                             tick={{ fill: "#fff" }}
                             tickFormatter={formatYAxisNumber}
                         />
+                        <YAxis
+                            yAxisId="shark-y-right2"
+                            orientation="right"
+                            width={0}
+                            tickMargin={0}
+                            tick={{ fill: "#fff" }}
+                            tickFormatter={formatYAxisNumber}
+                        />
                         <Tooltip
                             contentStyle={{ backgroundColor: "#1C2740", border: '0' }}
                             labelStyle={{ display: 'none' }}
                             itemStyle={{ color: "#7C8491" }}
                             formatter={function (value, name) {
-                                if (name === t('shark.totalBalance'))
-                                    return `${value.toFixed(2)}%`;
-                                return value;
+                                // if (name === t('shark.totalBalance'))
+                                //     return `${value.toFixed(2)}%`;
+                                return thousandSeparator(value);
                             }}
                         />
                         <Legend
@@ -177,7 +143,7 @@ const Shark = () => {
                             content={renderCusomizedLegend}
                         />
                         <Bar
-                            yAxisId="shark-y-right"
+                            yAxisId="shark-y-right2"
                             type="linear"
                             dataKey={'' + t(`shark.totalBalance`)}
                             fill="#C9A506"
@@ -185,7 +151,7 @@ const Shark = () => {
                             opacity={0.8}
                         />
                         <Line
-                            yAxisId="shark-y-left"
+                            yAxisId="shark-y-right"
                             type="linear"
                             dataKey={'' + t(`shark.totalTransactionHighValue`)}
                             stroke="#6E14D7"
@@ -213,7 +179,8 @@ const convertSharkData = (data) => {
 
     return data?.map((d, i) => ({
         ...d,
-        totalBalance: d.totalBalance / max.totalBalance * 100,
+        // totalBalance: d.totalBalance / max.totalBalance * 100,
+        totalBalance: d.totalBalance,
     })).map((d, i) => ({
         d: d.date,
         ['' + t(`shark.totalBalance`)]: d.totalBalance,

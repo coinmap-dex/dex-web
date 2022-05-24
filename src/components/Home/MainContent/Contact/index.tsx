@@ -1,7 +1,7 @@
 import React from 'react'
 
 import _ from 'lodash';
-import * as  S from './styled';
+import S from './styled';
 import { Col } from 'sezy-design';
 import WebIcon from '~svg/web';
 import DocumentIcon from '~svg/document';
@@ -14,7 +14,7 @@ import TelegramIcon from '~svg/TelegramIcon';
 
 const Contact = () => {
     return (
-        <div>
+        <S.Wrapper>
             <S.ContactRow1>
                 <Col grid={24} gutter={{ sm: 24, lg: 10, xl: 10 }}>
                     <S.ContactBackgroundImage src='https://i.ibb.co/YbBvYXY/contact-background.png' />
@@ -74,7 +74,7 @@ const Contact = () => {
                     </S.ContactInfoMarketCap>
                 </S.ContactInfo2>
             </S.ContactRow2>
-        </div>
+        </S.Wrapper>
     )
 }
 
