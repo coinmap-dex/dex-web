@@ -24,9 +24,6 @@ function getContract(address, ABI, library, account) {
 function useContract(address, ABI, withSignerIfPossible = true) {
     const { library, account, chainId } = useWeb3React()
     return useMemo(() => {
-        console.log('==================');
-        console.log(supportedChainIds);
-        console.log(chainId);
         if (!address || !ABI || !library) return null
         if (!supportedChainIds.includes(chainId ?? 0)) return null
         try {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import * as  S from './styled';
+import S from './styled';
 import UnionIcon from '~svg/Union';
 import { useWeb3React } from '@web3-react/core';
 import { useEagerConnect, useInactiveListener } from '~hooks';
@@ -36,14 +36,32 @@ const UserWallet = () => {
       <S.HeaderUnionIconWrapper>
         <UnionIcon />
       </S.HeaderUnionIconWrapper>
-      <S.HeaderUserWalletButton
-        onClick={() => {
-          setActivatingConnector(injected);
-          activate(injected);
-        }}
-      >
-        Connect
-      </S.HeaderUserWalletButton>
+
+      {
+        account && supportedChain
+          ? (
+            <S.UserAccount>
+              <S.AccountAddress
+                href={`https://bscscan.com/address/${account}`}
+                target={"blank_"}
+              >{` ${account.substring(0, 6)}...${account.substring(
+                account.length - 6
+              )}`}
+              </S.AccountAddress>
+              {/* <S.Logout onClick={() => { deactivate(); }}> Logout </S.Logout> */}
+            </S.UserAccount>
+          )
+          : (
+            <S.HeaderUserWalletButton
+              onClick={() => {
+                setActivatingConnector(injected);
+                activate(injected);
+              }}
+            >
+              Connect
+            </S.HeaderUserWalletButton>
+          )
+      }
     </S.HeaderUserWalletWrapper >
   )
 }

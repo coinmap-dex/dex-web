@@ -9,16 +9,10 @@ const useToken = (address) => {
   const coinmap = useCoinmapDexContract();
 
   const [isApproved, setApprove] = useState(false)
+  const [balance, setBalance] = useState(undefined)
   const blocknumber = useReadLocalStorage('blocknumber')
 
   const fetchAllowance = useCallback(async () => {
-    console.log('------------------');
-    console.log('------------------');
-    console.log('--------fetchAllowance----------');
-    console.log(address);
-    console.log(token);
-    console.log('------------------');
-    console.log('------------------');
     if (token) {
       const allowance = await token.allowance(account, coinmap?.address)
       setApprove(allowance.gt("1000000000000000000"));
@@ -31,7 +25,6 @@ const useToken = (address) => {
 
   const approve = useCallback(
     async () => {
-      console.log('------------------');
       try {
         return await token?.approve(coinmap?.address, "1000000000000000000000000")
       } catch (e) {
@@ -42,7 +35,18 @@ const useToken = (address) => {
     [coinmap, token]
   )
 
-  return { isApproved, approve, blocknumber }
+  const fetchBalance = useCallback(async () => {
+    if (token) {
+      const balance = await token.balanceOf(account)
+      setBalance(balance.toString());
+    }
+  }, [account, token, blocknumber])
+
+  useEffect(() => {
+    fetchBalance()
+  }, [fetchBalance, account, token, blocknumber])
+
+  return { isApproved, balance, approve, blocknumber }
 }
 
 export default useToken

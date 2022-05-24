@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import _ from 'lodash';
 import S from './styled';
@@ -16,27 +16,44 @@ import { amountToBN } from '~utils';
 import axios from "axios";
 import { useForm } from 'react-hook-form';
 
+const getTokenFromList = (symbol) => {
+    if (!symbol)
+        return {}
+    const upperCaseSymbol = symbol.toUpperCase();
+    return tokenList.tokens.find(v => v.symbol === upperCaseSymbol);
+}
+
 const Order = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const contract = useAppSelector(state => state.home.contract);
+    const tokenSymbol = useAppSelector(state => state.home.tokenSymbol);
     const orderToken = useAppSelector(state => state.home.orderToken);
-    const [buyTokenName, setBuyTokenName] = useState(orderToken);
-    useEffect(()=>{
-        setBuyTokenName(orderToken);
-    },[orderToken]);
+    // const [buyTokenName, setBuyTokenName] = useState(orderToken);
+    // const [payTokenName, setPayTokenName] = useState(orderToken);
+    useEffect(() => {
+        setPayToken(getTokenFromList(orderToken));
+    }, [orderToken]);
+    useEffect(() => {
+        setBuyToken(getTokenFromList(tokenSymbol));
+    }, [tokenSymbol]);
+
+    const [isDisabledApproveButton, setDisabledApproveButton] = useState(true);
 
     // const { data, isLoading, error } = useGetVolumeQuery(contract);
-    const totalRangeRef = React.useRef<HTMLInputElement>(null);
-    const totalRangeLabelRef = React.useRef<HTMLInputElement>(null);
-    const totalInputRef = React.useRef<HTMLInputElement>(null);
+    const totalRangeRef: any = React.useRef(null);
+    const totalRangeLabelRef: any = React.useRef(null);
+    const percentageInputRef: any = React.useRef(null);
+    const totalInputRef: any = React.useRef(null);
+    const priceInputRef: any = useRef(null);
+    const amountInputRef: any = useRef(null);
+
     React.useEffect(() => {
-        const percentage = '100';
+        const percentage = '0';
         totalRangeRef.current && (totalRangeRef.current.value = percentage);
-        if (totalRangeLabelRef.current) {
-            totalRangeLabelRef.current.textContent = `${percentage}%`;
-            totalRangeLabelRef.current.style.left = `${percentage}%`;
-        }
-        totalInputRef.current && (totalInputRef.current.value = percentage);
+        totalInputRef.current && (amountInputRef.current.value = 0);
+        priceInputRef.current && (priceInputRef.current.value = 0);
+        amountInputRef.current && (amountInputRef.current.value = 0);
+        percentageInputRef.current && (percentageInputRef.current.value = percentage);
     }, []);
 
     const [isBuyType, setBuyType] = useState(true);
@@ -44,26 +61,55 @@ const Order = () => {
     const context = useWeb3React();
     const { account, library } = context;
 
-    const [pay, setPayAmount] = useState(0);
-    const [buy, setBuyAmount] = useState(0);
-    const [payToken, setPayToken] = useState(tokenList.tokens[1].address);
-    const [buyToken, setBuyToken] = useState(tokenList.tokens.find(v => v.symbol === orderToken)?.address);
+    // const [pay, setPayAmount] = useState(0);
+    // const [buy, setBuyAmount] = useState(0);
+    const [payToken, setPayToken] = useState<any>({});
+    const [buyToken, setBuyToken] = useState<any>({});
 
-    const { approve, isApproved } = useToken(payToken);
-
+    const { approve, isApproved, balance: Aaa } = useToken(payToken.address);
+    const balance = 10000;
     const [pendingTx, setPendingTx] = useState(false);
-    const [balance, setBalance] = useState(0)
+    // const [balance, setBalance] = useState(0)
 
-    useEffect(() => {
-        library?.getBalance(account).then((result) => {
-            setBalance(result / 1e18)
-        })
-    });
+    // useEffect(() => {
+    //     library?.getBalance(account).then((result) => {
+    //         setBalance(result / 1e18)
+    //     })
+    // });
+    const setPercentageLabel = (percentage) => {
+        if (totalRangeLabelRef.current) {
+            totalRangeLabelRef.current.textContent = `${percentage}%`;
+            totalRangeLabelRef.current.style.left = `${percentage}%`;
+        }
+    }
 
     const handleApproveClick = async formData => {
         setPendingTx(true)
         await approve()
         setPendingTx(false)
+    }
+
+    const handleMinusClick = (inputRef) => () => {
+        const newValue = +inputRef.current.value - 1;
+        inputRef.current.value = newValue > 0 ? newValue : 0;
+        validateApproveButton();
+    }
+
+    const handlePlusClick = (inputRef) => () => {
+        inputRef.current.value = +inputRef.current.value + 1;
+        validateApproveButton();
+    }
+
+    const validateApproveButton = () => {
+        const pay = amountInputRef.current.value;
+        const buy = amountInputRef.current.value / priceInputRef.current.value;
+        totalInputRef.current.value = buy;
+
+        const percentage = buy / balance * 100;
+        percentageInputRef.current.value = percentage.toFixed(2);
+        totalRangeRef.current.value = percentage;
+        setPercentageLabel(percentage.toFixed(2));
+        setDisabledApproveButton(pay <= 0 || buy <= 0 || payToken?.address == buyToken?.address);
     }
 
     return (
@@ -93,48 +139,60 @@ const Order = () => {
                             placeholder='Select'
                             type='nude'
                             onChange={v => {
-                                console.log(v);
-                                setBuyTokenName(v);
+                                // console.log(v);
+                                setPayToken(getTokenFromList(v));
                             }}
                         >
                             {
                                 tokenList?.tokens?.map((v, k) => (
-                                    <Option value={v.symbol} active={v.symbol === 'WBNB'}>{v.symbol}</Option>
+                                    <Option value={v.symbol} active={v.symbol === orderToken}>{v.symbol}</Option>
                                 ))
                             }
                         </S.TokenSelect>
                     </div>
-                    <div>
+                    <S.Balance>
                         <span>My balance  </span>
-                        <span>{balance} BNB</span>
-                    </div>
+                        <span>{balance} {payToken?.symbol}</span>
+                    </S.Balance>
                 </S.OrderBoxDetail>
                 <S.OrderBoxInputWrapper>
-                    <S.OrderBoxInputLabel>Price {buyTokenName}/COIN</S.OrderBoxInputLabel>
+                    <S.OrderBoxInputLabel>Price {buyToken?.symbol}/COIN</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
+                        ref={priceInputRef}
                         valueType='number'
                         size='l'
                         postfix={(
                             <S.OrderBoxPriceCounter>
-                                <MinusIcon />
+                                <div onClick={handleMinusClick(priceInputRef)}>
+                                    <MinusIcon />
+                                </div>
                                 <span />
-                                <PlusIcon />
+                                <div onClick={handlePlusClick(priceInputRef)}>
+                                    <PlusIcon />
+                                </div>
                             </S.OrderBoxPriceCounter>
                         )}
+                        onChange={() => validateApproveButton()}
                     />
                 </S.OrderBoxInputWrapper>
                 <S.OrderBoxInputWrapper>
                     <S.OrderBoxInputLabel>Amount COIN</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
+                        ref={amountInputRef}
                         valueType='number'
                         size='l'
                         postfix={(
                             <S.OrderBoxPriceCounter>
-                                <MinusIcon />
+                                <div onClick={handleMinusClick(amountInputRef)}>
+                                    <MinusIcon />
+                                </div>
                                 <span />
-                                <PlusIcon />
+                                <div onClick={handlePlusClick(amountInputRef)}>
+                                    <PlusIcon />
+                                </div>
                             </S.OrderBoxPriceCounter>
                         )}
+                        onChange={() => validateApproveButton()}
                     />
                 </S.OrderBoxInputWrapper>
                 <S.OrderBoxRangeWrapper>
@@ -144,26 +202,33 @@ const Order = () => {
                         min={0}
                         max={100}
                         onChange={(e) => {
-                            if (totalRangeLabelRef.current) {
-                                totalRangeLabelRef.current.textContent = `${e.target.value}%`;
-                                totalRangeLabelRef.current.style.left = `${e.target.value}%`;
-                            }
-                            totalInputRef.current && (totalInputRef.current.value = e.target.value);
+                            const percentage = e.target.value / 100;
+                            const payAmount = balance * percentage;
+                            amountInputRef.current.value = Math.round(payAmount);
+                            totalInputRef.current.value = payAmount / priceInputRef.current.value;
+                            percentageInputRef.current.value = e.target.value;
+                            setPercentageLabel(e.target.value);
                         }}
                     />
                     <S.OrderBoxInput
-                        ref={totalInputRef}
+                        ref={percentageInputRef}
                         valueType='number'
                         postfix={<S.OrderBoxInputRangePercentage>%</S.OrderBoxInputRangePercentage>}
-
                         onChange={(e) => {
-                            totalRangeRef.current && (totalRangeRef.current.value = e.value);
+                            const percentage = e.target.value / 100;
+                            const payAmount = balance * percentage;
+                            amountInputRef.current.value = Math.round(payAmount);
+                            totalRangeRef.current.value = percentage;
+                            totalInputRef.current.value = payAmount / priceInputRef.current.value;
+                            totalRangeRef.current.value = e.target.value;
+                            setPercentageLabel(e.target.value);
                         }}
                     />
                 </S.OrderBoxRangeWrapper>
                 <S.OrderBoxInputWrapper>
-                    <S.OrderBoxInputLabel>Total {buyTokenName}</S.OrderBoxInputLabel>
+                    <S.OrderBoxInputLabel>Total {buyToken?.symbol}</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
+                        ref={totalInputRef}
                         valueType='number'
                         size='l'
                         onChange={e => {
@@ -179,15 +244,15 @@ const Order = () => {
                             <S.SubmitOrder
                                 className={`button is-info is-fullwidth ${pendingTx ? "is-loading" : ""}`}
                                 isLoading={pendingTx}
-                                isDisabled={pay <= 0 || buy <= 0 || payToken == buyToken}
+                                isDisabled={isDisabledApproveButton}
                                 onClick={async () => {
                                     setPendingTx(true)
                                     const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
                                     const salt = Web3.utils.randomHex(32);
-                                    const payAmount = amountToBN(pay, payToken).toString();
-                                    const buyAmount = amountToBN(buy, buyToken).toString();
-                                    const sig = await library.provider.request(signData(account, payToken, buyToken, payAmount, buyAmount, deadline, salt))
-                                    await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken, buyToken, payAmount, buyAmount, deadline, salt, sig })
+                                    const payAmount = amountToBN(amountInputRef.current.value, payToken?.address).toString();
+                                    const buyAmount = amountToBN(totalInputRef.current.value, buyToken?.address).toString();
+                                    const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
+                                    await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
                                     setPendingTx(false)
                                 }}>
                                 Submit order
@@ -198,7 +263,7 @@ const Order = () => {
                                 isLoading={pendingTx}
                                 onClick={handleSubmit(handleApproveClick)}
                             >
-                                {['Sell', 'Buy'][+isBuyType]} {buyTokenName} -&gt; BUSD
+                                {['Sell', 'Buy'][+isBuyType]} {payToken?.symbol} -&gt; {buyToken?.symbol}
                             </S.SubmitOrder>
                         )
                 }

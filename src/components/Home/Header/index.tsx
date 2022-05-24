@@ -11,7 +11,9 @@ const Header = () => {
         <S.HeaderSection>
             <S.HeaderRow>
                 <S.HeaderLogoCol grid={3}>
-                    <img src='https://i.ibb.co/HrMKdPK/coinmap-logo.png' />
+                    <a href='/'>
+                        <img src='https://i.ibb.co/HrMKdPK/coinmap-logo.png' />
+                    </a>
                 </S.HeaderLogoCol>
                 <Col grid={1} />
                 <Col grid={15} gutter={{ sm: 16 }}>

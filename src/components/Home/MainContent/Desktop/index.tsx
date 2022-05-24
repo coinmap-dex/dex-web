@@ -26,7 +26,7 @@ const Desktop = () => {
                     <TokenTransaction />
                 </Col>
                 <Col grid={24} gutter={{ sm: 24, lg: 8, xl: 12 }}>
-                    <TVChartContainer />
+                    {/* <TVChartContainer /> */}
                 </Col>
                 <Col grid={24} gutter={{ sm: 24, lg: 8, xl: 6 }}>
                     <Order />

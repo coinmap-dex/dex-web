@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { homeApi } from './api';
 
+
 interface HomeState {
     contract: string,
     orderToken: string,
+    tokenSymbol: string,
 }
 
 const initialState = {
@@ -21,8 +23,11 @@ const homeSlice = createSlice({
         setOrderToken(state, action: PayloadAction<string>) {
             state.orderToken = action.payload;
         },
+        setTokenSymbol(state, action: PayloadAction<string>) {
+            state.tokenSymbol = action.payload;
+        },
     },
 })
 
-export const { setContract, setOrderToken } = homeSlice.actions
+export const { setContract, setOrderToken, setTokenSymbol } = homeSlice.actions
 export default homeSlice.reducer

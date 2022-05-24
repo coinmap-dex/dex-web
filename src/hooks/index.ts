@@ -8,3 +8,4 @@ export { default as useEagerConnect } from "./useEagerConnect";
 export { default as useToken } from "./useToken";
 export { default as useLocalStorage } from "./useLocalStorage";
 export { default as useReadLocalStorage } from "./useReadLocalStorage";
+export { default as useAxios } from "./useAxios";
