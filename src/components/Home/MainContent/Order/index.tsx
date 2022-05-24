@@ -15,6 +15,7 @@ import Web3 from 'web3';
 import { amountToBN } from '~utils';
 import axios from "axios";
 import { useForm } from 'react-hook-form';
+import OrderModal from './OrderModal';
 
 const getTokenFromList = (symbol) => {
     if (!symbol)
@@ -57,6 +58,7 @@ const Order = () => {
     }, []);
 
     const [isBuyType, setBuyType] = useState(true);
+    const [isOrderModalVisible, setOrderModalVisible] = useState(false);
 
     const context = useWeb3React();
     const { account, library } = context;
@@ -132,6 +134,11 @@ const Order = () => {
                     <S.OrderBoxBuyButton {...{ active: isBuyType }} onClick={() => setBuyType(true)}>Buy</S.OrderBoxBuyButton>
                     <S.OrderBoxSellButton {...{ active: !isBuyType }} onClick={() => setBuyType(false)}>Sell</S.OrderBoxSellButton>
                 </S.OrderBoxBuySell>
+                <div
+                    onClick={() => setOrderModalVisible(true)}
+                >
+                    YOUR ORDERS
+                </div>
                 <S.OrderBoxDetail>
                     <div>
                         <span>Avbl - </span>
@@ -249,7 +256,6 @@ const Order = () => {
                                     setPendingTx(true)
                                     const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
                                     const salt = Web3.utils.randomHex(32);
-
                                     const pay = amountInputRef.current.value;
                                     const buy = totalInputRef.current.value;
                                     const payAmount = amountToBN(isBuyType ? pay : buy, payToken?.address).toString();
@@ -271,6 +277,7 @@ const Order = () => {
                         )
                 }
             </S.OrderBox>
+            <OrderModal isVisible={isOrderModalVisible} setVisible={setOrderModalVisible} />
         </>
     );
 }

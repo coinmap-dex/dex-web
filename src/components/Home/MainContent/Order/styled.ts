@@ -47,6 +47,7 @@ export default {
     OrderBoxBuySell: styled.div`
         display:flex;
         justify-content:space-between;
+        margin-bottom:1rem;
     `,
     OrderBoxBuyButton: styled.button`
         width:49%;
@@ -74,7 +75,7 @@ export default {
         align-items: center;
         color:#858D9A;
         font-size:1.4rem;
-        margin-top:3rem;
+        margin-top:1rem;
     `,
     TokenSelect: styled(Select)`
         width:80px;

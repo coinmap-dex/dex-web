@@ -40,6 +40,12 @@ export default {
         font-size: 15px;
         line-height: 15px;
         color: #30e8fb;
+        @media ${breakpoints.xs}{
+            width: 60px;
+            display: inline-block;
+            overflow: hidden;
+            font-size: 12px;
+        }
     `,
     Logout: styled.a`
         display:block;
