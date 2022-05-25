@@ -15,7 +15,6 @@ const OrderModal = ({
     isVisible,
     setVisible
 }: IActionConfirmModalProps) => {
-
     //refactor later
     const context = useWeb3React();
     const { account } = context;
