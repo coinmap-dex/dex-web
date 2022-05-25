@@ -69,9 +69,10 @@ const Order = () => {
     const [buyToken, setBuyToken] = useState<any>({});
 
     const { approve, isApproved, balance: walletBalance } = useToken(payToken.address);
-    const balance = walletBalance ?? 0;
+    // const balance = walletBalance ? walletBalance / 1e18 : 0;
+    const balance = 1000;
     const [pendingTx, setPendingTx] = useState(false);
-    // const [balance, setBalance] = useState(0)
+    // const [balance, setBalance] = useState(0)F
 
     // useEffect(() => {
     //     library?.getBalance(account).then((result) => {
@@ -107,10 +108,12 @@ const Order = () => {
         const buy = amountInputRef.current.value / priceInputRef.current.value;
         totalInputRef.current.value = buy;
 
-        const percentage = buy / balance * 100;
-        percentageInputRef.current.value = percentage.toFixed(2);
-        totalRangeRef.current.value = percentage;
-        setPercentageLabel(percentage.toFixed(2));
+        if (balance) {
+            const percentage = buy / balance * 100;
+            percentageInputRef.current.value = percentage.toFixed(2);
+            totalRangeRef.current.value = percentage;
+            setPercentageLabel(percentage.toFixed(2));
+        }
         setDisabledApproveButton(pay <= 0 || buy <= 0 || payToken?.address == buyToken?.address);
     }
 
@@ -145,14 +148,15 @@ const Order = () => {
                         <S.TokenSelect
                             placeholder='Select'
                             type='nude'
-                            onChange={v => {
+                            onChange={e => {
                                 // console.log(v);
-                                setPayToken(getTokenFromList(v));
+                                setPayToken(getTokenFromList(e.target.value));
                             }}
+                            defaultValue={orderToken}
                         >
                             {
                                 tokenList?.tokens?.map((v, k) => (
-                                    <Option value={v.symbol} active={v.symbol === orderToken}>{v.symbol}</Option>
+                                    <Option value={v.symbol}>{v.symbol}</Option>
                                 ))
                             }
                         </S.TokenSelect>
