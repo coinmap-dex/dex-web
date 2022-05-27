@@ -16,10 +16,13 @@ export const lengendItem = styled.span`
         vertical-align:middle;
     }
     &>span{
-        font-size:8px;
-        margin-left:8px;
-        color:#fff;
-        white-space:nowrap;
+        font-size: 0.8rem;
+        margin-left: 0.4rem;
+        color: #fff;
+        white-space: nowrap;
+        @media ${breakpoints.xxl}{
+            margin-left: 0.8rem;
+        }
     }
     >svg.recharts-surface {
         background: linear-gradient(180deg, #2D149D 0%, #411185 100%);
@@ -62,6 +65,36 @@ export const Pool = styled.div`
 
 export const PoolChart = styled(ResponsiveContainer)`
     height: 30rem !important;
+    .recharts-wrapper {
+        .recharts-cartesian-axis-ticks {
+            .recharts-cartesian-axis-tick {
+                text {
+                    fill: #F4F7FC;
+                    font-size: 1.15rem;
+                }
+            }
+        }
+        .recharts-surface {
+            path.recharts-curve.recharts-tooltip-cursor {
+                visibility: hidden;
+            }
+        }
+        .recharts-tooltip-wrapper {
+            .recharts-default-tooltip {
+                .recharts-tooltip-item {
+                    .recharts-tooltip-item-name {
+                        color: #B6BBC3;
+                    }
+                    .recharts-tooltip-item-separator {
+                        color: #B6BBC3;
+                    }
+                    .recharts-tooltip-item-value {
+                        color: #f3aa3c;
+                    }
+                }
+            }
+        }
+    }
     @media ${breakpoints.sm} {
         height: 100% !important;
         max-height: 28rem;

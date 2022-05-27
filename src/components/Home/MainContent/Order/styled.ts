@@ -13,7 +13,7 @@ export default {
     OrderOrderType: styled.div`
         font-size: 1.3rem;
         color: ${props => props['active'] ? '#2BDBEA' : '#FDF4F4'};
-        text-transform:uppercase;
+        text-transform: uppercase;
     `,
     OrderSlash: styled.div`
         color: #FDF4F4;
@@ -30,10 +30,11 @@ export default {
         margin-top:-1rem;
     `,
     OrderPlaceTypes: styled.div`
-        display:flex;
-        align-items:center;
+        display: flex;
+        align-items: center;
         padding: 1.5rem 1.8rem;
-        background:#1C2740;
+        background: #1C2740;
+        cursor: pointer;
     `,
     OrderPlaceType: styled.div`
         font-size: 1.4rem;
@@ -48,6 +49,9 @@ export default {
         display:flex;
         justify-content:space-between;
         margin-bottom:1rem;
+        >button {
+            text-transform: uppercase
+        }
     `,
     OrderBoxBuyButton: styled.button`
         width:49%;
@@ -78,14 +82,21 @@ export default {
         margin-top:1rem;
     `,
     TokenSelect: styled(Select)`
-        width:80px;
-        display:inline-block;
-        & input{
-            color:orange;
-            font-size:1.6rem;
-        }
-        & svg{
-            display:none;
+        width: 8rem;
+        display: inline-block;
+        background-color: #0D172D;
+        margin-left: 2rem;
+        >div:first-child {
+          height: 2.8rem;
+          & input{
+            color: #E5A03B;
+            font-size: 1.4rem;
+            padding: 0 !important;
+            text-align: center;
+          }
+          & svg{
+              fill: #E5A03B;
+          }
         }
     `,
     Balance: styled.div`
@@ -98,9 +109,10 @@ export default {
     OrderBoxInput: styled(Input)`
         height:4.8rem !important;
         padding:0;
+        border: 1px solid #2E3A52;
         &>input{
             font-size:1.3rem !important;
-            color:#B9C2D0;
+            color: #B9C2D0;
             text-align:right;
             height:4.8rem !important;
             line-height:4.8rem !important;
@@ -149,18 +161,20 @@ export default {
         font-size: 1.4rem;
     `,
     OrderBoxInputRange: styled(Range)`
-        width:75%; 
-        box-sizing:border-box;
-        margin-right:1.8rem;
+        width: 75%; 
+        box-sizing: border-box;
+        margin-top: 1.8rem;
+        margin-right: 1.8rem;
         &>input{
-            width:100%;  
-            height:0.4rem;
-            border:0;
-            margin-top:1.8rem;
-            cursor:pointer;
+            width: 100%;  
+            height: 0.1rem;
+            border: 0;
+            cursor: pointer;
+            background-color: #2E3A52;
         }
         &>span{
-            font-size:1.1rem;
+            font-size: 1.1rem;
+            padding-bottom: 5px;
         }
     `,
     SubmitOrder: styled(Button)`

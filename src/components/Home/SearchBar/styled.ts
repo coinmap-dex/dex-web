@@ -20,6 +20,8 @@ export default {
             padding-left: 0.5rem !important;
             font-size: 0.8rem !important;
             color: #A8BCDE;
+            opacity: 0.5;
+            text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
             @media ${breakpoints.sm}{
                 height: 5.5rem !important;
                 line-height: 5.5rem !important;

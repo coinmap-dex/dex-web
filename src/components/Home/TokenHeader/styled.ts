@@ -4,8 +4,7 @@ import breakpoints from "~breakpoints";
 import CopyIconComponent from 'sezy-design/components/icon/light/copy'
 
 export const TokenHeaderSection = styled(Section)`
-    background: #0F1A30;
-    
+    background: #0C122A;
 `;
 export const TokenHeaderRow = styled(Row)`
     padding:0.8rem 1rem;
@@ -19,12 +18,18 @@ export const TokenHeaderRow = styled(Row)`
 
 export const TokenInfoDetailData = styled(Col)`
     width:calc(100% - 5rem);
+    padding-left: 0.5rem;
+    @media ${breakpoints.xl} {
+        padding-left: 2rem;
+    }
     @media ${breakpoints.xl} {
         width:calc(100% - 10rem);
     }
 `;
 export const TokenInfoDetailCol = styled(Col)`
-    margin-bottom:0.2rem;
+    margin-bottom: 0.2rem;
+    flex: 0 0 35%;
+  margin-right: 2rem;
     &>div{
         display:flex;
         align-items:center;
@@ -33,19 +38,20 @@ export const TokenInfoDetailCol = styled(Col)`
     @media ${breakpoints.xs} {
         max-width: 65%;
     }
+    @media ${breakpoints.xxl} {
+        flex: 0 0 28%;
+    }
 `;
 
 export const TokenLogoWrapper = styled.div`
     border-radius: 50%;
     width: 2.8rem;
     height: 2.8rem;
-    margin-right: 1rem;
     border: 0;
     overflow: hidden;
     @media ${breakpoints.sm}{
         width: 5rem;
         height: 5rem;
-        margin-right: 2rem;
     }
     &>img{
         background:#EDF0F4;
@@ -201,6 +207,7 @@ export const TokenInfoContractCopy = styled(CopyIconComponent)`
 export const TokenInfoPriceCol = styled(Col)`
     border-left:1px solid #1D222C;
     padding-left:1rem;
+    flex: 0 0 26.5%;
     &>div:first-child{
         display:flex;
     }
@@ -211,12 +218,21 @@ export const TokenInfoPriceCol = styled(Col)`
     @media ${breakpoints.xs}{
         padding-left: 5%;
     }
+    @media ${breakpoints.xl}{
+        flex: 0 0 25.5%;
+    }
+    @media ${breakpoints.xxl}{
+        flex: 0 0 32.5%;
+    }
 `;
 export const TokenInfoPriceData = styled(Label)`
-    margin-right:0.5rem;
-    line-height:0;
+    margin-right: 0.5rem;
+    line-height: 0;
     @media ${breakpoints.sm}{
         width: 14rem;
+    }
+    @media ${breakpoints.xs}{
+        margin-right: 2rem;
     }
 `;
 
@@ -224,8 +240,9 @@ export const TokenInfoPriceData1 = styled(Label)`
     font-size:1.2rem;
     display:block;
     color:#26E1CD;
-    font-weight:bold;
+    font-weight: 500;
     height: 1.6rem;
+    font-style: normal;
     line-height: 1.6rem;
     width: 4rem;
     margin-bottom:0.4rem;
@@ -239,7 +256,8 @@ export const TokenInfoPriceData1 = styled(Label)`
 
 export const TokenInfoPriceData2 = styled(Label)`
     font-size:0.9rem;
-    font-weight:bold;
+    font-style: normal;
+    font-weight: 500;
     height: 1.3rem;
     line-height: 1.3rem;
     width: 4rem;
@@ -262,7 +280,7 @@ export const TokenInfoPrice24label = styled(Label)`
 
 export const TokenInfoPrice24Data = styled(Label)`
     font-size:0.7rem;
-    font-weight:bold;
+    font-weight: 500;
     color:${props=>props['changeRate'] > 0?'#26E1CD':'#EC6649'};
     height:1.3rem;
     line-height:1.3rem;

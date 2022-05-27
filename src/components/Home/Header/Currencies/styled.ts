@@ -14,6 +14,14 @@ export const Currencies = styled.div`
             width:13rem;
             height:5rem;
         }
+        @media ${breakpoints.xs} {
+            width: 40%;
+        }
+    }
+    >div:nth-child(2) {
+        @media ${breakpoints.xs} {
+            display: none;
+        }
     }
 `;
 export const Currency = styled.div`

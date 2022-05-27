@@ -7,13 +7,18 @@ import TokenPrice from './TokenPrice';
 import SearchBar from '../SearchBar';
 import { useBreakpoint } from '~hooks';
 
-const TokenHeader = () => {
+type TokenHeaderProps = {
+    isLeftMenu?: boolean;
+}
+
+const TokenHeader = (props: TokenHeaderProps) => {
     const breakpoint = useBreakpoint();
+    const isLeftMenu = props.isLeftMenu;
     return (
         <S.TokenHeaderSection>
             <S.TokenHeaderRow>
                 <TokenDetail />
-                <TokenPrice />
+                <TokenPrice isLeftMenu={isLeftMenu}/>
                 <Col grid={0} gutter={{ sm: 12, lg: 8, xl: 9 }}>
                     {
                         breakpoint('sm') && <SearchBar />
@@ -21,7 +26,7 @@ const TokenHeader = () => {
                 </Col>
             </S.TokenHeaderRow>
         </S.TokenHeaderSection>
-    )
+    );
 }
 
 

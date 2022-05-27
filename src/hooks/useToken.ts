@@ -9,7 +9,7 @@ const useToken = (address) => {
   const coinmap = useCoinmapDexContract();
 
   const [isApproved, setApprove] = useState(false)
-  const [balance, setBalance] = useState(undefined)
+  const [balance, setBalance] = useState(0)
   const blocknumber = useReadLocalStorage('blocknumber')
 
   const fetchAllowance = useCallback(async () => {

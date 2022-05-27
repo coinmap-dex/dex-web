@@ -4,7 +4,10 @@ import breakpoints from "~breakpoints";
 
 export const FooterSection = styled(Section)`
     background: #0F1A30;
-    padding:1.2rem 1rem;
+    padding: 1.2rem 1rem;
+    @media ${breakpoints.lg} {
+        margin-top: -1.5rem;
+    }
     &>div{
         display:flex;
         justify-content:space-between;
@@ -24,6 +27,7 @@ export const FooterLogo= styled.img`
 export const FooterCopyright= styled.span`
     color: #858D9A;
     font-size: 1.2rem;
+    text-align: center;
     @media ${breakpoints.sm}{
         font-size: 1.6rem;
     }

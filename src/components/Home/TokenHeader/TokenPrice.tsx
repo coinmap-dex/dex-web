@@ -6,7 +6,11 @@ import { useAppSelector } from '~hooks';
 import { Shimmer } from 'sezy-design';
 import { thousandSeparator } from '~utils';
 
-const TokenPrice = () => {
+type TokenPriceProps = {
+    isLeftMenu?: boolean;
+}
+
+const TokenPrice = (props: TokenPriceProps) => {
     const contract = useAppSelector(state => state.home.contract)
     // const { data, isLoading, error } = useGetPriceQuery(contract, {
     //     pollingInterval: +(process.env.POLLING_INTERVAL || 0),
@@ -20,7 +24,8 @@ const TokenPrice = () => {
     const lastPrice = transactionData?.[0];
     const secondPrice = transactionData?.[1];
     const changeRate = transactionData ? (((transactionData[0]?.price - transactionData[transactionData.length - 1]?.price) / transactionData[transactionData.length - 1]?.price) * 100) : '';
-    return (
+    const isLeftMenu = props.isLeftMenu;
+    return !isLeftMenu ? (
         <S.TokenInfoPriceCol grid={6} gutter={{ sm: 12, lg: 8, xl: 9 }}>
             <div>
                 <S.TokenInfoPriceData>
@@ -40,7 +45,7 @@ const TokenPrice = () => {
                 </div>
             </div>
         </S.TokenInfoPriceCol>
-    )
+    ) : <></>
 }
 
 export default TokenPrice

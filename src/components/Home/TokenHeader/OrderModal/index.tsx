@@ -27,9 +27,7 @@ const OrderModal = ({
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        if (response !== null) {
-            setData(response);
-        }
+        setData(response ?? []);
     }, [response]);
 
 

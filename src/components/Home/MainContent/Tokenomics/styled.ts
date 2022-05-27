@@ -38,6 +38,9 @@ export const TokenomicsAudit = styled.div`
         font-size: 1.6rem;
         font-weight: normal;
         padding-top: 1.5rem;
+        @media ${breakpoints.xs}{
+            padding-top: 0;
+        }
         margin-right: 0.5rem;
     }
 `;
@@ -56,9 +59,12 @@ export const TokenomicsAuditIconLink = styled.a`
         }
     }
     &>svg{
-        position:absolute;
+        position: absolute;
         top: 0.8rem;
         right: 0.8rem;
         width: 1.5rem;
+        @media ${breakpoints.xs}{
+            top: 0.5rem;
+        }
     }
 `;

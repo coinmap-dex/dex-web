@@ -45,7 +45,7 @@ const Donut = ({
                 <S.DonutPercent y="50%" x="50%" >
                     <tspan fill={color}>{data}</tspan>
                 </S.DonutPercent>
-                <S.DonutData y="50%" x="50%" transform="translate(0, 2)">
+                <S.DonutData y="53%" x="50%" transform="translate(0, 2)">
                     <tspan>{text}</tspan>
                 </S.DonutData>
             </g>

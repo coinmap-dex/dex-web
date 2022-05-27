@@ -29,7 +29,7 @@ const LeftMenu = ({
                 <img alt="coinmap-logo" src='https://i.ibb.co/HrMKdPK/coinmap-logo.png' />
                 <ClosedMenuIcon onClick={onClickClose}/>
             </S.MenuHeader>
-            <TokenHeader />
+            <TokenHeader isLeftMenu={true}/>
             <S.MenuList>
                 {menuElements.map((element, index) => (
                     <S.MenuItem key={index}>
