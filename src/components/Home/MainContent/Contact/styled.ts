@@ -4,7 +4,12 @@ import breakpoints from "~breakpoints";
 export default {
     Wrapper: styled.div`
         position:relative;
+        filter: blur(0.4rem);
+        @media ${breakpoints.lg} {
+            max-height: 40rem;
+        }
         &:after{
+            filter: blur(0);
             display: flex;
             align-items: center;
             justify-content: center;

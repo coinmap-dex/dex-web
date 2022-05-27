@@ -7,13 +7,19 @@ export const GasChartWrapper = styled.div`
     display:flex;
     align-items:center;
     position:relative;
-    height:80%;
+    height: 65%;
+    @media ${breakpoints.xxl}{
+        height:80%;
+    }
     &>svg:first-child{
         position:absolute;
         top:50%;
         left:50%;
         transform:translate(-50%,-50%);
         height:85%;
+        text {
+            fill: #F4F7FC;
+        }
     }
     &>svg:nth-child(2){
         margin: auto;

@@ -58,11 +58,15 @@ export const DonutPercent = styled.text`
 export const DonutData = styled.text`
     transform:translateY(10%);
     &>tspan{
-        font-size: 0.35rem;
+        font-size: 0.42rem;
         line-height: 1;
         text-align: center;
         text-anchor: middle;
         fill: #B6BBC3;
         animation: ${donutfadelong} 1s;
+        text-transform: capitalize;
+        @media ${breakpoints.xxl}{
+            font-size: 0.35rem;
+        }
     }
 `

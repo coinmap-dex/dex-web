@@ -8,7 +8,7 @@ export const MainContentTitleBox = styled.div`
     justify-content:space-between;
     align-items:center;
     padding: 0 1.8rem;
-    font-weight:bold;
+    font-weight: 500;
     height: 6.4rem;
     line-height: 6.4rem;
     &>div:first-child{
@@ -19,7 +19,10 @@ export const MainContentTitleBox = styled.div`
         white-space:nowrap;
         
         @media ${breakpoints.sm}{
-            font-size:1.8rem;
+            font-size: 1.5rem;
+        }
+        @media ${breakpoints.xxl}{
+            font-size: 1.8rem;
         }
     }
 `;
@@ -37,6 +40,9 @@ export const TitleLengend = styled.div`
     &>*{
         white-space:nowrap;
         margin-left:3rem;
+    }
+    >.chart-info-icon {
+        cursor: pointer;
     }
     @media ${breakpoints.sm}{
         padding-left:3rem;   

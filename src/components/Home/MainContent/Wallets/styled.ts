@@ -1,11 +1,15 @@
 import styled from "styled-components";
+import breakpoints from '~breakpoints';
 
 export const walletItems = styled.div`
     padding: 0 1.4rem;
     margin: 1.2rem 0.4rem;
     height: 25%;
-    overflow:hidden auto;
-    font-size:1.4rem;
+    overflow: hidden auto;
+    font-size: 1.2rem;
+    @media ${breakpoints.xxl}{
+        font-size: 1.4rem;
+    }
     &>a{
         display: block;
         margin-bottom: 0.3rem;

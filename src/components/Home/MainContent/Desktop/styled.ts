@@ -28,7 +28,7 @@ export const MainContentRow = styled(Row)`
         }
     }
     &>div{
-        padding-bottom:1.6rem;
+        padding-bottom: 1.5rem;
     }
 `;
 

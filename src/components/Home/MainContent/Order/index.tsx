@@ -128,23 +128,19 @@ const Order = () => {
                 <S.OrderOrderType>pending order</S.OrderOrderType>
             </S.OrderTitleBox>
             <S.OrderPlaceTypes>
-                <S.OrderPlaceType {...{ active: true }}>market</S.OrderPlaceType>
+                <S.OrderPlaceType onClick={() => setOrderModalVisible(true)}>your orders</S.OrderPlaceType>
                 <S.OrderPlaceType>limit</S.OrderPlaceType>
                 <S.OrderPlaceType>stop-limit</S.OrderPlaceType>
+                <S.OrderPlaceType {...{ active: true }}>market</S.OrderPlaceType>
             </S.OrderPlaceTypes>
             <S.OrderBox>
                 <S.OrderBoxBuySell>
                     <S.OrderBoxBuyButton {...{ active: isBuyType }} onClick={() => setBuyType(true)}>Buy</S.OrderBoxBuyButton>
                     <S.OrderBoxSellButton {...{ active: !isBuyType }} onClick={() => setBuyType(false)}>Sell</S.OrderBoxSellButton>
                 </S.OrderBoxBuySell>
-                <div
-                    onClick={() => setOrderModalVisible(true)}
-                >
-                    YOUR ORDERS
-                </div>
                 <S.OrderBoxDetail>
                     <div>
-                        <span>Avbl - </span>
+                        <span>Avbl</span>
                         <S.TokenSelect
                             placeholder='Select'
                             type='nude'
@@ -156,7 +152,7 @@ const Order = () => {
                         >
                             {
                                 tokenList?.tokens?.map((v, k) => (
-                                    <Option value={v.symbol}>{v.symbol}</Option>
+                                    <Option key={v.symbol} value={v.symbol}>{v.symbol}</Option>
                                 ))
                             }
                         </S.TokenSelect>
@@ -236,9 +232,14 @@ const Order = () => {
                         }}
                     />
                 </S.OrderBoxRangeWrapper>
-                <S.OrderBoxInputWrapper>
+                <S.OrderBoxInputWrapper
+                    style={{
+                        backgroundColor: '#0D172D',
+                        borderRadius: 'var(--border-radius)'}}
+                >
                     <S.OrderBoxInputLabel>Total {buyToken?.symbol}</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
+                        isReadOnly={true}
                         ref={totalInputRef}
                         valueType='number'
                         size='l'
