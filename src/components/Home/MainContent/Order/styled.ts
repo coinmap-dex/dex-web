@@ -180,12 +180,15 @@ export default {
     SubmitOrder: styled(Button)`
         width:100%;
         height: 5.6rem;
-        background: #50B6D4;
+        background: ${props => props['active'] ? '#50B6D4' : '#EF6777'};
         border:0;
         margin-top:3.2rem;
         font-size: 1.8rem;
         line-height: 2.1rem;
         color: #FDFFFE;
         cursor:pointer;
+        &:hover {
+            background: ${props => props['active'] ? '#14B5E5' : '#FF5C70'};
+        }
     `,
 }
