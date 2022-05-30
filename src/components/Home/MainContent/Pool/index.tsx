@@ -40,7 +40,6 @@ const Pool = () => {
                 {
                     data?.pools?.map((pool, index) => {
                         const token0 = pool?.token0?.toLowerCase() ?? '';
-                        console.log('aaaaaaa pool', pool);
                         const reserve = token0 === contract?.toLowerCase() ? pool?.reserve1 : pool?.reserve0;
                         const nameArray = pool?.name?.split('/');
                         return <S.Pool key={`pool_item_${index}`}>
