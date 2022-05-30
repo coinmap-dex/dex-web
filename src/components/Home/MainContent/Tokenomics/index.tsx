@@ -15,12 +15,13 @@ import CollapseBar from '~components/Home/MainContent/Mobile/CollapseBar';
 const Tokenomics = () => {
     const { t } = useTranslation();
     const contract = useAppSelector(state => state.home.contract)
+    const tokenSymbol = useAppSelector(state => state.home.tokenSymbol)
     const { data, isLoading, error } = useGetTokenomicsQuery(contract);
 
     return <div>
         <MS.MainContentTitleBox>
             <Label>
-                Bitcoin
+                {tokenSymbol}
             </Label>
             <S.TokenomicsAudit>
                 <div>Audits:</div>

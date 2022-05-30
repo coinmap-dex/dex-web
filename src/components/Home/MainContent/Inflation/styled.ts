@@ -17,12 +17,14 @@ export const InflattionNumber = styled.div`
     margin-right: 2rem;
 `;
 export const InflattionButton = styled.button`
-    color:#fff;
-    font-size:2.4rem;
+    color: #fff;
+    font-size: 2.4rem;
     background: linear-gradient(91.6deg, #993381 27.73%, #BB5387 101.11%, #AE4785 109.63%);
     border-radius: 3rem;
-    height:5.2rem;
-    width:100%;
-    border:0;
-    cursor:pointer;
+    height: 5.2rem;
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+    font-weight: 300;
+    text-transform: capitalize;
 `;

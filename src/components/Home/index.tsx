@@ -23,8 +23,10 @@ const Home = () => {
     address && dispatch(setContract(address));
     return (
         <>
-            <Header />
-            <Menu />
+            <S.HeaderWrapper>
+                <Header />
+                <Menu />
+            </S.HeaderWrapper>
             <TokenHeader />
             <MainContent />
             <Footer />

@@ -33,18 +33,21 @@ const Pool = () => {
                     {t('pool.title')}
                 </Label>
                 <S.TitleTotalSupply>
-                    Total Supply: <span>{thousandSeparator((data?.pools?.reduce((c, n) => c + n?.liquidity, 0).toFixed(2)))}</span>
+                    Total Liquidity: <span>${thousandSeparator((data?.pools?.reduce((c, n) => c + n?.liquidity, 0).toFixed(2)))}</span>
                 </S.TitleTotalSupply>
             </MS.MainContentTitleBox>
             <S.Pools>
                 {
                     data?.pools?.map((pool, index) => {
+                        const token0 = pool?.token0?.toLowerCase() ?? '';
+                        console.log('aaaaaaa pool', pool);
+                        const reserve = token0 === contract?.toLowerCase() ? pool?.reserve1 : pool?.reserve0;
                         const nameArray = pool?.name?.split('/');
                         return <S.Pool key={`pool_item_${index}`}>
                             <div>
-                                <a>Pc v2</a> | {pool?.name} LP Holdings: <span>(${thousandSeparator(pool?.liquidity)})</span>
+                                <a>exchange</a> | {pool?.name} LP Holdings: <span>(${thousandSeparator(pool?.liquidity)})</span>
                             </div>
-                            <div>{`${thousandSeparator(pool?.liquidity)} ${nameArray[1]}`}</div>
+                            <div>{`${thousandSeparator(reserve)} ${nameArray[1]}`}</div>
                         </S.Pool>
                     })
                 }

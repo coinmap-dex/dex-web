@@ -7,11 +7,13 @@ import * as MS from '../styled';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '~hooks';
 import { useGetInflationQuery } from '~store/modules/home/api';
+import {thousandSeparator} from '~utils';
 
 const Inflattion = () => {
     const { t } = useTranslation();
-    const contract = useAppSelector(state => state.home.contract)
+    const contract = useAppSelector(state => state.home.contract);
     const { data, isLoading, error } = useGetInflationQuery(contract);
+    const inflationary = !!data?.inflationary;
 
     return <S.InflattionWrapper>
         <S.InflattionTitle>
@@ -19,8 +21,8 @@ const Inflattion = () => {
                 Inflationary
             </Label>
         </S.InflattionTitle>
-        <S.InflattionNumber>{data?.rate || ''}</S.InflattionNumber>
-        <S.InflattionButton>YES</S.InflattionButton>
+        <S.InflattionNumber>{thousandSeparator(data?.rate) || ''}</S.InflattionNumber>
+        <S.InflattionButton>{inflationary ? 'yes': 'no'}</S.InflattionButton>
     </S.InflattionWrapper>
 }
 

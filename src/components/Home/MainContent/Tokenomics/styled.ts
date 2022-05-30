@@ -37,7 +37,7 @@ export const TokenomicsAudit = styled.div`
     &>div {
         font-size: 1.6rem;
         font-weight: normal;
-        padding-top: 1.5rem;
+        padding-top: 0.1rem;
         @media ${breakpoints.xs}{
             padding-top: 0;
         }
