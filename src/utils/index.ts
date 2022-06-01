@@ -31,7 +31,7 @@ export function getTokenName(address) {
 }
 
 export function amountToBN(amount, token) {
-    const decimals = tokenList.tokens.filter(i => i.address == token)[0].decimals
+    const decimals = tokenList.tokens.filter(i => i.address == token)[0].decimals;
     return BigNumber.from(amount).mul(BigNumber.from(10).pow(decimals));
 }
 

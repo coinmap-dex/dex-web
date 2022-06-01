@@ -70,7 +70,7 @@ const Order = () => {
 
     const { approve, isApproved, balance: walletBalance } = useToken(payToken.address);
     const balance = walletBalance ? walletBalance / 1e18 : 0;
-    // const balance = 1000;
+    // const balance = 1.1232123123;
     const [pendingTx, setPendingTx] = useState(false);
     // const [balance, setBalance] = useState(0)F
 
@@ -251,28 +251,29 @@ const Order = () => {
                     />
                 </S.OrderBoxInputWrapper>
                 {
-                    isApproved
-                        ? (
-                            <S.SubmitOrder
-                                className={`button is-info is-fullwidth ${pendingTx ? "is-loading" : ""}`}
-                                isLoading={pendingTx}
-                                isDisabled={isDisabledApproveButton}
-                                onClick={async () => {
-                                    setPendingTx(true)
-                                    const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
-                                    const salt = Web3.utils.randomHex(32);
-                                    const pay = amountInputRef.current.value;
-                                    const buy = totalInputRef.current.value;
-                                    const payAmount = amountToBN(isBuyType ? pay : buy, payToken?.address).toString();
-                                    const buyAmount = amountToBN(isBuyType ? buy : pay, buyToken?.address).toString();
-                                    const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
-                                    await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
-                                    setPendingTx(false)
-                                }}>
-                                Submit order
-                            </S.SubmitOrder>
-                        )
-                        : (
+                    // isApproved
+                    //     ? (
+                    //         <S.SubmitOrder
+                    //             className={`button is-info is-fullwidth ${pendingTx ? "is-loading" : ""}`}
+                    //             isLoading={pendingTx}
+                    //             isDisabled={isDisabledApproveButton}
+                    //             // onClick={async () => {
+                    //             //     setPendingTx(true)
+                    //             //     const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
+                    //             //     const salt = Web3.utils.randomHex(32);
+                    //             //     const pay = amountInputRef.current.value;
+                    //             //     const buy = totalInputRef.current.value;
+                    //             //     const payAmount = amountToBN(isBuyType ? pay : buy, payToken?.address).toString();
+                    //             //     const buyAmount = amountToBN(isBuyType ? buy : pay, buyToken?.address).toString();
+                    //             //     const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
+                    //             //     await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
+                    //             //     setPendingTx(false)
+                    //             // }}
+                    //             >
+                    //             {['Sell', 'Buy'][+isBuyType]} {payToken?.symbol} -&gt; {buyToken?.symbol}
+                    //         </S.SubmitOrder>
+                    //     )
+                    //     : (
                             <S.SubmitOrder
                                 {...{ active: isBuyType }}
                                 isLoading={pendingTx}
@@ -280,7 +281,7 @@ const Order = () => {
                             >
                                 {['Sell', 'Buy'][+isBuyType]} {payToken?.symbol} -&gt; {buyToken?.symbol}
                             </S.SubmitOrder>
-                        )
+                        // )
                 }
             </S.OrderBox>
             <OrderModal isVisible={isOrderModalVisible} setVisible={setOrderModalVisible} />
