@@ -19,8 +19,9 @@ const TokenDetail = () => {
         dispatch(setTokenSymbol(overviewData?.symbol));
     }, [overviewData?.symbol]);
 
-
-
+    const onContractCopyIconClick = () => {
+        navigator.clipboard.writeText(contract);
+    }
 
     return (
         <S.TokenInfoDetailCol grid={18} gutter={{ sm: 12, lg: 8, xl: 6 }}>
@@ -61,7 +62,7 @@ const TokenDetail = () => {
                                 !isLoading && <>
                                     <S.TokenInfoDetailFullname>({overviewData?.name})</S.TokenInfoDetailFullname>
                                     <S.TokenInfoDetailContract>Token contract{breakpoint('sm') ? `: ${contract?.slice(0, 8)}...${contract?.slice(-4)}` : ''}</S.TokenInfoDetailContract>
-                                    <S.TokenInfolContractCopyIcon />
+                                    <S.TokenInfolContractCopyIcon onClick={onContractCopyIconClick} />
                                 </>
                             }
                         </S.TokenInfoContractWrapper>

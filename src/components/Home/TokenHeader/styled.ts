@@ -155,6 +155,13 @@ export const TokenInfoContractWrapper= styled.div`
     height:1.6rem;
     line-height:1.6rem;
     white-space: nowrap;
+    >svg {
+        &:active {
+            >path {
+                stroke: #b7bec7;
+            }
+        }
+    }
     @media ${breakpoints.sm}{
         // width:38rem;
         height:2.4rem;
