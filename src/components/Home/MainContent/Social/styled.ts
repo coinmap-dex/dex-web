@@ -34,3 +34,18 @@ export const SocialChartWrapper = styled(ResponsiveContainer)`
         max-height: 30rem;
     }
 `;
+
+export const TooltipWrapper = styled.div`
+    margin-left: 3rem;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    >div>div>div {
+        padding-left: 0;
+        >span:first-child {
+            margin-left: 1rem;
+        }
+        >span:nth-child(2) {
+            margin-right: 1rem;
+        }
+    }
+`;

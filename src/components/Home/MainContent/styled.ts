@@ -25,6 +25,9 @@ export const MainContentTitleBox = styled.div`
             font-size: 1.8rem;
         }
     }
+    >svg {
+        margin-left: 3rem;
+    }
 `;
 
 export const MainContentContentBox = styled.div`
