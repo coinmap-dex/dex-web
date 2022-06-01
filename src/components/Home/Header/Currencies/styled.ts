@@ -37,33 +37,33 @@ export const Currency = styled.div`
         margin-right: 1.2rem;
     }
     &>img{
-        width:20%;
+        width: 20%;
     }
     &>div{
-        width: 78%;
+        width:78%;
     }
 `;
 
 export const CurrencyPrice = styled.span`
-    font-size:1rem;
-    line-height:1.2rem;
-    color:#fff;
-    margin:0.5rem 0.5rem 0 0;
-    display:inline-block;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    color: #fff;
+    margin: 0.5rem 0.5rem 0 0;
+    display: inline-block;
     @media ${breakpoints.sm} {
-        font-size:1.5rem;
-        line-height:1.8rem;
+        font-size: 1.5rem;
+        line-height: 1.8rem;
     }
 `;
 
 export const CurrencySymbol = styled.span`
-    font-size:0.7rem;
-    line-height:1.2rem;
+    font-size: 0.7rem;
+    line-height: 1.2rem;
     color: #312F62;
-    font-weight:bold;
+    font-weight: bold;
     @media ${breakpoints.sm} {
-        font-size:1rem;
-        line-height:1.8rem;
+        font-size: 1rem;
+        line-height: 1.8rem;
     }
 `;
 export const CurrencyLineChart = styled.div`
@@ -77,28 +77,28 @@ export const CurrencyLineWrapper = styled.div`
 
 export const CurrencyDownIconWrapper = styled.span`
    &>svg{
-        width:0.5rem;
-        height:0.5rem;
+        width: 0.5rem;
+        height: 0.5rem;
         margin-bottom: 0.6rem;
-        margin-right:0.5rem;
+        margin-right: 0.5rem;
    }
 `;
 export const CurrencyRate = styled.span`
-    color:${props=>props['rate'] > 0?'#50E3C2':'#E3507A'};
-    font-size:0.6rem;
+    color: ${props => props['rate'] > 0 ? '#50E3C2' : '#E3507A'};
+    font-size: 1rem;
 `;
 
 
 export const AddCurrency = styled.div`
-    line-height:3.2rem;
-    border:1px dashed #312F62;
-    color:#312F62;
-    font-size:0.8rem;
-    box-sizing:border-box;
+    line-height: 3.2rem;
+    border: 1px dashed #312F62;
+    color: #312F62;
+    font-size: 0.8rem;
+    box-sizing: border-box;
     padding-left: 1rem;
-    font-weight:bold;
+    font-weight: bold;
     @media ${breakpoints.sm} {
-        font-size:1.4rem;
-        line-height:5rem;
+        font-size: 1.4rem;
+        line-height: 5rem;
     }
 `;
