@@ -69,8 +69,8 @@ const Order = () => {
     const [buyToken, setBuyToken] = useState<any>({});
 
     const { approve, isApproved, balance: walletBalance } = useToken(payToken.address);
-    // const balance = walletBalance ? walletBalance / 1e18 : 0;
-    const balance = 1.1232123123;
+    const balance = walletBalance ? walletBalance / 1e18 : 0;
+    // const balance = 1.1232123123;
     const [pendingTx, setPendingTx] = useState(false);
     // const [balance, setBalance] = useState(0)F
 
