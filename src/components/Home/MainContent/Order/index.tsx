@@ -274,6 +274,7 @@ const Order = () => {
                         )
                         : (
                             <S.SubmitOrder
+                                {...{ active: isBuyType }}
                                 isLoading={pendingTx}
                                 onClick={handleSubmit(handleApproveClick)}
                             >

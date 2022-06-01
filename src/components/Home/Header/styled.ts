@@ -3,7 +3,6 @@ import styled from "styled-components";
 import breakpoints from "~breakpoints";
 
 export const HeaderSection = styled(Section)`
-    background: #0D1222;
     padding:0 1rem;
     @media ${breakpoints.xl} {
         padding:0 10rem;

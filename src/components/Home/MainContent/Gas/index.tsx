@@ -3,14 +3,13 @@ import React from 'react'
 import _ from 'lodash';
 import * as  S from './styled';
 import * as MS from '../styled';
-import { Label } from 'sezy-design';
+import { Label, Tooltip } from 'sezy-design';
 import GasChartCirle from '~svg/gasChartCircle';
 import GasChartNumber from '~svg/gasChartNumber';
 import { useAppSelector } from 'src/hooks';
 import { useGetGasFeeQuery } from '~store/modules/home/api';
 import { t } from 'i18next';
 import InfoIcon from '~svg/Info';
-
 
 const chartLegend = t => {
     return (

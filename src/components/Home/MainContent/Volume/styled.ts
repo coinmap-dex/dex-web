@@ -39,3 +39,17 @@ export const VolumeChartWrapper = styled(ResponsiveContainer)`
         max-height: 46rem;
     }
 `;
+
+export const TooltipWrapper = styled.div`
+    margin-top: 1.5rem;
+    cursor: pointer;
+    >div>div>div {
+        padding-left: 0;
+        >span:first-child {
+            margin-left: 1rem;
+        }
+        >span:nth-child(3) {
+            margin-right: 1rem;
+        }
+    }
+`;

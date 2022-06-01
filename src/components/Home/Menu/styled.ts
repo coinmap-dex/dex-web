@@ -11,7 +11,6 @@ export default {
         border-bottom: 1px solid rgba(191, 201, 221, 0.2);
         @media ${breakpoints.sm}{
             padding: 0 5rem;
-            margin-bottom: 1.3rem;
         }
     `,
     MenuRow: styled(Row)`

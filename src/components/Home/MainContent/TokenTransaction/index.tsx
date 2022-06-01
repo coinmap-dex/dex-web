@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Label, Table } from 'sezy-design'
+import { Col, Dropdown, Label, Table } from 'sezy-design'
 import Arrow from 'sezy-design/components/icon/solid/arrow'
 import _ from 'lodash';
 import S from './styled';
@@ -38,7 +38,10 @@ const TokenTransaction = () => {
                 <S.HighlightDataSub>${secondPrice?.price?.toFixed(5)}</S.HighlightDataSub>
             </S.HighlightData>
             <S.MoreWrapper>
-                <Label>More</Label>
+                <Dropdown placement='tl'>
+                    <S.MoreLabel>More</S.MoreLabel>
+                    <div>TRADE HISTORY</div>
+                </Dropdown>
                 <ArrowIcon />
             </S.MoreWrapper>
         </S.HighLightDataWrapper>
