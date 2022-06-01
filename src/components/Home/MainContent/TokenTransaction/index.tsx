@@ -40,7 +40,7 @@ const TokenTransaction = () => {
             <S.MoreWrapper>
                 <Dropdown placement='tl'>
                     <S.MoreLabel>More</S.MoreLabel>
-                    <div>bbbb</div>
+                    <div>TRADE HISTORY</div>
                 </Dropdown>
                 <ArrowIcon />
             </S.MoreWrapper>
