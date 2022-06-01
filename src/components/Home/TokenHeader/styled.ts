@@ -84,20 +84,12 @@ export const TokenInfoSymbolWrapper = styled.div`
     }
 `;
 
-export const TokenInfoDetailName1 = styled(Label)`
+export const TokenInfoDetailName = styled(Label)`
     font-size:1.4rem;
     margin-right:0.2rem;
     text-transform:uppercase;
     @media ${breakpoints.sm}{
         font-size:2.4rem;
-    }
-`; 
-
-export const TokenInfoDetailName2 = styled(Label)`
-    font-size:1.6rem;
-    font-weight:bold;
-    @media ${breakpoints.sm}{
-        font-size:2.6rem;
     }
 `;
 
