@@ -125,15 +125,15 @@ export default {
         align-items:center;
         width:20%;
         cursor:pointer;
-        &>div{
-            font-size:1.3rem;
-            font-weight: 400;
-            color: #F3AA3C;
-            margin-right:0.3rem;
-        }
         &>svg{
             width:1.1rem;
         }
+    `,
+    MoreLabel: styled(Label)`
+        font-size:1.3rem;
+        font-weight: 400;
+        color: #F3AA3C;
+        margin-right:0.3rem;
     `
 };
 
