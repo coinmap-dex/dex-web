@@ -27,6 +27,7 @@ export const MainContentTitleBox = styled.div`
     }
     >svg {
         margin-left: 3rem;
+        cursor: pointer;
     }
 `;
 

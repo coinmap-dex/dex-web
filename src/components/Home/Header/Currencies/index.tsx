@@ -1,97 +1,61 @@
 import React from 'react'
-import { Col, Row, Section } from 'sezy-design'
-import _ from 'lodash';
 import * as  S from './styled';
-import { Line, LineChart, ResponsiveContainer } from 'recharts';
+import { Line, LineChart } from 'recharts';
 import CurrencyDownIcon from '~svg/CurrencyDown'
 import CurrencyUpIcon from '~svg/CurrencyUp'
+import { useGetFavoriteListQuery } from '~store/modules/home/api';
+import {Favorite} from '../../../../models/favorite.model';
+import {thousandSeparator} from '~utils';
+import BitcoinIcon from '~svg/BitcoinIcon';
+import EthereumIcon from '~svg/EthereumIcon';
+import LitecoinIcon from '~svg/LitecoinIcon';
+
+const COLOR_CURRENCY_UP_ID = 'colorCurrencyUp';
+const COLOR_CURRENCY_DOWN_ID = 'colorCurrencyDown';
+const BTC_USDT = 'BTCUSDT';
+const ETH_USDT = 'ETHUSDT';
+const BNB_USDT = 'BNBUSDT';
 
 const Currencies = () => {
+    const { data, isLoading, error } = useGetFavoriteListQuery(null);
+    const favouriteList: Favorite[] = (data && [...data]) ?? [];
     return (
         <S.Currencies>
-            <S.Currency>
-                <img src='https://i.ibb.co/gM8rRTQ/Bitcoin.png' />
-                <div>
-                    <div>
-                        <S.CurrencyPrice>50.234</S.CurrencyPrice>
-                        <S.CurrencySymbol>BTC</S.CurrencySymbol>
-                    </div>
-                    <S.CurrencyLineChart>
-                        <S.CurrencyLineWrapper>
-                            <LineChart width={30} height={20} data={data}>
-                                <defs>
-                                    <linearGradient id="colorCurrencyDown" x1="0%" y1="0" x2="100%" y2="0">
-                                        <stop offset="0%" stopColor="#A330FF" stopOpacity={0.1} />
-                                        <stop offset="100%" stopColor="#BC3DCB" />
-                                    </linearGradient>
-                                </defs>
-                                <Line type="monotone" dataKey="pv" stroke="url(#colorCurrencyDown)" strokeWidth={2} dot={false}
-                                />
-                            </LineChart>
-                        </S.CurrencyLineWrapper>
-                        <S.CurrencyDownIconWrapper>
-                            <CurrencyDownIcon />
-                        </S.CurrencyDownIconWrapper>
-                        <S.CurrencyRate {...{rate: -1}}>-5.23%</S.CurrencyRate>
-                    </S.CurrencyLineChart>
-                </div>
-            </S.Currency>
-            <S.Currency>
-                <img src='https://i.ibb.co/gM8rRTQ/Bitcoin.png' />
-                <div>
-                    <div>
-                        <S.CurrencyPrice>23.234</S.CurrencyPrice>
-                        <S.CurrencySymbol>ETH</S.CurrencySymbol>
-                    </div>
-                    <S.CurrencyLineChart>
-                        <S.CurrencyLineWrapper>
-                            <LineChart width={30} height={20} data={data}>
-                                <defs>
-                                    <linearGradient id="colorCurrencyUp" x1="0%" y1="0" x2="100%" y2="0">
-                                        <stop offset="0%" stopColor="#A330FF" stopOpacity={0.1} />
-                                        <stop offset="100%" stopColor="#50E3C2" />
-                                    </linearGradient>
-                                </defs>
-                                <Line type="monotone" dataKey="pv" stroke="url(#colorCurrencyUp)" strokeWidth={2} dot={false}
-                                />
-                            </LineChart>
-                        </S.CurrencyLineWrapper>
-                        <S.CurrencyDownIconWrapper>
-                            <CurrencyUpIcon />
-                        </S.CurrencyDownIconWrapper>
-                        <S.CurrencyRate {...{rate: 1}}>15.12%</S.CurrencyRate>
-                    </S.CurrencyLineChart>
-                </div>
-            </S.Currency>
-            {/* <S.Currency>
-                <img src='https://i.ibb.co/gM8rRTQ/Bitcoin.png' />
-                <div>
-                    <div>
-                        <S.CurrencyPrice>23.234</S.CurrencyPrice>
-                        <S.CurrencySymbol>BTC</S.CurrencySymbol>
-                    </div>
-                    <S.CurrencyLineChart>
-                        <S.CurrencyLineWrapper>
-                            <LineChart width={35} height={20} data={data}>
-                                <defs>
-                                    <linearGradient id="colorUv" x1="0%" y1="0" x2="100%" y2="0">
-                                        <stop offset="0%" stopColor="#A330FF" stopOpacity={0.1} />
-                                        <stop offset="100%" stopColor="#BC3DCB" />
-                                    </linearGradient>
-                                </defs>
-                                <Line type="monotone" dataKey="pv" stroke="url(#colorUv)" strokeWidth={2} dot={false}
-                                />
-                            </LineChart>
-                        </S.CurrencyLineWrapper>
-                        <S.CurrencyDownIconWrapper>
-                            <CurrencyDownIcon />
-                        </S.CurrencyDownIconWrapper>
-                        <S.CurrencyRate>-5.23%</S.CurrencyRate>
-                    </S.CurrencyLineChart>
-                </div>
-            </S.Currency> */}
-
-
+            {favouriteList.map((favorite: Favorite) => {
+                const priceChangePercent = Number(favorite?.priceChangePercent) ?? 0;
+                const isPriceChangeUp = priceChangePercent >= 0;
+                const colorCurrencyId = isPriceChangeUp ? COLOR_CURRENCY_UP_ID : COLOR_CURRENCY_DOWN_ID;
+                const lastPrice = parseFloat(favorite?.lastPrice) ?? 0;
+                return (
+                    <S.Currency key={lastPrice}>
+                        {getCoinIcon(favorite?.symbol)}
+                        <div>
+                            <div>
+                                <S.CurrencyPrice>{thousandSeparator(lastPrice)}</S.CurrencyPrice>
+                                <S.CurrencySymbol>{getCurrencyUnit(favorite?.symbol)}</S.CurrencySymbol>
+                            </div>
+                            <S.CurrencyLineChart>
+                                <S.CurrencyLineWrapper>
+                                    <LineChart width={30} height={20} data={data}>
+                                        <defs>
+                                            <linearGradient id={colorCurrencyId} x1="0%" y1="0" x2="100%" y2="0">
+                                                <stop offset="0%" stopColor="#A330FF" stopOpacity={0.1} />
+                                                <stop offset="100%" stopColor={isPriceChangeUp ? '#50E3C2' : '#BC3DCB'} />
+                                            </linearGradient>
+                                        </defs>
+                                        <Line type="monotone" dataKey="pv" stroke={`url(#${colorCurrencyId})`} strokeWidth={2} dot={false}
+                                        />
+                                    </LineChart>
+                                </S.CurrencyLineWrapper>
+                                <S.CurrencyDownIconWrapper>
+                                    {isPriceChangeUp ? <CurrencyUpIcon/> : <CurrencyDownIcon/>}
+                                </S.CurrencyDownIconWrapper>
+                                <S.CurrencyRate {...{rate: priceChangePercent}}>{priceChangePercent}%</S.CurrencyRate>
+                            </S.CurrencyLineChart>
+                        </div>
+                    </S.Currency>
+                );
+            })}
             <S.AddCurrency>+ Add Currency</S.AddCurrency>
         </S.Currencies>
     )
@@ -141,5 +105,29 @@ const data = [
         amt: 2100,
     },
 ];
+
+const getCurrencyUnit = (symbol: string) => {
+    switch (symbol) {
+        case BTC_USDT:
+            return 'BCT';
+        case ETH_USDT:
+            return 'ETH';
+        case BNB_USDT:
+            return 'BNB';
+    }
+    return '';
+}
+
+const getCoinIcon = (symbol: string) => {
+    switch (symbol) {
+        case BTC_USDT:
+            return <BitcoinIcon/>;
+        case ETH_USDT:
+            return <EthereumIcon/>;
+        case BNB_USDT:
+            return <LitecoinIcon/>;
+    }
+    return <></>;
+}
 
 export default Currencies
