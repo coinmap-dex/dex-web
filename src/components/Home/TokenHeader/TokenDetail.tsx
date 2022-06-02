@@ -19,8 +19,9 @@ const TokenDetail = () => {
         dispatch(setTokenSymbol(overviewData?.symbol));
     }, [overviewData?.symbol]);
 
-
-
+    const onContractCopyIconClick = () => {
+        navigator.clipboard.writeText(contract);
+    }
 
     return (
         <S.TokenInfoDetailCol grid={18} gutter={{ sm: 12, lg: 8, xl: 6 }}>
@@ -35,9 +36,7 @@ const TokenDetail = () => {
                         <S.TokenInfoSymbolWrapper>
                             {
                                 !isLoading && <>
-                                    <S.TokenInfoDetailName1>{overviewData?.symbol}</S.TokenInfoDetailName1>
-                                    <S.TokenInfoDetailName1>/</S.TokenInfoDetailName1>
-                                    <S.TokenInfoDetailName2>BNB</S.TokenInfoDetailName2>
+                                    <S.TokenInfoDetailName>{overviewData?.symbol}</S.TokenInfoDetailName>
 
                                     <S.TokenInfoBSCScan href=''>
                                         <img src="https://i.ibb.co/ygdN0m8/bscscan-2.png" />
@@ -63,9 +62,7 @@ const TokenDetail = () => {
                                 !isLoading && <>
                                     <S.TokenInfoDetailFullname>({overviewData?.name})</S.TokenInfoDetailFullname>
                                     <S.TokenInfoDetailContract>Token contract{breakpoint('sm') ? `: ${contract?.slice(0, 8)}...${contract?.slice(-4)}` : ''}</S.TokenInfoDetailContract>
-                                    <S.TokenInfolContractCopyIcon />
-                                    <S.TokenInfoDetailContract> - Pair</S.TokenInfoDetailContract>
-                                    <S.TokenInfolContractCopyIcon />
+                                    <S.TokenInfolContractCopyIcon onClick={onContractCopyIconClick} />
                                 </>
                             }
                         </S.TokenInfoContractWrapper>
