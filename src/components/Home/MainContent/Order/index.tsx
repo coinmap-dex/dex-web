@@ -24,6 +24,9 @@ const getTokenFromList = (symbol) => {
     return tokenList.tokens.find(v => v.symbol === upperCaseSymbol);
 }
 
+const PRICE_INPUT_ID = 1;
+const AMOUNT_INPUT_ID = 2;
+
 const Order = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const contract = useAppSelector(state => state.home.contract);
@@ -31,6 +34,9 @@ const Order = () => {
     const orderToken = useAppSelector(state => state.home.orderToken);
     // const [buyTokenName, setBuyTokenName] = useState(orderToken);
     // const [payTokenName, setPayTokenName] = useState(orderToken);
+    const [currentPrice, setCurrentPrice] = useState(0);
+    const [currentAmount, setCurrentAmount] = useState(0);
+
     useEffect(() => {
         setPayToken(getTokenFromList(orderToken));
     }, [orderToken]);
@@ -51,7 +57,7 @@ const Order = () => {
     React.useEffect(() => {
         const percentage = '0';
         totalRangeRef.current && (totalRangeRef.current.value = percentage);
-        totalInputRef.current && (amountInputRef.current.value = 0);
+        totalInputRef.current && (totalInputRef.current.value = 0);
         priceInputRef.current && (priceInputRef.current.value = 0);
         amountInputRef.current && (amountInputRef.current.value = 0);
         percentageInputRef.current && (percentageInputRef.current.value = percentage);
@@ -92,15 +98,73 @@ const Order = () => {
         setPendingTx(false)
     }
 
-    const handleMinusClick = (inputRef) => () => {
-        const newValue = +inputRef.current.value - 1;
-        inputRef.current.value = newValue > 0 ? newValue : 0;
+    const onInputChange = (inputTypeId) => () => {
+        let inputRef;
+        switch (inputTypeId) {
+            case PRICE_INPUT_ID:
+                inputRef = priceInputRef;
+                break;
+            case AMOUNT_INPUT_ID:
+                inputRef = amountInputRef;
+                break;
+            default:
+                break;
+        }
+        if (inputRef) {
+            updateCurrentInputStateById(inputTypeId, inputRef.current.value);
+            validateApproveButton();
+        }
+    }
+
+    const onInputClick = (inputRef) => () => {
+        if (!Number(inputRef.current.value)) {
+            inputRef.current.value = '';
+        }
+    }
+
+    const onInputClickOut = (inputRef, inputTypeId) => () => {
+        switch (inputTypeId) {
+            case PRICE_INPUT_ID:
+                inputRef.current.value = currentPrice;
+                break;
+            case AMOUNT_INPUT_ID:
+                inputRef.current.value = currentAmount;
+                break;
+            default:
+                break;
+        }
+    }
+
+    const handlePlusClick = (inputRef, inputTypeId) => () => {
+        if (!inputRef.current.value) {
+            inputRef.current.value = 0;
+        }
+        inputRef.current.value = +inputRef.current.value + 1;
+        updateCurrentInputStateById(inputTypeId, inputRef.current.value);
         validateApproveButton();
     }
 
-    const handlePlusClick = (inputRef) => () => {
-        inputRef.current.value = +inputRef.current.value + 1;
+    const handleMinusClick = (inputRef, inputTypeId) => () => {
+        if (!inputRef.current.value) {
+            inputRef.current.value = 0;
+        }
+        const newValue = +inputRef.current.value - 1;
+        inputRef.current.value = newValue > 0 ? newValue : 0;
+        updateCurrentInputStateById(inputTypeId, inputRef.current.value);
         validateApproveButton();
+    }
+
+    const updateCurrentInputStateById = (inputTypeId, newValue) => {
+        switch (inputTypeId) {
+            case PRICE_INPUT_ID:
+                setCurrentPrice(Number(newValue));
+                break;
+            case AMOUNT_INPUT_ID:
+                setCurrentAmount(Number(newValue));
+                break;
+            default:
+                break;
+        }
     }
 
     const validateApproveButton = () => {
@@ -115,6 +179,8 @@ const Order = () => {
             setPercentageLabel(percentage.toFixed(2));
         }
         setDisabledApproveButton(pay <= 0 || buy <= 0 || payToken?.address == buyToken?.address);
+        setCurrentAmount(Number(amountInputRef.current.value));
+        setCurrentPrice(Number(priceInputRef.current.value));
     }
 
     return (
@@ -165,41 +231,47 @@ const Order = () => {
                 <S.OrderBoxInputWrapper>
                     <S.OrderBoxInputLabel>Price {buyToken?.symbol}/COIN</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
+                        placeholder="0"
                         ref={priceInputRef}
                         valueType='number'
                         size='l'
                         postfix={(
                             <S.OrderBoxPriceCounter>
-                                <div onClick={handleMinusClick(priceInputRef)}>
+                                <div onClick={handleMinusClick(priceInputRef, PRICE_INPUT_ID)}>
                                     <MinusIcon />
                                 </div>
                                 <span />
-                                <div onClick={handlePlusClick(priceInputRef)}>
+                                <div onClick={handlePlusClick(priceInputRef, PRICE_INPUT_ID)}>
                                     <PlusIcon />
                                 </div>
                             </S.OrderBoxPriceCounter>
                         )}
-                        onChange={() => validateApproveButton()}
+                        onChange={onInputChange(PRICE_INPUT_ID)}
+                        onClick={onInputClick(priceInputRef)}
+                        onBlur={onInputClickOut(priceInputRef, PRICE_INPUT_ID)}
                     />
                 </S.OrderBoxInputWrapper>
                 <S.OrderBoxInputWrapper>
                     <S.OrderBoxInputLabel>Amount COIN</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
+                        placeholder="0"
                         ref={amountInputRef}
                         valueType='number'
                         size='l'
                         postfix={(
                             <S.OrderBoxPriceCounter>
-                                <div onClick={handleMinusClick(amountInputRef)}>
+                                <div onClick={handleMinusClick(amountInputRef, AMOUNT_INPUT_ID)}>
                                     <MinusIcon />
                                 </div>
                                 <span />
-                                <div onClick={handlePlusClick(amountInputRef)}>
+                                <div onClick={handlePlusClick(amountInputRef, AMOUNT_INPUT_ID)}>
                                     <PlusIcon />
                                 </div>
                             </S.OrderBoxPriceCounter>
                         )}
-                        onChange={() => validateApproveButton()}
+                        onChange={onInputChange(AMOUNT_INPUT_ID)}
+                        onClick={onInputClick(amountInputRef)}
+                        onBlur={onInputClickOut(amountInputRef, AMOUNT_INPUT_ID)}
                     />
                 </S.OrderBoxInputWrapper>
                 <S.OrderBoxRangeWrapper>

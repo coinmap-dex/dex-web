@@ -116,6 +116,9 @@ export default {
             text-align:right;
             height:4.8rem !important;
             line-height:4.8rem !important;
+            &::placeholder {
+                color: #B9C2D0;
+            }
         }
     `,
     OrderBoxInputLabel: styled.span`
