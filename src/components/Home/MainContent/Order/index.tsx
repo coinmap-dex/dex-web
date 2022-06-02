@@ -194,10 +194,8 @@ const Order = () => {
                 <S.OrderOrderType>pending order</S.OrderOrderType>
             </S.OrderTitleBox>
             <S.OrderPlaceTypes>
+                <S.OrderPlaceType {...{ active: true }}>limit</S.OrderPlaceType>
                 <S.OrderPlaceType onClick={() => setOrderModalVisible(true)}>your orders</S.OrderPlaceType>
-                <S.OrderPlaceType>limit</S.OrderPlaceType>
-                <S.OrderPlaceType>stop-limit</S.OrderPlaceType>
-                <S.OrderPlaceType {...{ active: true }}>market</S.OrderPlaceType>
             </S.OrderPlaceTypes>
             <S.OrderBox>
                 <S.OrderBoxBuySell>
