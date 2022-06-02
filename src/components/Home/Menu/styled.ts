@@ -12,6 +12,10 @@ export default {
         @media ${breakpoints.sm}{
             padding: 0 5rem;
         }
+        &>div>div>div:nth-child(4) {
+            margin-left: 4rem;
+            margin-right: 4rem;
+        }
     `,
     MenuRow: styled(Row)`
         width:100%;
