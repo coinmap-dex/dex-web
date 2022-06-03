@@ -17,14 +17,14 @@ export default {
         }
     `,
     HeaderUserWalletButton: styled.div`
-        width:100%;
+        width: 100%;
         height: 2.8rem;
         line-height: 2.8rem;
-        text-align:center;
+        text-align: center;
         background: linear-gradient(123.77deg, #993381 29.96%, #BB5387 78.97%);
         border-radius: 5rem;
-        font-size:1.2rem;
-        cursor:pointer;
+        font-size: 1.2rem;
+        cursor: pointer;
         @media ${breakpoints.sm} {
             width: 17rem;
             height: 5.5rem;
@@ -34,20 +34,40 @@ export default {
         }
     `,
     UserAccount: styled.div`
-        margin-left:18px;
+        margin-left: 1.8rem;
+        margin-top: 0.5rem;
     `,
     AccountAddress: styled.a`
-        font-size: 15px;
+        font-size: 2rem;
         line-height: 15px;
-        color: #30e8fb;
+        color: #A8BCDE;
         @media ${breakpoints.xs}{
             width: 60px;
             display: inline-block;
-            overflow: hidden;
             font-size: 12px;
         }
     `,
     Logout: styled.a`
-        display:block;
+        position: absolute;
+        display: block;
+        width: 10rem;
+        height: 3.235rem;
+        background: linear-gradient(123.77deg, #EF6777 29.96%, #FF5C70 78.97%);
+        border-radius: 2.94118rem;
+        text-align: center;
+        line-height: 3rem;
+        cursor: pointer;
+        font-size: 1.29412rem;
+        margin-top: 0.5rem;
+        margin-left: 2%;
+        @media ${breakpoints.xl}{
+            margin-left: 1.6%;
+        }
+        @media ${breakpoints.xs}{
+          width: 7rem;
+          height: 2rem;
+          line-height: 2rem;
+          font-size: 1.1rem;
+        }
     `,
 }
