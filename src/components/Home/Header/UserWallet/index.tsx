@@ -20,6 +20,10 @@ const UserWallet = () => {
 
   // handle logic to recognize the connector currently being activated
   const [activatingConnector, setActivatingConnector] = useState<InjectedConnector>();
+
+  const [isShownDisconnectButton, setShownDisconnectButton] = useState<boolean>(false);
+  let shownDisconnectButtonTimeOut;
+
   useEffect(() => {
     if (activatingConnector && activatingConnector === connector) {
       setActivatingConnector(undefined);
@@ -29,26 +33,46 @@ const UserWallet = () => {
   const triedEager = useEagerConnect();
   useInactiveListener(!triedEager || !!activatingConnector);
 
-  const supportedChain = supportedChainIds.includes(chainId)
+  const isSupportedChain = supportedChainIds.includes(chainId);
+
+  const onDisconnectButtonMouseEnter = () => {
+    clearTimeout(shownDisconnectButtonTimeOut);
+    setShownDisconnectButton(true);
+  }
+
+  const handleHiddenDisconnectButton = () => {
+    shownDisconnectButtonTimeOut = setTimeout(() => {
+        setShownDisconnectButton(false);
+    }, 500);
+  }
 
   return (
     <S.HeaderUserWalletWrapper>
       <S.HeaderUnionIconWrapper>
         <UnionIcon />
       </S.HeaderUnionIconWrapper>
-
       {
-        account && supportedChain
+        account && isSupportedChain
           ? (
             <S.UserAccount>
               <S.AccountAddress
                 href={`https://bscscan.com/address/${account}`}
                 target={"blank_"}
+                onMouseEnter={() => setShownDisconnectButton(true)}
+                onMouseOut={handleHiddenDisconnectButton}
               >{` ${account.substring(0, 6)}...${account.substring(
                 account.length - 6
               )}`}
               </S.AccountAddress>
-              {/* <S.Logout onClick={() => { deactivate(); }}> Logout </S.Logout> */}
+              {isShownDisconnectButton && (
+                  <S.Logout
+                      onClick={deactivate}
+                      onMouseEnter={onDisconnectButtonMouseEnter}
+                      onMouseOut={handleHiddenDisconnectButton}
+                  >
+                    Disconnect
+                  </S.Logout>
+              )}
             </S.UserAccount>
           )
           : (
