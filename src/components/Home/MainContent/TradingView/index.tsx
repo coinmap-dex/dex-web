@@ -65,6 +65,12 @@ const customWidgetPriceScale = (tvWidget: IChartingLibraryWidget) => {
 	});
 }
 
+const trackChartIntervalChange = (tvWidget: IChartingLibraryWidget) => {
+	tvWidget.activeChart().onIntervalChanged().subscribe(null, (interval) => {
+		localStorage.setItem('chartInterval', interval);
+	});
+}
+
 const numberOnDecimalPartOfPriceAfterZero: string = getNumberOnDecimalPartOfPriceAfterZero();
 
 const buildPriceScale = (minPriceRange: number) => {
@@ -97,7 +103,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 	static defaultProps: Omit<ChartContainerProps, 'container'> = {
 		symbol: DEFAULT_SYMBOL,
 		// symbol: 'AAPL',
-		interval: 'D' as ResolutionString,
+		interval: localStorage.getItem('chartInterval') as ResolutionString || 'D' as ResolutionString,
 		// datafeedUrl: 'https://demo-feed-data.tradingview.com',
 		datafeedUrl: 'https://api.dextrading.io/api/v1/tradingview',
 		// datafeedUrl: 'http://localhost:3000/tradingview',	
@@ -165,6 +171,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 		tvWidget.onChartReady(() => {
 			customWidgetPriceScale(tvWidget);
 			addCheckApiButton(tvWidget);
+			trackChartIntervalChange(tvWidget);
 		});
 
 		this.setState({ tvWidget });
