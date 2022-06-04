@@ -192,7 +192,7 @@ const convertSharkData = (data) => {
         // totalBalance: d.totalBalance / max.totalBalance * 100,
         totalBalance: d.totalBalance,
     })).map((d, i) => ({
-        d: d.date,
+        date: d.date,
         ['' + t(`shark.totalBalance`)]: d.totalBalance,
         ['' + t(`shark.totalTransaction`)]: d.totalTransaction,
         ['' + t(`shark.totalTransactionHighValue`)]: d.totalTransactionHighValue,
