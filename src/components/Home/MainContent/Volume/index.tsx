@@ -47,9 +47,9 @@ const chartHeader = (t, breakpoint) => {
     return (
         <>
             {!isDisplayLegendItemInInfoIcon && chartLegend(t)}
-            {!isDisplayLegendItemInInfoIcon && (
-                <ChartInfoIcon/>
-            )}
+            {/*{!isDisplayLegendItemInInfoIcon && (*/}
+            {/*    <ChartInfoIcon/>*/}
+            {/*)}*/}
             {isDisplayLegendItemInInfoIcon && (
                 <S.TooltipWrapper>
                     <SezyTooltip content={chartLegend(t)}>

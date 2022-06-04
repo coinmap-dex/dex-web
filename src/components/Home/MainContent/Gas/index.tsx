@@ -24,7 +24,7 @@ const chartLegend = t => {
                 </svg>
                 <span>GWEI</span>
             </MS.TitleLengendItem>
-            <ChartInfoIcon/>
+            {/*<ChartInfoIcon/>*/}
         </MS.TitleLengend>
     )
 }

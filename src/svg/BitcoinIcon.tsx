@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChartInfoIcon = () => {
+const BitcoinIcon = () => {
     return (
         <svg width="25" height="27" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_1380_2057)">
@@ -20,4 +20,4 @@ const ChartInfoIcon = () => {
         </svg>
     );
 }
-export default ChartInfoIcon;
+export default BitcoinIcon;

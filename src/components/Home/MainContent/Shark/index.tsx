@@ -25,7 +25,7 @@ import ChartInfoIcon from '~svg/ChartInfoIcon';
 const chartLegend = t => {
     return (
         <MS.TitleLengend>
-            <ChartInfoIcon/>
+            {/*<ChartInfoIcon/>*/}
         </MS.TitleLengend>
     )
 }
