@@ -1,15 +1,74 @@
 import React, { useEffect, useState } from 'react'
-import _ from 'lodash';
 import S from './styled';
-import { Modal } from 'sezy-design';
 import { useWeb3React } from '@web3-react/core';
 import { useAxios, useCoinmapDex } from '~hooks';
 import { formatAmount, getTokenName } from '~utils';
+import PopupTableWrapper from '~components/Partials/PopupTableWrapper';
 
 interface IActionConfirmModalProps {
     isVisible: boolean,
     setVisible: (boolean) => void,
 }
+
+const tableColumns = [
+    {
+        index: 'payToken',
+        label: 'Pay Token',
+        styles: {
+            width: '10rem',
+            paddingLeft: '3.2rem'
+        }
+    },
+    {
+        index: 'buyToken',
+        label: 'Buy Token',
+        styles: {
+            width: '10rem'
+        }
+    },
+    {
+        index: 'type',
+        label: 'Type',
+        styles: {
+            width: '11rem'
+        }
+    },
+    {
+        index: 'price',
+        label: 'Price',
+        styles: {
+            width: '13rem'
+        }
+    },
+    {
+        index: 'amount',
+        label: 'Amount',
+        styles: {
+            width: '15rem'
+        }
+    },
+    {
+        index: 'total',
+        label: 'Total',
+        styles: {
+            width: '17rem'
+        }
+    },
+    {
+        index: 'deadline',
+        label: 'Deadline',
+        styles: {
+            width: '13rem'
+        }
+    },
+    {
+        index: 'status',
+        label: 'Status',
+        styles: {
+            width: '13rem'
+        }
+    },
+];
 
 const OrderModal = ({
     isVisible,
@@ -31,48 +90,6 @@ const OrderModal = ({
             setData(response);
         }
     }, [response]);
-
-    const tableColumns = [
-        {
-            index: 'payToken',
-            label: 'Pay Token',
-            styles: {
-                width: '100px'
-            }
-        },
-        {
-            index: 'payAmount',
-            label: 'Pay Amount',
-            styles: {
-                width: '100px'
-            }
-        },
-        {
-            index: 'buyToken',
-            label: 'Buy Token',
-            styles: {
-                width: '100px'
-            }
-        },
-        {
-            index: 'buyAmount',
-            label: 'Buy Amount',
-            styles: {
-                width: '100px'
-            }
-        },
-        {
-            index: 'deadline',
-            label: 'Deadline',
-        },
-        {
-            index: 'status',
-            label: 'Status',
-            styles: {
-                width: '100px'
-            }
-        },
-    ];
 
     const tableData = data.map((v) => {
         return {
@@ -98,14 +115,33 @@ const OrderModal = ({
         }
     });
 
+    // TODO: Test data - Please remove when complete this task
+    // const tableData = [1, 2, 3, 4, 5].map((v) => {
+    //     return {
+    //         payToken: 'BUSD',
+    //         buyToken: 'BNB',
+    //         type: 'Sell Limit',
+    //         price: '50.00 ≈$50 (BUSD)',
+    //         amount: '28.0000/0.0000 0.00% (BNB)',
+    //         total: '1400.00/$ 1400 ≈0.00/≈$ 0 (BUSD)',
+    //         deadline: '21-09-30',
+    //         status: {
+    //             children: <>
+    //                 <span>Success</span>
+    //             </>
+    //         }
+    //     }
+    // });
+
     return (
-        <Modal isVisible={isVisible} setVisible={setVisible}>
-            <S.Wrapper>
-                <S.Title>YOUR ORDERS</S.Title>
-                <S.Table columns={tableColumns as any} data={tableData} />
-            </S.Wrapper>
-        </Modal>
+        <PopupTableWrapper
+            title="YOUR ORDERS"
+            isVisible={isVisible}
+            setVisible={setVisible}
+        >
+            <S.Table columns={tableColumns as any} data={tableData} />
+        </PopupTableWrapper>
     )
 }
 
-export default OrderModal
+export default OrderModal;
