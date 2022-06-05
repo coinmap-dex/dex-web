@@ -4,7 +4,7 @@ import breakpoints from "~breakpoints";
 
 export const Currencies = styled.div`
     display:inline-flex;
-    aling-items:center;
+    align-items:center;
     &>div{
         width: 30%;
         height:3rem;
@@ -15,12 +15,17 @@ export const Currencies = styled.div`
             height:5rem;
         }
         @media ${breakpoints.xs} {
-            width: 40%;
+            width: 35%;
         }
     }
     >div:nth-child(2) {
         @media ${breakpoints.xs} {
             display: none;
+        }
+    }
+    >div:nth-child(4) {
+        @media ${breakpoints.xs} {
+            width: 18%;
         }
     }
 `;
@@ -54,6 +59,10 @@ export const CurrencyPrice = styled.span`
         font-size: 1.5rem;
         line-height: 1.8rem;
     }
+    @media ${breakpoints.xs} {
+        font-size: 0.9rem;
+        margin: 0.5rem 0.2rem 0 0;
+    }
 `;
 
 export const CurrencySymbol = styled.span`
@@ -72,7 +81,10 @@ export const CurrencyLineChart = styled.div`
 `;
 
 export const CurrencyLineWrapper = styled.div`
-    display:inline-block;
+    display: inline-block;
+    @media ${breakpoints.xs} {
+        width: 2.5rem;
+    }
 `;
 
 export const CurrencyDownIconWrapper = styled.span`
@@ -86,6 +98,9 @@ export const CurrencyDownIconWrapper = styled.span`
 export const CurrencyRate = styled.span`
     color: ${props => props['rate'] > 0 ? '#50E3C2' : '#E3507A'};
     font-size: 1rem;
+    @media ${breakpoints.xs} {
+        font-size: 0.8rem;
+    }
 `;
 
 
