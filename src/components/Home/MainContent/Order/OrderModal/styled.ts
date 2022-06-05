@@ -17,7 +17,13 @@ export default {
         }
       }
       tbody {
+        tr:first-child {
+          td {
+            padding-top: 3rem;
+          }
+        }
         tr {
+          border-bottom: 1px solid #2E3A52;
           td:first-child {
             text-align: left;
           }
