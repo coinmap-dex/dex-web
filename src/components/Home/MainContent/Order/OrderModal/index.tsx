@@ -4,6 +4,7 @@ import { useWeb3React } from '@web3-react/core';
 import { useAxios, useCoinmapDex } from '~hooks';
 import { formatAmount, getTokenName } from '~utils';
 import PopupTableWrapper from '~components/Partials/PopupTableWrapper';
+import moment from 'moment';
 
 interface IActionConfirmModalProps {
     isVisible: boolean,
@@ -84,20 +85,25 @@ const OrderModal = ({
     });
     const { cancelOrder } = useCoinmapDex();
     const [data, setData] = useState<any>([]);
-
     useEffect(() => {
         if (response !== null) {
             setData(response);
         }
     }, [response]);
-
+    console.log(response);
     const tableData = data.map((v) => {
         return {
+            // payToken: getTokenName(v.payToken),
+            // payAmount: formatAmount(v.payAmount, v.payToken),
+            // buyToken: getTokenName(v.buyToken),
+            // buyAmount: formatAmount(v.buyAmount, v.buyToken),
+            type: 'limit',
             payToken: getTokenName(v.payToken),
-            payAmount: formatAmount(v.payAmount, v.payToken),
             buyToken: getTokenName(v.buyToken),
-            buyAmount: formatAmount(v.buyAmount, v.buyToken),
-            deadline: new Date(v.deadline * 1000),
+            amount: formatAmount(v.payAmount, v.payToken),
+            total: formatAmount(v.buyAmount, v.buyToken),
+            price: +formatAmount(v.payAmount, v.payToken) / +formatAmount(v.buyAmount, v.buyToken),
+            deadline: moment.unix(v.deadline * 1000).format("DD/MM/YYYY"),
             status: {
                 children: <>
                     {v.status == 0 &&
