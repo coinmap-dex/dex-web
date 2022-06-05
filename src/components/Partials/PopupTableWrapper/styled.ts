@@ -3,41 +3,44 @@ import styled from 'styled-components';
 
 export default {
     TableWrapper: styled.div`
+      min-width: 92.8rem;
       display: flex;
       flex-direction: column;
       background-color: #0F1A30;
       border: 1px solid rgba(44, 54, 73, 0.3);
-      overflow-x: auto;
-      table {
-        margin-bottom: 2.5rem;
-        thead {
-          background-color: #1C2740;
-          tr {
-            th:first-child {
-              padding-left: 3.2rem;
-            }
-            th:last-child {
-              padding-right: 3.2rem;
-            }
-            th {
-              border: none;
-              padding-top: 1.3rem;
-              padding-bottom: 1.3rem;
-              background:transparent;
+      div:nth-child(2) {
+        overflow-x:auto;
+        table {
+          margin-bottom: 2.5rem;
+          thead {
+            background-color: #1C2740;
+            tr {
+              th:first-child {
+                padding-left: 3.2rem;
+              }
+              th:last-child {
+                padding-right: 3.2rem;
+              }
+              th {
+                border: none;
+                padding-top: 1.3rem;
+                padding-bottom: 1.3rem;
+                background:transparent;
+              }
             }
           }
-        }
-        tbody {
-          color: #B6BBC3;
-          tr {
-            td:first-child {
-              padding-left: 3.2rem;
-            }
-            td:last-child {
-              padding-right: 3.2rem;
-            }
-            td {
-              border: none;
+          tbody {
+            color: #B6BBC3;
+            tr {
+              td:first-child {
+                padding-left: 3.2rem;
+              }
+              td:last-child {
+                padding-right: 3.2rem;
+              }
+              td {
+                border: none;
+              }
             }
           }
         }
