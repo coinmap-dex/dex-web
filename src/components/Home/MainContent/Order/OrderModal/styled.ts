@@ -5,23 +5,32 @@ import breakpoints from "~breakpoints";
 import Search from "~svg/Search";
 
 export default {
-    Wrapper: styled.div`
-        width: 928px;
-        height: 559px;
-        border-radius: 8px;
-        display:flex;
-        flex-direction: column;
-        background-color: #0F1A30;
-        padding: 38px;
-    `,
-    Title: styled.div`
-        font-size: 28px;
-        line-height: 28px;
-        margin-bottom:18px;
-    `,
     Table: styled(Table)`
-        & th{
-            background:transparent;
+      thead {
+        tr {
+          th:first-child {
+            text-align: left;
+          }
+          th {
+            text-align: right;
+          }
         }
+      }
+      tbody {
+        tr {
+          td:first-child {
+            text-align: left;
+          }
+          td {
+            padding-top: 1.6rem;
+            padding-bottom: 1.6rem;
+            padding-left: 3rem;
+            text-align: right;
+          }
+        }
+      }
+      & th{
+        background:transparent;
+      }
     `,
 }
