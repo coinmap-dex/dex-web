@@ -13,7 +13,8 @@ import {
     Symbols,
     ComposedChart,
     Bar,
-} from "recharts";
+    Label as ChartLabel,
+} from 'recharts';
 import { Label } from "sezy-design";
 import { t } from "i18next";
 import { formatDateXAxis, thousandSeparator } from "~utils";
@@ -120,7 +121,17 @@ const Shark = () => {
                             tickMargin={10}
                             tick={{ fill: "#fff" }}
                             tickFormatter={formatYAxisNumber}
-                        />
+                        >
+                            <ChartLabel
+                                offset={-2}
+                                angle={270}
+                                position='insideLeft'
+                                style={{
+                                    fill: '#F4F7FC',
+                                    fontSize: '1.15rem'
+                                }}
+                                value="Token" />
+                        </YAxis>
                         <YAxis
                             yAxisId="shark-y-right"
                             orientation="right"
@@ -128,7 +139,17 @@ const Shark = () => {
                             tickMargin={10}
                             tick={{ fill: "#fff" }}
                             tickFormatter={formatYAxisNumber}
-                        />
+                        >
+                            <ChartLabel
+                                offset={-2}
+                                angle={90}
+                                position='insideRight'
+                                style={{
+                                    fill: '#F4F7FC',
+                                    fontSize: '1.15rem'
+                                }}
+                                value="Token" />
+                        </YAxis>
                         <YAxis
                             yAxisId="shark-y-right2"
                             orientation="right"
