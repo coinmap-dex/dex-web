@@ -11,9 +11,6 @@ import { useState } from 'react';
 import { useWeb3React } from "@web3-react/core";
 import tokenList from "~configs/list";
 import core from "~configs/core";
-import Web3 from 'web3';
-import { amountToBN } from '~utils';
-import axios from "axios";
 import { useForm } from 'react-hook-form';
 import OrderModal from './OrderModal';
 
@@ -77,6 +74,7 @@ const Order = () => {
     const { approve, isApproved, balance: walletBalance } = useToken(payToken.address);
     const balance = walletBalance ? walletBalance / 1e18 : 0;
     // const balance = 1.1232123123;
+    // const balance = 12.0752968813138;
     const [pendingTx, setPendingTx] = useState(false);
     // const [balance, setBalance] = useState(0)F
 
@@ -223,7 +221,7 @@ const Order = () => {
                     </div>
                     <S.Balance>
                         <span>My balance  </span>
-                        <span>{balance} {payToken?.symbol}</span>
+                        <span>{balance.toFixed(3)} {payToken?.symbol}</span>
                     </S.Balance>
                 </S.OrderBoxDetail>
                 <S.OrderBoxInputWrapper>

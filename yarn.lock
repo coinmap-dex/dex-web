@@ -12417,10 +12417,10 @@ setprototypeof@1.2.0:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.2.0.tgz#66c9a24a73f9fc28cbe66b09fed3d33dcaf1b424"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
-sezy-design@^1.6.88:
-  version "1.6.88"
-  resolved "https://registry.yarnpkg.com/sezy-design/-/sezy-design-1.6.88.tgz#38111bdbb8a97fbff0d75dc3643ab0e15b2b9972"
-  integrity sha512-2/UWOMoJi72sh6SwYkBq7i3yJM+DIMXFQIzOGhe6rrBgyA2WTGHMidff5dN6GN1EaUz7GS49B25qi58LMPnXDg==
+sezy-design@^1.6.89:
+  version "1.6.89"
+  resolved "https://registry.yarnpkg.com/sezy-design/-/sezy-design-1.6.89.tgz#0699b1d3b29040b498bd1c23798c36b1c0c6319e"
+  integrity sha512-CWjGqoBQvvgkp/kPlDhbVMzSvK5Vb0hu6HfbqVUIL/bW6X1FHvK9vx32nT/bRlUpw554xcnAwtNKyPGrgUB5jQ==
   dependencies:
     classnames "^2.3.1"
     lodash "^4.17.21"

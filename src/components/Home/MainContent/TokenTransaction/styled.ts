@@ -17,11 +17,11 @@ const tableWrapperStyle = `
         padding-bottom: 2rem;
     }
 
-    & tr>td:first-child{
-        width: 40%;
+    & tr>td:first-child,& th:first-child{
+        width: 30%;
     }
 
-    & tr>td:last-child{
+    & tr>td:last-child,& th:last-child{
         width: 30%;
     }
 
