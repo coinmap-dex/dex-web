@@ -16,7 +16,9 @@ const PopupTableWrapper = ({title, isVisible, setVisible, children}: IActionConf
             <S.TableWrapper>
                 <S.TitleContainer>
                     <S.Title>{title}</S.Title>
-                    <ClosePopupTableIcon/>
+                    <div onClick={() => setVisible(false)}>
+                        <ClosePopupTableIcon/>
+                    </div>
                 </S.TitleContainer>
                 {children}
             </S.TableWrapper>

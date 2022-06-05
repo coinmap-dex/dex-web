@@ -23,6 +23,7 @@ export default {
               border: none;
               padding-top: 1.3rem;
               padding-bottom: 1.3rem;
+              background:transparent;
             }
           }
         }
@@ -45,8 +46,9 @@ export default {
     TitleContainer: styled.div`
       display: flex;
       justify-content: space-between;
-      >svg {
+      >div>svg {
         margin: 2rem 1.5rem 1.5rem 0;
+        cursor: pointer;
       }
     `,
     Title: styled.div`
@@ -55,7 +57,7 @@ export default {
       line-height: 2.1rem;
       text-transform: uppercase;
       color: #FFFFFF;
-      margin: 2.6rem 0 1.8rem 3.4rem;
+      margin: 3rem 0 1.8rem 3.4rem;
     `,
     TableContent: styled(Table)`
         & th{
