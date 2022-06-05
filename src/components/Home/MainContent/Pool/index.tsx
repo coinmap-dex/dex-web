@@ -14,8 +14,8 @@ import {
     Symbols,
     ComposedChart,
     Bar,
-    ResponsiveContainer
-} from "recharts";
+    Label as ChartLabel
+} from 'recharts';
 import { Label } from 'sezy-design';
 import { t } from 'i18next';
 import { formatDateXAxis, formatYAxisNumber, thousandSeparator } from '~utils';
@@ -84,7 +84,17 @@ const Pool = () => {
                                 tickMargin={10}
                                 tick={{ fill: "#fff" }}
                                 tickFormatter={formatYAxisNumber}
-                            />
+                            >
+                                <ChartLabel
+                                    offset={-2}
+                                    angle={270}
+                                    position='insideLeft'
+                                    style={{
+                                        fill: '#F4F7FC',
+                                        fontSize: '1.15rem'
+                                    }}
+                                    value="USD" />
+                            </YAxis>
                             <YAxis
                                 yAxisId="pool-y-right"
                                 orientation="right"
@@ -92,7 +102,17 @@ const Pool = () => {
                                 tickMargin={10}
                                 tick={{ fill: "#fff" }}
                                 tickFormatter={formatYAxisNumber}
-                            />
+                            >
+                                <ChartLabel
+                                    offset={10}
+                                    angle={90}
+                                    position='insideRight'
+                                    style={{
+                                        fill: '#F4F7FC',
+                                        fontSize: '1.15rem'
+                                    }}
+                                    value="Token" />
+                            </YAxis>
                             <Tooltip
                                 contentStyle={{ backgroundColor: "#1C2740", border: '0' }}
                                 labelStyle={{ display: 'none' }}

@@ -7,7 +7,8 @@ import {
     CartesianGrid,
     Tooltip,
     ComposedChart,
-    Area
+    Area,
+    Label as ChartLabel
 } from "recharts";
 import {Label, Tooltip as SezyTooltip} from 'sezy-design';
 import { t } from "i18next";
@@ -106,7 +107,17 @@ const Shark = () => {
                             tickMargin={10}
                             tick={{ fill: "#fff" }}
                             tickFormatter={formatYAxisNumber}
-                        />
+                        >
+                            <ChartLabel
+                                offset={-2}
+                                angle={270}
+                                position='insideLeft'
+                                style={{
+                                    fill: '#F4F7FC',
+                                    fontSize: '1.15rem'
+                                }}
+                                value="Telegram" />
+                        </YAxis>
                         <YAxis
                             yAxisId="pool-y-right"
                             orientation="right"
@@ -114,7 +125,17 @@ const Shark = () => {
                             tickMargin={10}
                             tick={{ fill: "#fff" }}
                             tickFormatter={formatYAxisNumber}
-                        />
+                        >
+                            <ChartLabel
+                                offset={-8}
+                                angle={90}
+                                position='insideRight'
+                                style={{
+                                    fill: '#F4F7FC',
+                                    fontSize: '1.15rem'
+                                }}
+                                value="Twitter" />
+                        </YAxis>
                         <Tooltip
                             contentStyle={{ backgroundColor: "#1C2740", border: '0' }}
                             labelStyle={{ display: 'none' }}
