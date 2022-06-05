@@ -4,7 +4,7 @@ import UnionIcon from '~svg/Union';
 import { useWeb3React } from '@web3-react/core';
 import { useEagerConnect, useInactiveListener } from '~hooks';
 
-import { injected, supportedChainIds } from "~configs/connectors";
+import { injected, injectedLogout, supportedChainIds } from "~configs/connectors";
 import { InjectedConnector } from '@web3-react/injected-connector';
 
 const UserWallet = () => {
@@ -52,7 +52,7 @@ const UserWallet = () => {
         <UnionIcon />
       </S.HeaderUnionIconWrapper>
       {
-        account && isSupportedChain
+        +localStorage.getItem('isConnected')! && account && isSupportedChain
           ? (
             <S.UserAccount>
               <S.AccountAddress
@@ -66,9 +66,13 @@ const UserWallet = () => {
               </S.AccountAddress>
               {isShownDisconnectButton && (
                   <S.Logout
-                      onClick={deactivate}
+                      onClick={()=>{
+                        localStorage.setItem('isConnected', '0');
+                        deactivate();
+                      }}
                       onMouseEnter={onDisconnectButtonMouseEnter}
                       onMouseOut={handleHiddenDisconnectButton}
+                      
                   >
                     Disconnect
                   </S.Logout>
@@ -80,6 +84,8 @@ const UserWallet = () => {
               onClick={() => {
                 setActivatingConnector(injected);
                 activate(injected);
+
+                localStorage.setItem('isConnected', '1');
               }}
             >
               Connect
