@@ -4,7 +4,7 @@ import UnionIcon from '~svg/Union';
 import { useWeb3React } from '@web3-react/core';
 import { useEagerConnect, useInactiveListener } from '~hooks';
 
-import { injected, injectedLogout, supportedChainIds } from "~configs/connectors";
+import { injected, supportedChainIds } from "~configs/connectors";
 import { InjectedConnector } from '@web3-react/injected-connector';
 
 const UserWallet = () => {
