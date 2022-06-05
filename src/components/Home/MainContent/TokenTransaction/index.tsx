@@ -38,7 +38,7 @@ const TokenTransaction = () => {
                 <S.HighlightDataSub>${secondPrice?.price?.toFixed(5)}</S.HighlightDataSub>
             </S.HighlightData>
             <S.MoreWrapper>
-                <Dropdown placement='tl'>
+                <Dropdown placement='tl' trigger='click'>
                     <S.MoreLabel>More</S.MoreLabel>
                     <div>TRADE HISTORY</div>
                 </Dropdown>

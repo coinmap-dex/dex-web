@@ -135,8 +135,13 @@ export default {
                 background: rgba(80, 182, 212, 0.6);
                 border-radius: 0.2rem;
                 text-align: center;
-                top: -0.5rem;
-                left: 2.5rem;
+                transform: translate(-100%, -100%);
+                @media ${breakpoints.lg}{
+
+                    transform: translate(0%, -100%);
+                    top: -0.5rem;
+                    left: 2.5rem;
+                }
                 >div {
                     padding-top: 0.4rem;
                 }
