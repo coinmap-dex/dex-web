@@ -99,7 +99,7 @@ export const CurrencyRate = styled.span`
     color: ${props => props['rate'] > 0 ? '#50E3C2' : '#E3507A'};
     font-size: 1rem;
     @media ${breakpoints.xs} {
-        font-size: 0.8rem;
+        font-size: 0.65rem;
     }
 `;
 
