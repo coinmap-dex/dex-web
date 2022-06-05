@@ -71,6 +71,10 @@ const trackChartIntervalChange = (tvWidget: IChartingLibraryWidget) => {
 	});
 }
 
+const customTimezone = (tvWidget: IChartingLibraryWidget) => {
+	tvWidget.activeChart().setTimezone('Asia/Ho_Chi_Minh');
+}
+
 const numberOnDecimalPartOfPriceAfterZero: string = getNumberOnDecimalPartOfPriceAfterZero();
 
 const buildPriceScale = (minPriceRange: number) => {
@@ -172,6 +176,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 			customWidgetPriceScale(tvWidget);
 			addCheckApiButton(tvWidget);
 			trackChartIntervalChange(tvWidget);
+			customTimezone(tvWidget);
 		});
 
 		this.setState({ tvWidget });
