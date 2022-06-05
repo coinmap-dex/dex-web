@@ -70,7 +70,7 @@ const Order = () => {
 
     const { approve, isApproved, balance: walletBalance } = useToken(payToken.address);
     const balance = walletBalance ? walletBalance / 1e18 : 0;
-    // const balance = 1.1232123123;
+    // const balance = 12.0752968813138;
     const [pendingTx, setPendingTx] = useState(false);
     // const [balance, setBalance] = useState(0)F
 
@@ -88,7 +88,7 @@ const Order = () => {
 
     const handleApproveClick = async formData => {
         setPendingTx(true)
-        await approve()
+        // await approve()
         setPendingTx(false)
     }
 

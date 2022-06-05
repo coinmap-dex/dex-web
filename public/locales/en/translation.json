@@ -16,8 +16,8 @@
     "volume":{
         "title":"volume",
         "totalTransaction":"Tổng số lượng giao dịch",
-        "totalAmountBuyByNewWallet":"Tổng tiền mua từ ví mới",
-        "totalAmountSell":"Tổng tiền bán ra"
+        "totalAmountBuyByNewWallet":"Tổng token mua từ ví mới",
+        "totalAmountSell":"Tổng token bán ra"
     },
     "pool":{
         "title":"pool",

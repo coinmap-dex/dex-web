@@ -64,8 +64,8 @@ const TokenDetail = () => {
                                     <S.TokenInfoDetailFullname>({overviewData?.name})</S.TokenInfoDetailFullname>
                                     <S.TokenInfoDetailContract>Token contract{breakpoint('sm') ? `: ${contract?.slice(0, 8)}...${contract?.slice(-4)}` : ''}</S.TokenInfoDetailContract>
                                     <S.TokenInfolContractCopyIcon />
-                                    <S.TokenInfoDetailContract> - Pair</S.TokenInfoDetailContract>
-                                    <S.TokenInfolContractCopyIcon />
+                                    {/* <S.TokenInfoDetailContract> - Pair</S.TokenInfoDetailContract>
+                                    <S.TokenInfolContractCopyIcon /> */}
                                 </>
                             }
                         </S.TokenInfoContractWrapper>

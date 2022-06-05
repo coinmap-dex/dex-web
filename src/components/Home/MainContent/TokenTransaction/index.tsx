@@ -53,7 +53,7 @@ const getTableColumns = (price, amount, total) => [
     },
     {
         index: 'amount',
-        label: `${amount}(BTC)`,
+        label: `${amount}`,
     },
     {
         index: 'total',
