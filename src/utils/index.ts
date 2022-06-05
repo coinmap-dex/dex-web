@@ -2,6 +2,7 @@ import moment from "moment";
 import { formatEther, formatUnits } from '@ethersproject/units';
 import tokenList from "~configs/list";
 import { BigNumber } from '@ethersproject/bignumber'
+import { ethers } from "ethers";
 
 export function thousandSeparator(v) {
     if (!v)
@@ -32,7 +33,9 @@ export function getTokenName(address) {
 
 export function amountToBN(amount, token) {
     const decimals = tokenList.tokens.filter(i => i.address == token)[0].decimals;
-    return BigNumber.from(amount).mul(BigNumber.from(10).pow(decimals));
+
+    return ethers.utils.parseEther("" + amount)
+    // return BigNumber.from(amount).mul(BigNumber.from(10).pow(decimals));
 }
 
 export function formatAmount(x, token, f = 4) {
@@ -53,4 +56,13 @@ export function formatBalance(x, f = 4) {
 export function numberWithCommas(x) {
     if (!x) return "0";
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export function increaseDecimalNumber(n: number, plus: number ){
+    const numbers = n.toString().split('.');
+    if(numbers.length === 1)
+        return n + plus;
+        const condition = +numbers[1] + plus  <= 0;
+        const newValue = ((condition ? +numbers[1] * 10  : +numbers[1]) +plus).toString();
+    return `${numbers[0]}.${'0'.repeat(numbers[1].length - newValue.length + +condition)}${newValue}`
 }

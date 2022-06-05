@@ -7,6 +7,7 @@ import { setContract } from '~store/modules/home';
 import { useGetSearchMutation } from '~store/modules/home/api';
 import SearchSuggestion from '../Suggestion';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const SearchBar = () => {
     const [keyword, setKeyword] = useState<string>('');
@@ -17,6 +18,7 @@ const SearchBar = () => {
     const [suggetionData, setSuggestionData] = useState([]);
     const [suggetionVisible, setSuggestionVisible] = useState(false);
     const searchInputRef: any = React.useRef(null);
+    const navigate = useNavigate();
 
     React.useEffect(() => {
         searchInputRef.current && (searchInputRef.current.value = address ?? contract);
@@ -50,7 +52,8 @@ const SearchBar = () => {
                     const isToken = keyword.match(/^0x([A-Fa-f0-9]{40})$/);
                     if (isToken) {
                         dispatch(setContract(keyword));
-                        window.history.replaceState({}, '', `/${keyword}`);
+                        navigate(`/${keyword}`)
+                        // window.history.pushState(keyword, '', `/${keyword}`);
                     }
 
                     setSuggestionVisible(true);
