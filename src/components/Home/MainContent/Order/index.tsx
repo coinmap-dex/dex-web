@@ -78,9 +78,9 @@ const Order = () => {
     // const [buy, setBuyAmount] = useState(0);
 
     const { approve, isApproved, balance: walletBalance } = useToken(payToken.address);
-    // const balance = walletBalance ? walletBalance / 1e18 : 0;
+    const balance = walletBalance ? walletBalance / 1e18 : 0;
     // const balance = 1.1232123123;
-    const balance = 100;
+    // const balance = 100;
     const [pendingTx, setPendingTx] = useState(false);
 
     const setPercentageLabel = (percentage) => {
