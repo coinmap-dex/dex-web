@@ -349,8 +349,9 @@ const Order = () => {
                             <S.SubmitOrder
                                 isLoading={pendingTx}
                                 onClick={handleSubmit(handleApproveClick)}
+                                {...{ active: isBuyType }}
                             >
-                                {['Sell', 'Buy'][+isBuyType]} {payToken?.symbol} -&gt; {buyToken?.symbol}
+                                {['Sell', 'Buy'][+isBuyType]} {isBuyType ? `${payToken?.symbol} -> ${buyToken?.symbol}` : `${buyToken?.symbol} -> ${payToken?.symbol}`}
                             </S.SubmitOrder>
                         )
                 }
