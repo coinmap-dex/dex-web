@@ -93,7 +93,7 @@ const Pool = () => {
                                         fill: '#F4F7FC',
                                         fontSize: '1.15rem'
                                     }}
-                                    value="USD" />
+                                    value="Token" />
                             </YAxis>
                             <YAxis
                                 yAxisId="pool-y-right"
@@ -111,7 +111,7 @@ const Pool = () => {
                                         fill: '#F4F7FC',
                                         fontSize: '1.15rem'
                                     }}
-                                    value="Token" />
+                                    value="USD" />
                             </YAxis>
                             <Tooltip
                                 contentStyle={{ backgroundColor: "#1C2740", border: '0' }}

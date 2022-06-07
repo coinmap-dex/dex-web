@@ -347,6 +347,7 @@ const Order = () => {
                         )
                         : (
                             <S.SubmitOrder
+                                isDisabled={payToken?.symbol === buyToken?.symbol}
                                 isLoading={pendingTx}
                                 onClick={handleSubmit(handleApproveClick)}
                                 {...{ active: isBuyType }}
