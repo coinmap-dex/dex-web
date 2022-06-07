@@ -345,15 +345,16 @@ const Order = () => {
                                 Submit order
                             </S.SubmitOrder>
                         )
-                        : (payToken?.symbol !== buyToken?.symbol) ? (
+                        : (
                             <S.SubmitOrder
+                                isDisabled={payToken?.symbol === buyToken?.symbol}
                                 isLoading={pendingTx}
                                 onClick={handleSubmit(handleApproveClick)}
                                 {...{ active: isBuyType }}
                             >
                                 {['Sell', 'Buy'][+isBuyType]} {isBuyType ? `${payToken?.symbol} -> ${buyToken?.symbol}` : `${buyToken?.symbol} -> ${payToken?.symbol}`}
                             </S.SubmitOrder>
-                        ) : <></>
+                        )
                 }
             </S.OrderBox>
             <OrderModal isVisible={isOrderModalVisible} setVisible={setOrderModalVisible} />
