@@ -8,10 +8,10 @@ interface HomeState {
     tokenSymbol: string,
 }
 
-const initialState = {
+export const initialState = {
     contract: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
     orderToken: ''
-} as HomeState
+} as HomeState;
 
 const homeSlice = createSlice({
     name: 'home',

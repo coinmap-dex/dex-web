@@ -14,13 +14,14 @@ import Header from './Header';
 import Footer from './Footer';
 import '../../../polyfills';
 import { useParams } from 'react-router-dom';
-import { setContract } from '~store/modules/home';
+import {initialState, setContract} from '~store/modules/home';
 import { useAppDispatch } from '~hooks';
 
 const Home = () => {
     const { address } = useParams();
     const dispatch = useAppDispatch();
-    address && dispatch(setContract(address));
+    const contract = address ?? initialState.contract;
+    contract && dispatch(setContract(contract));
     return (
         <>
             <S.HeaderWrapper>
