@@ -8,7 +8,7 @@ import {Favorite} from '../../../../models/favorite.model';
 import {thousandSeparator} from '~utils';
 import BitcoinIcon from '~svg/BitcoinIcon';
 import EthereumIcon from '~svg/EthereumIcon';
-import LitecoinIcon from '~svg/LitecoinIcon';
+import BinanceCoinIcon from '~svg/BinanceCoinIcon';
 
 const COLOR_CURRENCY_UP_ID = 'colorCurrencyUp';
 const COLOR_CURRENCY_DOWN_ID = 'colorCurrencyDown';
@@ -125,7 +125,7 @@ const getCoinIcon = (symbol: string) => {
         case ETH_USDT:
             return <EthereumIcon/>;
         case BNB_USDT:
-            return <LitecoinIcon/>;
+            return <BinanceCoinIcon/>;
     }
     return <></>;
 }
