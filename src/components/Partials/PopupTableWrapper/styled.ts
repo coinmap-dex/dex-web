@@ -1,15 +1,19 @@
 import { Table } from 'sezy-design';
 import styled from 'styled-components';
+import breakpoints from '~breakpoints';
 
 export default {
     TableWrapper: styled.div`
       min-width: 92.8rem;
+      max-width: 100%;
       display: flex;
       flex-direction: column;
       background-color: #0F1A30;
       border: 1px solid rgba(44, 54, 73, 0.3);
       div:nth-child(2) {
-        overflow-x:auto;
+        @media ${breakpoints.xs}{
+          overflow-x: hidden;
+        }
         table {
           margin-bottom: 2.5rem;
           thead {
