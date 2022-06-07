@@ -3,9 +3,9 @@ import styled from "styled-components";
 import breakpoints from "~breakpoints";
 
 export const HeaderSection = styled(Section)`
-    padding:0 1rem;
-    @media ${breakpoints.xl} {
-        padding:0 10rem;
+    padding: 0 1rem;
+    @media ${breakpoints.sm} {
+        padding: 0 4.5rem;
     }
 `;
 export const HeaderRow= styled(Row)`
