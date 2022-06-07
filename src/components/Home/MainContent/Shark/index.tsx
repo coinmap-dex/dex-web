@@ -141,7 +141,7 @@ const Shark = () => {
                             tickFormatter={formatYAxisNumber}
                         >
                             <ChartLabel
-                                offset={-2}
+                                offset={-5}
                                 angle={90}
                                 position='insideRight'
                                 style={{
