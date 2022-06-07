@@ -1,5 +1,6 @@
 import { Section } from "sezy-design";
 import styled from "styled-components";
+import breakpoints from '~breakpoints';
 
 export const MainContent= styled(Section)`
     background: #23304A;
@@ -9,6 +10,17 @@ export const MainContent= styled(Section)`
             background:#0F1A30;
             display:flex;
             flex-direction:column;
+            >div:nth-child(4) {
+                >div:nth-child(2) {
+                    @media ${breakpoints.xs}{
+                        width: 90%;
+                        overflow-x: scroll;
+                        &::-webkit-scrollbar {
+                          height: 0.2rem;
+                        }
+                    }
+                }
+            }
         }
     }
 `;
