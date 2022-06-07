@@ -345,7 +345,7 @@ const Order = () => {
                                 Submit order
                             </S.SubmitOrder>
                         )
-                        : (
+                        : (payToken?.symbol !== buyToken?.symbol) ? (
                             <S.SubmitOrder
                                 isLoading={pendingTx}
                                 onClick={handleSubmit(handleApproveClick)}
@@ -353,7 +353,7 @@ const Order = () => {
                             >
                                 {['Sell', 'Buy'][+isBuyType]} {isBuyType ? `${payToken?.symbol} -> ${buyToken?.symbol}` : `${buyToken?.symbol} -> ${payToken?.symbol}`}
                             </S.SubmitOrder>
-                        )
+                        ) : <></>
                 }
             </S.OrderBox>
             <OrderModal isVisible={isOrderModalVisible} setVisible={setOrderModalVisible} />
