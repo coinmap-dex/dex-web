@@ -11,7 +11,7 @@ const SearchSuggestion = ({ data, setData, setVisible, isLoading }) => {
         setVisible(false);
         setData([]);
         dispatch(setContract(contract));
-        window.history.replaceState({}, '', `/${contract}`);
+        window.history.pushState({ contract }, '', `/${contract}`);
     }
 
     return (
