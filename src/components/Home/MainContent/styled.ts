@@ -36,21 +36,20 @@ export const MainContentContentBox = styled.div`
 `;
 
 export const TitleLengend = styled.div`
-    display:none;
-    align-items:center;
-    padding-left:2rem;   
-    flex:1;
+    display: flex;
+    align-items: center;
+    padding-left: 2rem;   
+    flex: 1;
     justify-content: flex-end;
     &>*{
-        white-space:nowrap;
-        margin-left:3rem;
+        white-space: nowrap;
+        margin-left: 3rem;
     }
     >.chart-info-icon {
         cursor: pointer;
     }
     @media ${breakpoints.sm}{
-        padding-left:3rem;   
-        display:flex;
+        padding-left: 3rem;
     }
 `;
 

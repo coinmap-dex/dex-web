@@ -43,13 +43,38 @@ export const VolumeChartWrapper = styled(ResponsiveContainer)`
 export const TooltipWrapper = styled.div`
     margin-top: 1.5rem;
     cursor: pointer;
-    >div>div>div {
-        padding-left: 0;
-        >span:first-child {
-            margin-left: 1rem;
+    >div>div {
+        @media ${breakpoints.xs}{
+            left: -12.5rem;
+            top: 13rem;
+            &:before {
+                display: none;
+            }
+            &:after{
+                content: "";
+                position: absolute;
+                height: 0;
+                width: 0;
+                left: 100%;
+                top: 48%;
+                border: 5px solid transparent;
+                border-left: 5px solid #181818;
+            }
         }
-        >span:nth-child(3) {
-            margin-right: 1rem;
+        >div {
+            @media ${breakpoints.xs}{
+                display: block;
+            }
+            padding-left: 0;
+            >span:first-child {
+                margin-left: 1rem;
+                @media ${breakpoints.xs}{
+                    margin-left: 3rem;
+                }
+            }
+            >span:nth-child(3) {
+              margin-right: 1rem;
+            }
         }
     }
 `;
