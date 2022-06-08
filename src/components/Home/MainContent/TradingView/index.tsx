@@ -96,6 +96,7 @@ const buildPriceScale = (minPriceRange: number) => {
 }
 
 const DEFAULT_SYMBOL = '0x4556a6f454f15c4cd57167a62bda65a6be325d1f~0';
+const DEFAULT_INTERVAL = '15';
 
 class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>, ChartContainerState> {
 
@@ -107,7 +108,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 	static defaultProps: Omit<ChartContainerProps, 'container'> = {
 		symbol: DEFAULT_SYMBOL,
 		// symbol: 'AAPL',
-		interval: localStorage.getItem('chartInterval') as ResolutionString || 'D' as ResolutionString,
+		interval: localStorage.getItem('chartInterval') as ResolutionString || DEFAULT_INTERVAL as ResolutionString,
 		// datafeedUrl: 'https://demo-feed-data.tradingview.com',
 		datafeedUrl: 'https://api.dextrading.io/api/v1/tradingview',
 		// datafeedUrl: 'http://localhost:3000/tradingview',	
@@ -187,7 +188,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 			if (!!this.state.tvWidget) {
 				this.state.tvWidget.setSymbol(
 					this.props.symbol ?? DEFAULT_SYMBOL,
-					this.props.interval ?? 'D' as ResolutionString,
+					this.props.interval ?? DEFAULT_INTERVAL as ResolutionString,
 					() => {
 						console.log('updated symbol', this.props.symbol ?? DEFAULT_SYMBOL)
 					}
