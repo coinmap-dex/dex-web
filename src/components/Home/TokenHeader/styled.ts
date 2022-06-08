@@ -28,8 +28,9 @@ export const TokenInfoDetailData = styled(Col)`
 `;
 export const TokenInfoDetailCol = styled(Col)`
     margin-bottom: 0.2rem;
-    flex: 0 0 35%;
-  margin-right: 2rem;
+    flex: 0 0 40%;
+    width: 80%;
+    margin-right: 2rem;
     &>div{
         display:flex;
         align-items:center;
@@ -39,7 +40,7 @@ export const TokenInfoDetailCol = styled(Col)`
         max-width: 65%;
     }
     @media ${breakpoints.xxl} {
-        flex: 0 0 28%;
+        flex: 0 0 37%;
     }
 `;
 
@@ -155,17 +156,20 @@ export const TokenInfoContractWrapper= styled.div`
     height:1.6rem;
     line-height:1.6rem;
     white-space: nowrap;
-    >svg {
-        &:active {
-            >path {
-                stroke: #b7bec7;
-            }
-        }
-    }
     @media ${breakpoints.sm}{
         // width:38rem;
         height:2.4rem;
         line-height:2.4rem;
+    }
+    .copy-token-icon {
+        min-width: auto;
+        >svg {
+            &:active {
+                >path {
+                    stroke: #b7bec7;
+                }
+            }
+        }
     }
 `;
 
@@ -206,7 +210,8 @@ export const TokenInfoContractCopy = styled(CopyIconComponent)`
 export const TokenInfoPriceCol = styled(Col)`
     border-left:1px solid #1D222C;
     padding-left:1rem;
-    flex: 0 0 26.5%;
+    flex: 0 0 22.5%;
+    width: 24%;
     &>div:first-child{
         display:flex;
     }
@@ -218,10 +223,10 @@ export const TokenInfoPriceCol = styled(Col)`
         padding-left: 5%;
     }
     @media ${breakpoints.xl}{
-        flex: 0 0 25.5%;
+        flex: 0 0 20.5%;
     }
     @media ${breakpoints.xxl}{
-        flex: 0 0 32.5%;
+        flex: 0 0 22.5%;
     }
 `;
 export const TokenInfoPriceData = styled(Label)`
