@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Shimmer } from 'sezy-design'
+import {Shimmer, Tooltip as SezyTooltip} from 'sezy-design'
 import * as  S from './styled';
 import { useGetOverviewQuery } from '~store/modules/home/api';
 import { useAppSelector, useAxios, useBreakpoint, useCoinmapDex } from '~hooks';
@@ -7,6 +7,10 @@ import Star from '~svg/Star';
 import { setTokenSymbol } from '~store/modules/home';
 import { useDispatch } from 'react-redux';
 import OrderModal from './OrderModal';
+import ChartInfoIcon from '~svg/ChartInfoIcon';
+
+const COPY_MESSAGE = 'Copy';
+const COPIED_MESSAGE = 'Copied!';
 
 const TokenDetail = () => {
     const dispatch = useDispatch();
@@ -14,6 +18,7 @@ const TokenDetail = () => {
     const contract = useAppSelector(state => state.home.contract)
     const { data: overviewData, isLoading, error } = useGetOverviewQuery(contract);
     const [isOrderVisible, setOrderVisible] = useState(false);
+    const [copyMessage, setCopyMessage] = useState<string>(COPY_MESSAGE);
 
     useEffect(() => {
         dispatch(setTokenSymbol(overviewData?.symbol));
@@ -21,6 +26,7 @@ const TokenDetail = () => {
 
     const onContractCopyIconClick = () => {
         navigator.clipboard.writeText(contract);
+        setCopyMessage(COPIED_MESSAGE);
     }
 
     return (
@@ -61,8 +67,14 @@ const TokenDetail = () => {
                             {
                                 !isLoading && <>
                                     <S.TokenInfoDetailFullname>({overviewData?.name})</S.TokenInfoDetailFullname>
-                                    <S.TokenInfoDetailContract>Token contract{breakpoint('sm') ? `: ${contract?.slice(0, 8)}...${contract?.slice(-4)}` : ''}</S.TokenInfoDetailContract>
-                                    <S.TokenInfolContractCopyIcon onClick={onContractCopyIconClick} />
+                                    <S.TokenInfoDetailContract>Token contract{breakpoint('sm') ? `: ${contract}` : ''}</S.TokenInfoDetailContract>
+                                    <SezyTooltip size="s" content={copyMessage} className="copy-token-icon">
+                                        <div
+                                            onMouseLeave={() => setCopyMessage(COPY_MESSAGE)}
+                                            onClick={onContractCopyIconClick}>
+                                            <S.TokenInfolContractCopyIcon />
+                                        </div>
+                                    </SezyTooltip>
                                 </>
                             }
                         </S.TokenInfoContractWrapper>
