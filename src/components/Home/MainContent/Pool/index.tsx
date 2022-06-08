@@ -44,7 +44,7 @@ const Pool = () => {
                         const nameArray = pool?.name?.split('/');
                         return <S.Pool key={`pool_item_${index}`}>
                             <div>
-                                <a>exchange</a> | {pool?.name} LP Holdings: <span>(${thousandSeparator(pool?.liquidity)})</span>
+                                <a>{pool?.exchange}</a> | {pool?.name} LP Holdings: <span>(${thousandSeparator(pool?.liquidity)})</span>
                             </div>
                             <div>{`${thousandSeparator(reserve)} ${nameArray[1]}`}</div>
                         </S.Pool>
