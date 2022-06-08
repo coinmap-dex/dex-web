@@ -37,7 +37,7 @@ const chartLegend = t => {
 }
 
 const chartHeader = (t, breakpoint) => {
-    const isDisplayLegendItemInInfoIcon = breakpoint('lg') && !breakpoint('xl');
+    const isDisplayLegendItemInInfoIcon = (breakpoint('xs') && !breakpoint('sm')) || (breakpoint('lg') && !breakpoint('xl'));
     return (
         <>
             {!isDisplayLegendItemInInfoIcon && chartLegend(t)}
