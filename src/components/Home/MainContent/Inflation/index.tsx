@@ -21,7 +21,7 @@ const Inflattion = () => {
                 Inflationary
             </Label>
         </S.InflattionTitle>
-        <S.InflattionNumber>{thousandSeparator(data?.rate) || ''} Token/s</S.InflattionNumber>
+        <S.InflattionNumber>{thousandSeparator(data?.rate) || ''} Token/ngày</S.InflattionNumber>
         <S.InflattionButton>{inflationary ? 'yes': 'no'}</S.InflattionButton>
     </S.InflattionWrapper>
 }

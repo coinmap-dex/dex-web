@@ -8,11 +8,12 @@ export const TokenHeaderSection = styled(Section)`
 `;
 export const TokenHeaderRow = styled(Row)`
     padding:0.8rem 1rem;
+    justify-content: space-between;
     @media ${breakpoints.sm} {
         padding:1.5rem 2rem;
     }
     @media ${breakpoints.xl} {
-        padding:1.5rem 2.5rem;
+        padding:1.5rem 4rem;
     }
 `;
 
@@ -40,7 +41,7 @@ export const TokenInfoDetailCol = styled(Col)`
         max-width: 65%;
     }
     @media ${breakpoints.xxl} {
-        flex: 0 0 37%;
+        flex: 0 0 20%;
     }
 `;
 
@@ -210,8 +211,8 @@ export const TokenInfoContractCopy = styled(CopyIconComponent)`
 export const TokenInfoPriceCol = styled(Col)`
     border-left:1px solid #1D222C;
     padding-left:1rem;
-    flex: 0 0 22.5%;
-    width: 24%;
+    flex: 0 0 16%;
+    width: 16%;
     &>div:first-child{
         display:flex;
     }
@@ -223,10 +224,11 @@ export const TokenInfoPriceCol = styled(Col)`
         padding-left: 5%;
     }
     @media ${breakpoints.xl}{
-        flex: 0 0 20.5%;
+        flex: 0 0 15%;
+        width: 15%
     }
     @media ${breakpoints.xxl}{
-        flex: 0 0 22.5%;
+        flex: 0 0 18%;
     }
 `;
 export const TokenInfoPriceData = styled(Label)`
