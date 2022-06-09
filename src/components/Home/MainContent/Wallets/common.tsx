@@ -14,7 +14,10 @@ export const getWalletContracts = (dispatch, setContract) => (key, data, isLoadi
         ? <WalletShimmer />
         : data?.map((d, index) =>
             <a key={`wallet_${key}_${index}`}
-                onClick={() => d.address && dispatch(setContract(d.address))}
+               // onClick={() => d.address && dispatch(setContract(d.address))}
+               href={`https://bscscan.com/address/${d.address}`}
+               target="_blank"
+               rel="noreferrer"
             >
                 {d.address}
             </a>
