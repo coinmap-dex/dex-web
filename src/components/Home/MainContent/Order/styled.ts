@@ -192,6 +192,7 @@ export default {
         cursor:pointer;
         &:hover {
             background: ${props => props['active'] ? '#14B5E5' : '#FF5C70'};
+            opacity: 1;
         }
     `,
 }
