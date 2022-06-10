@@ -21,7 +21,7 @@ export default {
         height: 2.8rem;
         line-height: 2.8rem;
         text-align: center;
-        background: linear-gradient(123.77deg, #993381 29.96%, #BB5387 78.97%);
+        background: linear-gradient(225deg, #18C8FF 14.89%, #933FFE 85.85%);
         border-radius: 5rem;
         font-size: 1.2rem;
         cursor: pointer;
@@ -46,13 +46,17 @@ export default {
             display: inline-block;
             font-size: 12px;
         }
+        >svg {
+            margin-left: 1.1rem;
+            padding-bottom: 0.3rem;
+        }
     `,
     Logout: styled.a`
         position: absolute;
         display: block;
         width: 10rem;
         height: 3.235rem;
-        background: linear-gradient(123.77deg, #EF6777 29.96%, #FF5C70 78.97%);
+        background: linear-gradient(123.77deg, #993381 29.96%, #BB5387 78.97%);
         border-radius: 2.94118rem;
         text-align: center;
         line-height: 3rem;
