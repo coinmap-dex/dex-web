@@ -6,6 +6,7 @@ import { useEagerConnect, useInactiveListener } from '~hooks';
 
 import { injected, supportedChainIds } from "~configs/connectors";
 import { InjectedConnector } from '@web3-react/injected-connector';
+import TokenUpIcon from '~svg/TokenUpIcon';
 
 const UserWallet = () => {
   const context = useWeb3React();
@@ -62,7 +63,7 @@ const UserWallet = () => {
                 onMouseOut={handleHiddenDisconnectButton}
               >{` ${account.substring(0, 6)}...${account.substring(
                 account.length - 6
-              )}`}
+              )}`}<TokenUpIcon/>
               </S.AccountAddress>
               {isShownDisconnectButton && (
                   <S.Logout
