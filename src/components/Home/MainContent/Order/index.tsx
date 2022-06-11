@@ -230,7 +230,9 @@ const Order = () => {
                     </S.Balance>
                 </S.OrderBoxDetail>
                 <S.OrderBoxInputWrapper>
-                    <S.OrderBoxInputLabel>Price {buyToken?.symbol}/COIN</S.OrderBoxInputLabel>
+                    <S.OrderBoxInputLabel>
+                        Price {isBuyType ? payToken?.symbol : buyToken?.symbol}/{isBuyType ? buyToken?.symbol : payToken?.symbol}
+                    </S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         ref={priceInputRef}
                         valueType='number'
@@ -252,7 +254,7 @@ const Order = () => {
                     />
                 </S.OrderBoxInputWrapper>
                 <S.OrderBoxInputWrapper>
-                    <S.OrderBoxInputLabel>Amount COIN</S.OrderBoxInputLabel>
+                    <S.OrderBoxInputLabel>{isBuyType ? payToken?.symbol : buyToken?.symbol}</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         ref={amountInputRef}
                         valueType='number'
@@ -309,7 +311,7 @@ const Order = () => {
                         borderRadius: 'var(--border-radius)'
                     }}
                 >
-                    <S.OrderBoxInputLabel>Total {buyToken?.symbol}</S.OrderBoxInputLabel>
+                    <S.OrderBoxInputLabel>{isBuyType ? buyToken?.symbol : payToken?.symbol}</S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         isReadOnly={true}
                         ref={totalInputRef}
