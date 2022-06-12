@@ -45,7 +45,7 @@
     "react-scripts": "^5.0.0",
     "recharts": "^2.1.9",
     "redux": "^4.1.0",
-    "sezy-design": "^1.6.89",
+    "sezy-design": "^1.6.111",
     "web3": "^1.7.3"
   },
   "devDependencies": {
