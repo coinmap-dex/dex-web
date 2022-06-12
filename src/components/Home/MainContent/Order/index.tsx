@@ -1,10 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 
-import _ from 'lodash';
 import S from './styled';
-import { t } from 'i18next';
 import { useAppSelector, useToken } from '~hooks';
-import { Input, Option, Select } from 'sezy-design';
 import PlusIcon from '~svg/Plus';
 import MinusIcon from '~svg/Minus';
 import { useState } from 'react';
@@ -16,8 +13,9 @@ import OrderModal from './OrderModal';
 import { amountToBN, increaseDecimalNumber } from '~utils';
 import Web3 from 'web3';
 import axios from 'axios';
-import { BigNumber } from '@ethersproject/bignumber'
-import { ethers } from 'ethers';
+import TokenListModal from './TokenListModal';
+import ImportTokenModal from './ImportTokenModal';
+import {useGetPoolQuery} from '~store/modules/home/api';
 
 const getTokenFromList = (symbol) => {
     if (!symbol)
@@ -41,6 +39,9 @@ const Order = () => {
 
     const [payToken, setPayToken] = useState<any>({});
     const [buyToken, setBuyToken] = useState<any>({});
+
+    const { data: poolData } = useGetPoolQuery(contract);
+    const firstPoolPriceUnit = poolData?.pools?.[0]?.name?.split('/')?.[1] ?? '';
 
     useEffect(() => {
         setPayToken(getTokenFromList(orderToken));
@@ -70,6 +71,8 @@ const Order = () => {
 
     const [isBuyType, setBuyType] = useState(true);
     const [isOrderModalVisible, setOrderModalVisible] = useState(false);
+    const [isTokenListModalVisible, setTokenListModalVisible] = useState(false);
+    const [isImportTokenModalVisible, setImportTokenModalVisible] = useState(false);
 
     const context = useWeb3React();
     const { account, library } = context;
@@ -209,20 +212,7 @@ const Order = () => {
                 <S.OrderBoxDetail>
                     <div>
                         <span>Avbl</span>
-                        <S.TokenSelect
-                            placeholder='Select'
-                            type='nude'
-                            onChange={e => {
-                                setPayToken(getTokenFromList(e.target.value));
-                            }}
-                            defaultValue={orderToken}
-                        >
-                            {
-                                tokenList?.tokens?.map((v, k) => (
-                                    <Option key={v.symbol} value={v.symbol}>{v.symbol}</Option>
-                                ))
-                            }
-                        </S.TokenSelect>
+                        <S.TokenButton onClick={() => setTokenListModalVisible(true)}>{firstPoolPriceUnit}</S.TokenButton>
                     </div>
                     <S.Balance>
                         <span>My balance  </span>
@@ -360,6 +350,12 @@ const Order = () => {
                 }
             </S.OrderBox>
             <OrderModal isVisible={isOrderModalVisible} setVisible={setOrderModalVisible} />
+            <TokenListModal
+                isVisible={isTokenListModalVisible}
+                setVisible={setTokenListModalVisible}
+                setImportTokenModalVisible={setImportTokenModalVisible}
+            />
+            <ImportTokenModal isVisible={isImportTokenModalVisible} setVisible={setImportTokenModalVisible} />
         </>
     );
 }

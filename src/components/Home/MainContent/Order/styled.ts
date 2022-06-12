@@ -74,30 +74,19 @@ export default {
         cursor:pointer;
     `,
     OrderBoxDetail: styled.div`
-        display:flex;
-        justify-content:space-between;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        color:#858D9A;
-        font-size:1.4rem;
-        margin-top:1rem;
+        color: #858D9A;
+        font-size: 1.4rem;
+        margin-top: 3rem;
     `,
-    TokenSelect: styled(Select)`
+    TokenButton: styled.span`
         width: 8rem;
-        display: inline-block;
         background-color: #0D172D;
         margin-left: 2rem;
-        >div:first-child {
-          height: 2.8rem;
-          & input{
-            color: #E5A03B;
-            font-size: 1.4rem;
-            padding: 0 !important;
-            text-align: center;
-          }
-          & svg{
-              fill: #E5A03B;
-          }
-        }
+        color: #E5A03B;
+        cursor: pointer;
     `,
     Balance: styled.div`
         white-space: nowrap;

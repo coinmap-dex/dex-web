@@ -72,6 +72,9 @@ export const homeApi = createApi({
     getFavoriteList: builder.query({
       query: () => ({ url: `favorite-list` }),
     }),
+    getBalancesByAccount: builder.query({
+      query: (account) => ({ url: `balances/${account}` }),
+    }),
     postMetaMaskSignUp: builder.mutation({
       query: (publicAddress) => ({
         url: 'users',
@@ -114,6 +117,7 @@ export const {
   useGetWalletTotalTransactionQuery,
   useGetMetaMaskPublicAddressMutation,
   useGetFavoriteListQuery,
+  useGetBalancesByAccountQuery,
   usePostMetaMaskSignUpMutation,
   usePostMetaMaskAuthenticationMutation
 } = homeApi;
