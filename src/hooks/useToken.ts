@@ -2,6 +2,7 @@ import { useCallback, useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { useErc20TokenContract, useCoinmapDexContract } from "./useContracts";
 import useReadLocalStorage from "./useReadLocalStorage";
+import {LOCAL_STORAGE} from '../constants/local-storage.constants';
 
 const useToken = (address) => {
   const { account } = useWeb3React();
@@ -10,7 +11,7 @@ const useToken = (address) => {
 
   const [isApproved, setApprove] = useState(false)
   const [balance, setBalance] = useState(0)
-  const blocknumber = useReadLocalStorage('blocknumber')
+  const blocknumber = useReadLocalStorage(LOCAL_STORAGE.BLOCK_NUMBER)
 
   const fetchAllowance = useCallback(async () => {
     if (token) {

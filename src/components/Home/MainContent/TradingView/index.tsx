@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { TRADING_VIEW } from '../../../../constants/trading-view.constants';
 import { isMobileScreen } from '~utils/screen.util';
 import {getNumberOnDecimalPartOfPriceAfterZero} from '~utils/trading-view.util';
+import {LOCAL_STORAGE} from '../../../../constants/local-storage.constants';
 
 export interface ChartContainerProps {
 	symbol: ChartingLibraryWidgetOptions['symbol'];
@@ -67,7 +68,7 @@ const customWidgetPriceScale = (tvWidget: IChartingLibraryWidget) => {
 
 const trackChartIntervalChange = (tvWidget: IChartingLibraryWidget) => {
 	tvWidget.activeChart().onIntervalChanged().subscribe(null, (interval) => {
-		localStorage.setItem('chartInterval', interval);
+		localStorage.setItem(LOCAL_STORAGE.CHART_INTERVAL, interval);
 	});
 }
 
@@ -108,7 +109,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 	static defaultProps: Omit<ChartContainerProps, 'container'> = {
 		symbol: DEFAULT_SYMBOL,
 		// symbol: 'AAPL',
-		interval: localStorage.getItem('chartInterval') as ResolutionString || DEFAULT_INTERVAL as ResolutionString,
+		interval: localStorage.getItem(LOCAL_STORAGE.CHART_INTERVAL) as ResolutionString || DEFAULT_INTERVAL as ResolutionString,
 		// datafeedUrl: 'https://demo-feed-data.tradingview.com',
 		datafeedUrl: 'https://api.dextrading.io/api/v1/tradingview',
 		// datafeedUrl: 'http://localhost:3000/tradingview',	
