@@ -6,13 +6,16 @@ import { useBreakpoint } from '~hooks';
 import SearchBar from '../SearchBar';
 import NavigationIcon from '~svg/Navigation';
 import LeftMenu from '../LeftMenu';
-import Popup from './Popup';
+import MenuPopup from './MenuPopup';
 
 const Menu = () => {
     const grid = 4;
     const breakpoint = useBreakpoint();
     const [isLeftMenuActive, setLeftMenuActive] = React.useState(false);
     const [isPopupVisible, setPopupVisible] = React.useState(false);
+    const navigateToHome = () => {
+        window.open('/', '_self');
+    }
     return (
         <>
             <S.MenuSection>
@@ -26,7 +29,7 @@ const Menu = () => {
                             <SearchBar />
                         </S.NavigationWrapper>
                         : <S.MenuRow>
-                            <Col grid={grid}><div>Home</div></Col>
+                            <Col grid={grid}><div onClick={navigateToHome}>Home</div></Col>
                             <Col grid={grid}><div onClick={()=>setPopupVisible(true)}>Data</div></Col>
                             <Col grid={grid}><div onClick={()=>setPopupVisible(true)}>Trade</div></Col>
                             <Col grid={grid}><div onClick={()=>setPopupVisible(true)}>Shark - Trader</div></Col>
@@ -37,7 +40,7 @@ const Menu = () => {
                 }
             </S.MenuSection>
             {
-                isPopupVisible && <Popup isVisible={isPopupVisible} setVisible={setPopupVisible} />
+                isPopupVisible && <MenuPopup isVisible={isPopupVisible} setVisible={setPopupVisible} />
             }
         </>
     )

@@ -1,9 +1,6 @@
-import { Modal, Row, Section } from "sezy-design";
+import { Modal } from "sezy-design";
 import styled from "styled-components";
 import breakpoints from "~breakpoints";
-import Coinmap from "~svg/coinmap";
-import Logo from "~svg/logo";
-import Times from "~svg/Times";
 
 export default {
     Modal: styled(Modal)`
@@ -27,6 +24,7 @@ export default {
         }
         &>svg:first-child{
             margin-bottom:10px;
+            width: 44px;
         }
     `,
     Pro: styled.div`
@@ -37,6 +35,9 @@ export default {
         letter-spacing: 0.5em;
         color: #A8BCDE;
         text-align: center;
+        @media ${breakpoints.xs}{
+          font-size: 10px;
+        }
     `,
     Title1: styled.div`
         font-style: normal;
@@ -46,6 +47,9 @@ export default {
         text-align: center;
         letter-spacing: 2px;
         color: #FFFFFF;
+        @media ${breakpoints.xs}{
+            font-size: 22px;
+        }
     `,
     Title2: styled.div`
 
@@ -75,6 +79,10 @@ export default {
 		-webkit-text-fill-color: transparent;
 		animation: textclip 1.5s linear infinite;
 		display: inline-block;
+
+        @media ${breakpoints.xs}{
+            font-size: 22px;
+        }
     `,
     Title3: styled.div`
         font-style: normal;
@@ -84,6 +92,9 @@ export default {
         text-align: center;
         color: #B6BBC3;
         margin-top:38px;
+        @media ${breakpoints.xs}{
+            font-size: 8.5px;
+        }
     `,
     Button: styled.button`
         width: 245.14px;
@@ -100,6 +111,11 @@ export default {
         color: #FFFFFF;
         margin-top:38px;
         cursor: pointer;
+        @media ${breakpoints.xs}{
+            font-size: 14px;
+            width: 122.75px;
+            height: 44px;
+        }
     `,
     Exit: styled.div`
     position:absolute;
