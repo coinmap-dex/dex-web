@@ -33,8 +33,7 @@ const TokenListModal = ({
     const isSearching = !!searchKeyword;
     const context = useWeb3React();
     const { account } = context;
-    // const { data: balanceData } = useGetBalancesByAccountQuery(account);
-    const { data: balanceData } = useGetBalancesByAccountQuery('0x6924C22Ad6cf7b2b89291A1aEfD5eb8476E78E04');
+    const { data: balanceData } = useGetBalancesByAccountQuery(account);
 
     const mergeAccountBalancesWithStoredBalances = (
         accountBalances: Balance[],
