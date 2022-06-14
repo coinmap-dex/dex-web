@@ -1,16 +1,11 @@
-import React from 'react'
-import { Col, Row, Section } from 'sezy-design'
-import _ from 'lodash';
+import React from 'react';
 import S from './styled';
-import { useBreakpoint } from '~hooks';
 import Logo from '~svg/logo';
 import Coinmap from '~svg/coinmap';
 import Times from '~svg/Times';
 import Popup1 from '~svg/Popup1';
 
-const Popup = ({ isVisible, setVisible }) => {
-    const grid = 4;
-    const breakpoint = useBreakpoint();
+const MenuPopup = ({ isVisible, setVisible }) => {
     return (
         <S.Modal isVisible={isVisible} setVisible={setVisible}>
             <S.Background1><Popup1/></S.Background1>
@@ -43,4 +38,4 @@ const Popup = ({ isVisible, setVisible }) => {
 }
 
 
-export default Popup
+export default MenuPopup;
