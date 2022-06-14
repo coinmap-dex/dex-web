@@ -6,33 +6,40 @@ import { useBreakpoint } from '~hooks';
 import SearchBar from '../SearchBar';
 import NavigationIcon from '~svg/Navigation';
 import LeftMenu from '../LeftMenu';
+import Popup from './Popup';
 
 const Menu = () => {
     const grid = 4;
     const breakpoint = useBreakpoint();
     const [isLeftMenuActive, setLeftMenuActive] = React.useState(false);
+    const [isPopupVisible, setPopupVisible] = React.useState(false);
     return (
-        <S.MenuSection>
-            {
-                breakpoint('xs') && !breakpoint('sm')
-                    ? <S.NavigationWrapper>
-                        <S.NavigationIconWrapper>
-                            <NavigationIcon onClick={() => setLeftMenuActive(true)} />
-                        </S.NavigationIconWrapper>
-                        <LeftMenu isActive={isLeftMenuActive} setActive={setLeftMenuActive} />
-                        <SearchBar />
-                    </S.NavigationWrapper>
-                    : <S.MenuRow>
-                        <Col grid={grid}>Home</Col>
-                        <Col grid={grid}>Data</Col>
-                        <Col grid={grid}>Trade</Col>
-                        <Col grid={grid}>Shark - Trader</Col>
-                        <Col grid={grid}>Bot</Col>
-                        <Col grid={grid}>More</Col>
-                    </S.MenuRow>
+        <>
+            <S.MenuSection>
+                {
+                    breakpoint('xs') && !breakpoint('sm')
+                        ? <S.NavigationWrapper>
+                            <S.NavigationIconWrapper>
+                                <NavigationIcon onClick={() => setLeftMenuActive(true)} />
+                            </S.NavigationIconWrapper>
+                            <LeftMenu isActive={isLeftMenuActive} setActive={setLeftMenuActive} />
+                            <SearchBar />
+                        </S.NavigationWrapper>
+                        : <S.MenuRow>
+                            <Col grid={grid}><div>Home</div></Col>
+                            <Col grid={grid}><div onClick={()=>setPopupVisible(true)}>Data</div></Col>
+                            <Col grid={grid}><div onClick={()=>setPopupVisible(true)}>Trade</div></Col>
+                            <Col grid={grid}><div onClick={()=>setPopupVisible(true)}>Shark - Trader</div></Col>
+                            <Col grid={grid}><div onClick={()=>setPopupVisible(true)}>Bot</div></Col>
+                            <Col grid={grid}><div onClick={()=>setPopupVisible(true)}>More</div></Col>
+                        </S.MenuRow>
 
+                }
+            </S.MenuSection>
+            {
+                isPopupVisible && <Popup isVisible={isPopupVisible} setVisible={setPopupVisible} />
             }
-        </S.MenuSection>
+        </>
     )
 }
 

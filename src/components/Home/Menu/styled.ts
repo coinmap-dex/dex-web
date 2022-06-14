@@ -26,6 +26,7 @@ export default {
             line-height: 7.8rem;
             white-space: nowrap;
             flex: 0 0 12%;
+            cursor: pointer;
             @media ${breakpoints.sm}{
                 
             }
