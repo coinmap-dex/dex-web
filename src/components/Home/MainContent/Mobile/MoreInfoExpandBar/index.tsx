@@ -10,7 +10,9 @@ const MoreInfoExpandBar = (props: MoreInfoExpandBarProps) => {
     const onClick = props?.onClick;
     return <S.MoreInfoExpandContainer onClick={onClick}>
         <S.MoreInfoExpandIconContainer>
-            <DoublePlus />
+            <img src='/images/more1.png'/>
+            <img src='/images/more2.png'/>
+            <img src='/images/add.png'/>
         </S.MoreInfoExpandIconContainer>
     </S.MoreInfoExpandContainer>
 }
