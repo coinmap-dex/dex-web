@@ -36,6 +36,7 @@ export const TokenInfoDetailCol = styled(Col)`
         display:flex;
         align-items:center;
         line-height:0;
+        background-color: #0C122A;
     }
     @media ${breakpoints.xs} {
         max-width: 65%;
