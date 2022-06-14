@@ -56,7 +56,6 @@ export const DonutPercent = styled.text`
 `
 
 export const DonutData = styled.text`
-    transform:translateY(10%);
     &>tspan{
         font-size: 0.42rem;
         line-height: 1;
