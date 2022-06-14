@@ -1,8 +1,8 @@
-export interface Token {
+export interface SearchResult {
     address: string;
-    decimals: number;
+    decimals: string;
+    holder: number;
     logo: string;
     name: string;
     symbol: string;
-    tag?: string;
 }

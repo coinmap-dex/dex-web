@@ -19,6 +19,7 @@ export default {
       color: #50B6D4;
       margin-bottom: 1.6rem;
       align-items: self-end;
+      cursor: pointer;
       >img {
         width: 2.4rem;
         margin-right: 1rem;

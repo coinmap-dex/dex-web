@@ -18,6 +18,9 @@ export default {
     ItemInfo: styled.div`
       font-size: 1.7rem;
       padding-left: 1.3rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     `,
     Balance: styled.span`
       color: #FEFEFE;

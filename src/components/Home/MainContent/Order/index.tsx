@@ -16,6 +16,7 @@ import axios from 'axios';
 import TokenListModal from './TokenListModal';
 import ImportTokenModal from './ImportTokenModal';
 import {useGetPoolQuery} from '~store/modules/home/api';
+import {Balance} from '../../../../models/balance.model';
 
 const getTokenFromList = (symbol) => {
     if (!symbol)
@@ -73,6 +74,7 @@ const Order = () => {
     const [isOrderModalVisible, setOrderModalVisible] = useState(false);
     const [isTokenListModalVisible, setTokenListModalVisible] = useState(false);
     const [isImportTokenModalVisible, setImportTokenModalVisible] = useState(false);
+    const [selectedImportToken, setSelectedImportToken] = useState<Balance>({});
 
     const context = useWeb3React();
     const { account, library } = context;
@@ -354,8 +356,12 @@ const Order = () => {
                 isVisible={isTokenListModalVisible}
                 setVisible={setTokenListModalVisible}
                 setImportTokenModalVisible={setImportTokenModalVisible}
+                setSelectedImportToken={setSelectedImportToken}
             />
-            <ImportTokenModal isVisible={isImportTokenModalVisible} setVisible={setImportTokenModalVisible} />
+            <ImportTokenModal
+                isVisible={isImportTokenModalVisible}
+                setVisible={setImportTokenModalVisible}
+                selectedImportToken={selectedImportToken} />
         </>
     );
 }
