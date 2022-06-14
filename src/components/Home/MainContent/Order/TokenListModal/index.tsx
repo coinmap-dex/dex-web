@@ -7,7 +7,7 @@ import {TOKEN_ITEM_TYPE} from '../../../../../constants/order.constants';
 import {useWeb3React} from '@web3-react/core';
 import {useGetBalancesByAccountQuery} from '~store/modules/home/api';
 import {Balance} from '../../../../../models/balance.model';
-import {getStoredBalances, getTokenFromList} from '~utils/order.util';
+import {getStoredBalances} from '~utils/order.util';
 import _ from 'lodash';
 
 interface IActionConfirmModalProps {
@@ -57,8 +57,8 @@ const TokenListModal = ({
 
     const balances: Balance[] = getBalances();
 
-    const handleTokenItemClick = (paySymbol) => {
-        setPayToken(getTokenFromList(paySymbol));
+    const handleTokenItemClick = (payToken) => {
+        setPayToken(payToken);
         setVisible(false);
     }
 
@@ -84,7 +84,7 @@ const TokenListModal = ({
                     {!isSearching && balances.map((balance: Balance) => {
                         return (
                             <TokenItem
-                                onClick={() => handleTokenItemClick(balance?.token?.symbol)}
+                                onClick={() => handleTokenItemClick(balance?.token)}
                                 key={balance?.token?.address}
                                 type={TOKEN_ITEM_TYPE.BALANCE}
                                 balance={balance} />
