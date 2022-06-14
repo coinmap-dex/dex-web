@@ -7,6 +7,7 @@ import {setStoredBalances} from '~utils/order.util';
 interface IActionConfirmModalProps {
     isVisible: boolean,
     setVisible: (boolean) => void,
+    setSearchKeyword: (keyword) => void,
     selectedImportToken: Balance
 }
 
@@ -15,6 +16,7 @@ const DEFAULT_LOGO = '../../../images/default-token-logo.png';
 const ImportTokenModal = ({
     isVisible,
     setVisible,
+    setSearchKeyword,
     selectedImportToken
 }: IActionConfirmModalProps) => {
     const [logo, setLogo] = useState(selectedImportToken?.token?.logo || DEFAULT_LOGO);
@@ -27,6 +29,7 @@ const ImportTokenModal = ({
         if (isViewOnBscScanChecked) {
             navigateToBscScan();
         }
+        setSearchKeyword('');
         setVisible(false);
     }
     const onLogoError = () => {

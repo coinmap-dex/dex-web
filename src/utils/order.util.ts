@@ -1,6 +1,7 @@
 import {LOCAL_STORAGE} from '../constants/local-storage.constants';
 import {Balance} from '../models/balance.model';
 import _ from 'lodash';
+import tokenList from '~configs/list';
 
 export const getStoredBalances = (): Balance[] => {
     const storedBalanceString = localStorage.getItem(LOCAL_STORAGE.STORED_BALANCES);
@@ -18,4 +19,11 @@ export const setStoredBalances = (balances: Balance | Balance[]): void => {
     storedBalances.push(...receivedBalances);
     const filteredBalances = _.uniqBy(storedBalances, (balance: Balance) => balance.token?.address);
     localStorage.setItem(LOCAL_STORAGE.STORED_BALANCES, JSON.stringify(filteredBalances));
+}
+
+export const getTokenFromList = (symbol) => {
+    if (!symbol)
+        return {}
+    const upperCaseSymbol = symbol.toUpperCase();
+    return tokenList.tokens.find(v => v.symbol === upperCaseSymbol);
 }

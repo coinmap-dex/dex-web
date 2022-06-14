@@ -9,10 +9,10 @@ import {getStoredBalances} from '~utils/order.util';
 
 type TokenSearchBarProps = {
     setSearchResultTokens: (balances) => void;
-    setSearching: (boolean) => void;
+    setSearchKeyword: (keyword) => void;
 }
 
-const TokenSearchBar = ({setSearchResultTokens, setSearching}: TokenSearchBarProps) => {
+const TokenSearchBar = ({setSearchResultTokens, setSearchKeyword}: TokenSearchBarProps) => {
     const [requestSearch, { isLoading: isSearchLoading }] = useGetSearchMutation();
 
     const filterDuplicatedStoredBalances = (searchResults: SearchResult[]) => {
@@ -48,7 +48,7 @@ const TokenSearchBar = ({setSearchResultTokens, setSearching}: TokenSearchBarPro
                 onKeyUp={
                     _.debounce(async (e) => {
                         const keyword = e.target.value;
-                        setSearching(!!keyword);
+                        setSearchKeyword(keyword);
                         const searchResults: SearchResult[] = ((await requestSearch(keyword)) as any)?.data ?? [];
                         setSearchResultTokens(mapBalancesFromSearchResults(filterDuplicatedStoredBalances(searchResults)));
                     }, 500)

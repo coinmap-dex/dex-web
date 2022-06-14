@@ -6,7 +6,6 @@ import PlusIcon from '~svg/Plus';
 import MinusIcon from '~svg/Minus';
 import { useState } from 'react';
 import { useWeb3React } from "@web3-react/core";
-import tokenList from "~configs/list";
 import core from "~configs/core";
 import { useForm } from 'react-hook-form';
 import OrderModal from './OrderModal';
@@ -17,13 +16,7 @@ import TokenListModal from './TokenListModal';
 import ImportTokenModal from './ImportTokenModal';
 import {useGetPoolQuery} from '~store/modules/home/api';
 import {Balance} from '../../../../models/balance.model';
-
-const getTokenFromList = (symbol) => {
-    if (!symbol)
-        return {}
-    const upperCaseSymbol = symbol.toUpperCase();
-    return tokenList.tokens.find(v => v.symbol === upperCaseSymbol);
-}
+import {getTokenFromList} from '~utils/order.util';
 
 const PRICE_INPUT_ID = 1;
 const AMOUNT_INPUT_ID = 2;
@@ -75,6 +68,7 @@ const Order = () => {
     const [isTokenListModalVisible, setTokenListModalVisible] = useState(false);
     const [isImportTokenModalVisible, setImportTokenModalVisible] = useState(false);
     const [selectedImportToken, setSelectedImportToken] = useState<Balance>({});
+    const [importTokenSearchKeyword, setImportTokenSearchKeyword] = useState<string>('');
 
     const context = useWeb3React();
     const { account, library } = context;
@@ -82,7 +76,7 @@ const Order = () => {
     // const [pay, setPayAmount] = useState(0);
     // const [buy, setBuyAmount] = useState(0);
 
-    const { approve, isApproved, balance: walletBalance } = useToken(payToken.address);
+    const { approve, isApproved, balance: walletBalance } = useToken(payToken?.address ?? '');
     const balance = walletBalance ? walletBalance / 1e18 : 0;
     // const balance = 1.1232123123;
     // const balance = 100;
@@ -357,11 +351,15 @@ const Order = () => {
                 setVisible={setTokenListModalVisible}
                 setImportTokenModalVisible={setImportTokenModalVisible}
                 setSelectedImportToken={setSelectedImportToken}
+                setPayToken={setPayToken}
+                searchKeyword={importTokenSearchKeyword}
+                setSearchKeyword={setImportTokenSearchKeyword}
             />
             <ImportTokenModal
                 isVisible={isImportTokenModalVisible}
                 setVisible={setImportTokenModalVisible}
-                selectedImportToken={selectedImportToken} />
+                selectedImportToken={selectedImportToken}
+                setSearchKeyword={setImportTokenSearchKeyword} />
         </>
     );
 }
