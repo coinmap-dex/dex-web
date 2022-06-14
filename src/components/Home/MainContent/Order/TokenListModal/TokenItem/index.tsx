@@ -4,6 +4,7 @@ import {TOKEN_ITEM_TYPE} from '../../../../../../constants/order.constants';
 import {Balance} from '../../../../../../models/balance.model';
 
 type TokenItemProps = {
+    onClick?: () => void,
     setSelectedImportToken?: (token) => void,
     setImportTokenModalVisible?: (boolean) => void,
     type: TOKEN_ITEM_TYPE,
@@ -13,6 +14,7 @@ type TokenItemProps = {
 const DEFAULT_LOGO = '../../../images/default-token-logo.png';
 
 const TokenItem = ({
+    onClick,
     setSelectedImportToken,
     setImportTokenModalVisible,
     type,
@@ -33,7 +35,7 @@ const TokenItem = ({
         setSelectedImportToken && setSelectedImportToken(balance);
     }
     return (
-        <S.ItemWrapper>
+        <S.ItemWrapper style={{ cursor: isSearchType ? '' : 'pointer'}} onClick={onClick}>
             <S.ItemContent>
                 <img alt={symbol} src={logo} onError={onLogoError}/>
                 <S.ItemInfo style={{ width: isSearchType ? '20rem' : '100%'}}>

@@ -7,7 +7,7 @@ import {TOKEN_ITEM_TYPE} from '../../../../../constants/order.constants';
 import {useWeb3React} from '@web3-react/core';
 import {useGetBalancesByAccountQuery} from '~store/modules/home/api';
 import {Balance} from '../../../../../models/balance.model';
-import {getStoredBalances} from '~utils/order.util';
+import {getStoredBalances, getTokenFromList} from '~utils/order.util';
 import _ from 'lodash';
 
 interface IActionConfirmModalProps {
@@ -15,16 +15,22 @@ interface IActionConfirmModalProps {
     setVisible: (boolean) => void,
     setImportTokenModalVisible: (boolean) => void,
     setSelectedImportToken: (token) => void,
+    setPayToken: (paySymbol) => void,
+    searchKeyword: string,
+    setSearchKeyword: (keyWord) => void,
 }
 
 const TokenListModal = ({
     isVisible,
     setVisible,
     setImportTokenModalVisible,
-    setSelectedImportToken
+    setSelectedImportToken,
+    setPayToken,
+    searchKeyword,
+    setSearchKeyword
 }: IActionConfirmModalProps) => {
     const [searchResultTokens, setSearchResultTokens] = useState<Balance[]>([]);
-    const [isSearching, setSearching] = useState<boolean>(false);
+    const isSearching = !!searchKeyword;
     const context = useWeb3React();
     const { account } = context;
     // const { data: balanceData } = useGetBalancesByAccountQuery(account);
@@ -52,6 +58,11 @@ const TokenListModal = ({
 
     const balances: Balance[] = getBalances();
 
+    const handleTokenItemClick = (paySymbol) => {
+        setPayToken(getTokenFromList(paySymbol));
+        setVisible(false);
+    }
+
     return (
         <TokenModalWrapper
             isVisible={isVisible}
@@ -59,7 +70,7 @@ const TokenListModal = ({
             title="select a token"
         >
             <>
-                <TokenSearchBar setSearchResultTokens={setSearchResultTokens} setSearching={setSearching} />
+                <TokenSearchBar setSearchResultTokens={setSearchResultTokens} setSearchKeyword={setSearchKeyword} />
                 <S.ItemContainer>
                     {isSearching && searchResultTokens.map((resultToken: Balance) => {
                         return (
@@ -74,6 +85,7 @@ const TokenListModal = ({
                     {!isSearching && balances.map((balance: Balance) => {
                         return (
                             <TokenItem
+                                onClick={() => handleTokenItemClick(balance?.token?.symbol)}
                                 key={balance?.token?.address}
                                 type={TOKEN_ITEM_TYPE.BALANCE}
                                 balance={balance} />
