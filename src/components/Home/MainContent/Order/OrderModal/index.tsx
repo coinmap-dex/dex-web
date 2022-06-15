@@ -90,7 +90,7 @@ const OrderModal = ({
             setData(response);
         }
     }, [response]);
-    console.log(response);
+
     const tableData = data.map((v) => {
         return {
             // payToken: getTokenName(v.payToken),

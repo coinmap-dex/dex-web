@@ -31,15 +31,15 @@ export function getTokenName(address) {
     return tokenList.tokens.filter(i => i.address == address)[0].symbol
 }
 
-export function amountToBN(amount, token) {
-    const decimals = tokenList.tokens.filter(i => i.address == token)[0].decimals;
+export function amountToBN(amount, token, decimals) {
+    // const decimals = tokenList.tokens.filter(i => i.address == token)[0].decimals;
 
     return ethers.utils.parseEther("" + amount)
     // return BigNumber.from(amount).mul(BigNumber.from(10).pow(decimals));
 }
 
 export function formatAmount(x, token, f = 4) {
-    const decimals = tokenList.tokens.filter(i => i.address == token)[0].decimals
+    const decimals = tokenList.tokens.filter(i => i.address == token)?.[0]?.decimals || 18;
     let s = formatUnits(x, decimals);
     const dot = s.indexOf(".");
     if (dot >= 0) s = s.substr(0, dot + 1 + f);
@@ -58,11 +58,11 @@ export function numberWithCommas(x) {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export function increaseDecimalNumber(n: number, plus: number ){
+export function increaseDecimalNumber(n: number, plus: number) {
     const numbers = n.toString().split('.');
-    if(numbers.length === 1)
+    if (numbers.length === 1)
         return n + plus;
-        const condition = +numbers[1] + plus  <= 0;
-        const newValue = ((condition ? +numbers[1] * 10  : +numbers[1]) +plus).toString();
+    const condition = +numbers[1] + plus <= 0;
+    const newValue = ((condition ? +numbers[1] * 10 : +numbers[1]) + plus).toString();
     return `${numbers[0]}.${'0'.repeat(numbers[1].length - newValue.length + +condition)}${newValue}`
 }

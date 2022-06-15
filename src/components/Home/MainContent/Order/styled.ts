@@ -120,6 +120,7 @@ export default {
         z-index:0;
         position:absolute;
         left: 1rem;
+        top:0;
         z-index:1;
         cursor: pointer;
         &>svg{

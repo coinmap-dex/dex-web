@@ -34,7 +34,11 @@ const Order = () => {
 
     const [payToken, setPayToken] = useState<any>({});
     const [buyToken, setBuyToken] = useState<any>({});
-
+    console.log('==================');
+    console.log('==================');
+    console.log('==================');
+    console.log('==================');
+    console.log(payToken);
     const { data: poolData } = useGetPoolQuery(contract);
     const firstPoolPriceUnit = poolData?.pools?.[0]?.name?.split('/')?.[1] ?? '';
 
@@ -263,10 +267,6 @@ const Order = () => {
                     />
                 </S.OrderBoxInputWrapper>
                 <S.OrderBoxInputWrapper>
-                    <S.OrderBoxInputLabel onClick={() => isBuyType && setTokenListModalVisible(true)}>
-                        {isBuyType ? payToken?.symbol : buyToken?.symbol}
-                        {isBuyType && <Chevron size='s1'/>}
-                    </S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         ref={amountInputRef}
                         valueType='number'
@@ -287,6 +287,10 @@ const Order = () => {
                         onBlur={onInputClickOut(amountInputRef, AMOUNT_INPUT_ID)}
 
                     />
+                    <S.OrderBoxInputLabel onClick={() => isBuyType && setTokenListModalVisible(true)}>
+                        {isBuyType ? payToken?.symbol : buyToken?.symbol}
+                        {isBuyType && <Chevron size='s1' />}
+                    </S.OrderBoxInputLabel>
                 </S.OrderBoxInputWrapper>
                 <S.OrderBoxDetail>
                     <S.Balance>
@@ -330,10 +334,6 @@ const Order = () => {
                         borderRadius: 'var(--border-radius)'
                     }}
                 >
-                <S.OrderBoxInputLabel onClick={() => !isBuyType && setTokenListModalVisible(true)}>
-                    {!isBuyType ? payToken?.symbol : buyToken?.symbol}
-                    {!isBuyType && <Chevron size='s1'/>}
-                </S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         isReadOnly={true}
                         ref={totalInputRef}
@@ -345,6 +345,10 @@ const Order = () => {
                             // labelRef.current.style.left = '100px';
                         }}
                     />
+                    <S.OrderBoxInputLabel onClick={() => !isBuyType && setTokenListModalVisible(true)}>
+                        {!isBuyType ? payToken?.symbol : buyToken?.symbol}
+                        {!isBuyType && <Chevron size='s1' />}
+                    </S.OrderBoxInputLabel>
                 </S.OrderBoxInputWrapper>
                 {
                     isApproved
@@ -360,8 +364,8 @@ const Order = () => {
                                     const salt = Web3.utils.randomHex(32);
                                     const pay = amountInputRef.current.value;
                                     const buy = totalInputRef.current.value;
-                                    const payAmount = amountToBN(pay, payToken?.address).toString();
-                                    const buyAmount = amountToBN(buy, buyToken?.address).toString();
+                                    const payAmount = amountToBN(pay, payToken?.address, payToken?.decimals).toString();
+                                    const buyAmount = amountToBN(buy, buyToken?.address, buyToken?.decimals).toString();
                                     const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
                                     await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
                                     setPendingTx(false)
@@ -383,7 +387,7 @@ const Order = () => {
                         )
                 }
             </S.OrderBox>
-            <OrderModal isVisible={isOrderModalVisible} setVisible={setOrderModalVisible} />
+            {isOrderModalVisible && <OrderModal isVisible={isOrderModalVisible} setVisible={setOrderModalVisible} />}
             <TokenListModal
                 isVisible={isTokenListModalVisible}
                 setVisible={setTokenListModalVisible}
