@@ -14,9 +14,10 @@ import Web3 from 'web3';
 import axios from 'axios';
 import TokenListModal from './TokenListModal';
 import ImportTokenModal from './ImportTokenModal';
-import {useGetPoolQuery} from '~store/modules/home/api';
-import {Balance} from '../../../../models/balance.model';
-import {getTokenFromList} from '~utils/order.util';
+import { useGetPoolQuery } from '~store/modules/home/api';
+import { Balance } from '../../../../models/balance.model';
+import { getTokenFromList } from '~utils/order.util';
+import Chevron from 'sezy-design/components/icon/solid/chevron';
 
 const PRICE_INPUT_ID = 1;
 const AMOUNT_INPUT_ID = 2;
@@ -77,9 +78,9 @@ const Order = () => {
     // const [buy, setBuyAmount] = useState(0);
 
     const { approve, isApproved, balance: walletBalance } = useToken(payToken?.address ?? '');
-    const balance = walletBalance ? walletBalance / 1e18 : 0;
+    // const balance = walletBalance ? walletBalance / 1e18 : 0;
     // const balance = 1.1232123123;
-    // const balance = 100;
+    const balance = 100;
     const [pendingTx, setPendingTx] = useState(false);
 
     const setPercentageLabel = (percentage) => {
@@ -172,7 +173,6 @@ const Order = () => {
         if (balance) {
             const rate = pay / balance;
             const percentage = rate > 1 ? 100 : rate * 100;
-            console.log(rate);
             if (percentage === 100) {
                 amountInputRef.current.value = percentage * balance / 100
             }
@@ -184,6 +184,38 @@ const Order = () => {
         setDisabledApproveButton(pay <= 0 || buy <= 0 || payToken?.address == buyToken?.address);
         setCurrentAmount(Number(amountInputRef.current.value));
         setCurrentPrice(Number(priceInputRef.current.value));
+    }
+
+    const handleBuyClick = () => {
+        setBuyType(true);
+        if (!isBuyType) {
+            setBuyToken(payToken);
+            setPayToken(buyToken);
+            priceInputRef.current.value = '';
+            amountInputRef.current.value = '';
+            totalInputRef.current.value = '';
+            percentageInputRef.current.value = '0';
+            totalRangeRef.current.value = '0';
+            setPercentageLabel(0);
+            // setCurrentAmount(0);
+            // setCurrentPrice(0);
+        }
+    }
+
+    const handleSellClick = () => {
+        setBuyType(false);
+        if (isBuyType) {
+            setBuyToken(payToken);
+            setPayToken(buyToken);
+            priceInputRef.current.value = '';
+            amountInputRef.current.value = '';
+            totalInputRef.current.value = '';
+            percentageInputRef.current.value = '0';
+            totalRangeRef.current.value = '0';
+            setPercentageLabel(0);
+            // setCurrentAmount(0);
+            // setCurrentPrice(0);
+        }
     }
 
     return (
@@ -202,22 +234,13 @@ const Order = () => {
             </S.OrderPlaceTypes>
             <S.OrderBox>
                 <S.OrderBoxBuySell>
-                    <S.OrderBoxBuyButton {...{ active: isBuyType }} onClick={() => setBuyType(true)}>Buy</S.OrderBoxBuyButton>
-                    <S.OrderBoxSellButton {...{ active: !isBuyType }} onClick={() => setBuyType(false)}>Sell</S.OrderBoxSellButton>
+                    <S.OrderBoxBuyButton {...{ active: isBuyType }} onClick={handleBuyClick}>Buy {buyToken.symbol}</S.OrderBoxBuyButton>
+                    <S.OrderBoxSellButton {...{ active: !isBuyType }} onClick={handleSellClick}>Sell {buyToken.symbol}</S.OrderBoxSellButton>
                 </S.OrderBoxBuySell>
-                <S.OrderBoxDetail>
-                    <div>
-                        <span>Avbl</span>
-                        <S.TokenButton onClick={() => setTokenListModalVisible(true)}>{firstPoolPriceUnit}</S.TokenButton>
-                    </div>
-                    <S.Balance>
-                        <span>My balance  </span>
-                        <span>{balance.toFixed(3)} {payToken?.symbol}</span>
-                    </S.Balance>
-                </S.OrderBoxDetail>
                 <S.OrderBoxInputWrapper>
                     <S.OrderBoxInputLabel>
-                        Price {isBuyType ? payToken?.symbol : buyToken?.symbol}/{isBuyType ? buyToken?.symbol : payToken?.symbol}
+                        {/* Price {isBuyType ? payToken?.symbol : buyToken?.symbol}/{isBuyType ? buyToken?.symbol : payToken?.symbol} */}
+                        Price
                     </S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         ref={priceInputRef}
@@ -240,7 +263,10 @@ const Order = () => {
                     />
                 </S.OrderBoxInputWrapper>
                 <S.OrderBoxInputWrapper>
-                    <S.OrderBoxInputLabel>{isBuyType ? payToken?.symbol : buyToken?.symbol}</S.OrderBoxInputLabel>
+                    <S.OrderBoxInputLabel onClick={() => isBuyType && setTokenListModalVisible(true)}>
+                        {isBuyType ? payToken?.symbol : buyToken?.symbol}
+                        {isBuyType && <Chevron size='s1'/>}
+                    </S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         ref={amountInputRef}
                         valueType='number'
@@ -259,8 +285,15 @@ const Order = () => {
                         onChange={onInputChange(AMOUNT_INPUT_ID)}
                         onClick={onInputClick(amountInputRef)}
                         onBlur={onInputClickOut(amountInputRef, AMOUNT_INPUT_ID)}
+
                     />
                 </S.OrderBoxInputWrapper>
+                <S.OrderBoxDetail>
+                    <S.Balance>
+                        <span>My balance  </span>
+                        <span>{balance.toFixed(3)} {payToken?.symbol}</span>
+                    </S.Balance>
+                </S.OrderBoxDetail>
                 <S.OrderBoxRangeWrapper>
                     <S.OrderBoxInputRange
                         ref={totalRangeRef}
@@ -297,7 +330,10 @@ const Order = () => {
                         borderRadius: 'var(--border-radius)'
                     }}
                 >
-                    <S.OrderBoxInputLabel>{isBuyType ? buyToken?.symbol : payToken?.symbol}</S.OrderBoxInputLabel>
+                <S.OrderBoxInputLabel onClick={() => !isBuyType && setTokenListModalVisible(true)}>
+                    {!isBuyType ? payToken?.symbol : buyToken?.symbol}
+                    {!isBuyType && <Chevron size='s1'/>}
+                </S.OrderBoxInputLabel>
                     <S.OrderBoxInput
                         isReadOnly={true}
                         ref={totalInputRef}
@@ -324,8 +360,8 @@ const Order = () => {
                                     const salt = Web3.utils.randomHex(32);
                                     const pay = amountInputRef.current.value;
                                     const buy = totalInputRef.current.value;
-                                    const payAmount = amountToBN(isBuyType ? pay : buy, payToken?.address).toString();
-                                    const buyAmount = amountToBN(isBuyType ? buy : pay, buyToken?.address).toString();
+                                    const payAmount = amountToBN(pay, payToken?.address).toString();
+                                    const buyAmount = amountToBN(buy, buyToken?.address).toString();
                                     const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
                                     await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
                                     setPendingTx(false)
@@ -340,7 +376,9 @@ const Order = () => {
                                 onClick={handleSubmit(handleApproveClick)}
                                 {...{ active: isBuyType }}
                             >
-                                {['Sell', 'Buy'][+isBuyType]} {isBuyType ? `${payToken?.symbol} -> ${buyToken?.symbol}` : `${buyToken?.symbol} -> ${payToken?.symbol}`}
+                                {/* {['Sell', 'Buy'][+isBuyType]}  */}
+                                {`${payToken?.symbol} -> ${buyToken?.symbol}`}
+                                {/* {isBuyType ? `${payToken?.symbol} -> ${buyToken?.symbol}` : `${buyToken?.symbol} -> ${payToken?.symbol}`} */}
                             </S.SubmitOrder>
                         )
                 }
