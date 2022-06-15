@@ -75,11 +75,12 @@ export default {
     `,
     OrderBoxDetail: styled.div`
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         color: #858D9A;
-        font-size: 1.4rem;
-        margin-top: 3rem;
+        font-size: 1.2rem;
+        margin-top: 1rem;
+        margin-bottom:1.5rem;
     `,
     TokenButton: styled.span`
         width: 8rem;
@@ -99,6 +100,7 @@ export default {
         height:4.8rem !important;
         padding:0;
         border: 1px solid #2E3A52;
+        z-index:0;
         &>input{
             font-size:1.3rem !important;
             color: #B9C2D0;
@@ -111,13 +113,19 @@ export default {
         }
     `,
     OrderBoxInputLabel: styled.span`
+        display:inline-block;
         font-size: 1.3rem;
         line-height: 4.8rem;
         color: #858D9A;
-        width:25rem;
         z-index:0;
         position:absolute;
         left: 1rem;
+        z-index:1;
+        cursor: pointer;
+        &>svg{
+            margin-left:5px;
+            fill:orange;
+        }
     `,
     OrderBoxPriceCounter: styled.div`
         width:15rem;
