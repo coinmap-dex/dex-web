@@ -15,16 +15,27 @@ type TokenSearchBarProps = {
 const TokenSearchBar = ({setSearchResultTokens, setSearchKeyword}: TokenSearchBarProps) => {
     const [requestSearch, { isLoading: isSearchLoading }] = useGetSearchMutation();
 
-    const filterDuplicatedStoredBalances = (searchResults: SearchResult[]) => {
-        const storedBalances = getStoredBalances();
-        return searchResults.filter((result: SearchResult) => {
-            for (let i = 0; i < storedBalances.length; i++) {
-                if (storedBalances[i]?.token?.address === result?.address) {
-                    return false;
-                }
+    const reorderDuplicatedStoredBalances = (searchResults: SearchResult[]) => {
+        const importedResults: SearchResult[] = [];
+        const unImportedResults: SearchResult[] = [];
+        searchResults.forEach((result: SearchResult) => {
+            if (isSearchResultImported(result)) {
+                importedResults.push(result);
+            } else {
+                unImportedResults.push(result);
             }
-            return true;
         });
+        return [...importedResults, ...unImportedResults];
+    }
+
+    const isSearchResultImported = (searchResult: SearchResult) => {
+        const storedBalances = getStoredBalances();
+        for (let i = 0; i < storedBalances.length; i++) {
+            if (storedBalances[i]?.token?.address === searchResult?.address) {
+                return true;
+            }
+        }
+        return false;
     }
 
     const mapBalancesFromSearchResults = (searchResults: SearchResult[]): Balance[] => {
@@ -50,7 +61,7 @@ const TokenSearchBar = ({setSearchResultTokens, setSearchKeyword}: TokenSearchBa
                         const keyword = e.target.value;
                         setSearchKeyword(keyword);
                         const searchResults: SearchResult[] = ((await requestSearch(keyword)) as any)?.data ?? [];
-                        setSearchResultTokens(mapBalancesFromSearchResults(filterDuplicatedStoredBalances(searchResults)));
+                        setSearchResultTokens(mapBalancesFromSearchResults(reorderDuplicatedStoredBalances(searchResults)));
                     }, 500)
                 }
             />
