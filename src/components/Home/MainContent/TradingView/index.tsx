@@ -15,8 +15,6 @@ import {LOCAL_STORAGE} from '../../../../constants/local-storage.constants';
 
 export interface ChartContainerProps {
 	symbol: ChartingLibraryWidgetOptions['symbol'];
-	interval: ChartingLibraryWidgetOptions['interval'];
-
 	// BEWARE: no trailing slash is expected in feed URL
 	datafeedUrl: string;
 	libraryPath: ChartingLibraryWidgetOptions['library_path'];
@@ -99,8 +97,12 @@ const buildPriceScale = (minPriceRange: number) => {
 const DEFAULT_SYMBOL = '0x4556a6f454f15c4cd57167a62bda65a6be325d1f~0';
 const DEFAULT_INTERVAL = '15';
 
-class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>, ChartContainerState> {
+const getInterval = () => (
+	localStorage.getItem(LOCAL_STORAGE.CHART_INTERVAL)
+	|| DEFAULT_INTERVAL
+) as ChartingLibraryWidgetOptions['interval'];
 
+class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>, ChartContainerState> {
 	constructor(props) {
 		super(props);
 		this.state = { tvWidget: null };
@@ -109,7 +111,6 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 	static defaultProps: Omit<ChartContainerProps, 'container'> = {
 		symbol: DEFAULT_SYMBOL,
 		// symbol: 'AAPL',
-		interval: localStorage.getItem(LOCAL_STORAGE.CHART_INTERVAL) as ResolutionString || DEFAULT_INTERVAL as ResolutionString,
 		// datafeedUrl: 'https://demo-feed-data.tradingview.com',
 		datafeedUrl: 'https://api.dextrading.io/api/v1/tradingview',
 		// datafeedUrl: 'http://localhost:3000/tradingview',	
@@ -137,7 +138,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 			// BEWARE: no trailing slash is expected in feed URL
 			// tslint:disable-next-line:no-any
 			datafeed: new (window as any).Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
-			interval: this.props.interval as ChartingLibraryWidgetOptions['interval'],
+			interval: getInterval(),
 			container: this.ref.current,
 			library_path: this.props.libraryPath as string,
 
@@ -189,7 +190,7 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 			if (!!this.state.tvWidget) {
 				this.state.tvWidget.setSymbol(
 					this.props.symbol ?? DEFAULT_SYMBOL,
-					this.props.interval ?? DEFAULT_INTERVAL as ResolutionString,
+					getInterval(),
 					() => {
 						console.log('updated symbol', this.props.symbol ?? DEFAULT_SYMBOL)
 					}
