@@ -116,6 +116,10 @@ export default {
             width: 122.75px;
             height: 44px;
         }
+        &:hover {
+            background: #4B5780;
+            cursor: not-allowed;
+        }
     `,
     Exit: styled.div`
     position:absolute;

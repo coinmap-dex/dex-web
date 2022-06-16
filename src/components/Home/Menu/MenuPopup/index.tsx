@@ -30,7 +30,7 @@ const MenuPopup = ({ isVisible, setVisible }) => {
                 <br />
                 Optimize your portfolio and discover invisible market opportunities
             </S.Title3>
-            <S.Button onClick={()=>setVisible(false)}>
+            <S.Button>
                 Get Started
             </S.Button>
         </S.Modal>
