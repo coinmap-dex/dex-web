@@ -47,6 +47,7 @@ export const TooltipWrapper = styled.div`
         @media ${breakpoints.xs}{
             left: -12.5rem;
             top: 13rem;
+            z-index: 1;
             &:before {
                 display: none;
             }
