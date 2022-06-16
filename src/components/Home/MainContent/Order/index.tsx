@@ -238,8 +238,8 @@ const Order = () => {
             </S.OrderPlaceTypes>
             <S.OrderBox>
                 <S.OrderBoxBuySell>
-                    <S.OrderBoxBuyButton {...{ active: isBuyType }} onClick={handleBuyClick}>Buy {buyToken.symbol}</S.OrderBoxBuyButton>
-                    <S.OrderBoxSellButton {...{ active: !isBuyType }} onClick={handleSellClick}>Sell {buyToken.symbol}</S.OrderBoxSellButton>
+                    <S.OrderBoxBuyButton {...{ active: isBuyType }} onClick={handleBuyClick}>Buy {tokenSymbol}</S.OrderBoxBuyButton>
+                    <S.OrderBoxSellButton {...{ active: !isBuyType }} onClick={handleSellClick}>Sell {tokenSymbol}</S.OrderBoxSellButton>
                 </S.OrderBoxBuySell>
                 <S.OrderBoxInputWrapper>
                     <S.OrderBoxInputLabel>
@@ -288,7 +288,7 @@ const Order = () => {
 
                     />
                     <S.OrderBoxInputLabel onClick={() => isBuyType && setTokenListModalVisible(true)}>
-                        {isBuyType ? payToken?.symbol : buyToken?.symbol}
+                        {payToken?.symbol}
                         {isBuyType && <Chevron size='s1' />}
                     </S.OrderBoxInputLabel>
                 </S.OrderBoxInputWrapper>
@@ -346,7 +346,7 @@ const Order = () => {
                         }}
                     />
                     <S.OrderBoxInputLabel onClick={() => !isBuyType && setTokenListModalVisible(true)}>
-                        {!isBuyType ? payToken?.symbol : buyToken?.symbol}
+                        {buyToken?.symbol}
                         {!isBuyType && <Chevron size='s1' />}
                     </S.OrderBoxInputLabel>
                 </S.OrderBoxInputWrapper>
@@ -370,7 +370,7 @@ const Order = () => {
                                     await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
                                     setPendingTx(false)
                                 }}>
-                                Submit order
+                                {`${payToken?.symbol} -> ${buyToken?.symbol}`}
                             </S.SubmitOrder>
                         )
                         : (
