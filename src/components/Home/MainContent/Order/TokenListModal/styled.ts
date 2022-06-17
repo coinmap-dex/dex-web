@@ -10,7 +10,7 @@ export default {
       }
       &::-webkit-scrollbar {
         width: 6px;
-        height: 67px;
+        height: 6px;
       }
 
       &::-webkit-scrollbar-thumb {
