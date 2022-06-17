@@ -25,5 +25,5 @@ export const getTokenFromList = (symbol) => {
     if (!symbol)
         return {}
     const upperCaseSymbol = symbol.toUpperCase();
-    return tokenList.tokens.find(v => v.symbol === upperCaseSymbol);
+    return tokenList.tokens.find(v => v?.symbol === upperCaseSymbol);
 }

@@ -186,13 +186,13 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 	}
 
 	componentDidUpdate(prevProps: Readonly<Partial<ChartContainerProps>>) {
-		if (this.props.symbol !== prevProps.symbol) {
+		if (this.props?.symbol !== prevProps?.symbol) {
 			if (!!this.state.tvWidget) {
 				this.state.tvWidget.setSymbol(
-					this.props.symbol ?? DEFAULT_SYMBOL,
+					this.props?.symbol ?? DEFAULT_SYMBOL,
 					getInterval(),
 					() => {
-						console.log('updated symbol', this.props.symbol ?? DEFAULT_SYMBOL)
+						console.log('updated symbol', this.props?.symbol ?? DEFAULT_SYMBOL)
 					}
 				);
 			}

@@ -28,7 +28,7 @@ export const formatYAxisNumber = (number) => {
 }
 
 export function getTokenName(address) {
-    return tokenList.tokens.filter(i => i.address == address)[0].symbol
+    return tokenList.tokens.filter(i => i.address == address)[0]?.symbol
 }
 
 export function amountToBN(amount, token, decimals) {

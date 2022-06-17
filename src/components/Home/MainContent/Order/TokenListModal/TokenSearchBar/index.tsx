@@ -46,7 +46,7 @@ const TokenSearchBar = ({setSearchResultTokens, setSearchKeyword}: TokenSearchBa
                     decimals: +result.decimals ?? 0,
                     logo: result.logo ?? '',
                     name: result.name ?? '',
-                    symbol: result.symbol ?? '',
+                    symbol: result?.symbol ?? '',
                 } as Token,
             } as Balance;
         });

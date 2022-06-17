@@ -33,7 +33,7 @@ const SearchSuggestion = ({ data, setData, setVisible, isLoading }) => {
                             }
                             <S.RightCol>
                                 <S.RightColHead>
-                                    <S.Name>{`${d.name}(${d.symbol})`}</S.Name>
+                                    <S.Name>{`${d.name}(${d?.symbol})`}</S.Name>
                                     <S.holder>Holder: <span>{d.holder}</span></S.holder>
                                 </S.RightColHead>
                                 <S.Address>{d.address}</S.Address>
