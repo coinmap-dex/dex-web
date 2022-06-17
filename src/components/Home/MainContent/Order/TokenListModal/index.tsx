@@ -5,12 +5,12 @@ import TokenItem from '~components/Home/MainContent/Order/TokenListModal/TokenIt
 import S from './styled';
 import {TOKEN_ITEM_TYPE} from '../../../../../constants/order.constants';
 import {useWeb3React} from '@web3-react/core';
-import {useGetBalancesByAccountQuery} from '~store/modules/home/api';
 import {Balance} from '../../../../../models/balance.model';
 import {getStoredBalances} from '~utils/order.util';
 import _ from 'lodash';
 
 interface IActionConfirmModalProps {
+    accountBalances: Balance[],
     isVisible: boolean,
     setVisible: (boolean) => void,
     setImportTokenModalVisible: (boolean) => void,
@@ -23,6 +23,7 @@ interface IActionConfirmModalProps {
 }
 
 const TokenListModal = ({
+    accountBalances,
     isVisible,
     setVisible,
     setImportTokenModalVisible,
@@ -37,8 +38,6 @@ const TokenListModal = ({
     const isSearching = !!searchKeyword;
     const context = useWeb3React();
     const { account } = context;
-    const { data: balanceData } = useGetBalancesByAccountQuery(account);
-    // const { data: balanceData } = useGetBalancesByAccountQuery('0xc25D94fc3f8D7bD1d88f89802fe075338F71dEC7');
 
     const mergeAccountBalancesWithStoredBalances = (
         accountBalances: Balance[],
@@ -55,14 +54,14 @@ const TokenListModal = ({
     }
 
     const getBalances = (): Balance[] => {
-        const accountBalances = balanceData?.balances ?? []
         const storedBalances = getStoredBalances();
         return mergeAccountBalancesWithStoredBalances(accountBalances, storedBalances);
     }
 
     const balances: Balance[] = getBalances();
 
-    const handleTokenItemClick = (token) => {
+    const handleTokenItemClick = (balance: Balance) => {
+        const token = balance?.token;
         if (isBuyType) {
             setPayToken(token);
         } else {
@@ -93,7 +92,7 @@ const TokenListModal = ({
                     {!isSearching && balances.map((balance: Balance) => {
                         return (
                             <TokenItem
-                                onClick={() => handleTokenItemClick(balance?.token)}
+                                onClick={() => handleTokenItemClick(balance)}
                                 key={balance?.token?.address}
                                 type={TOKEN_ITEM_TYPE.BALANCE}
                                 balance={balance} />
