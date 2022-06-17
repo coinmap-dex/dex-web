@@ -393,6 +393,8 @@ const Order = () => {
                 setVisible={setTokenListModalVisible}
                 setImportTokenModalVisible={setImportTokenModalVisible}
                 setSelectedImportToken={setSelectedImportToken}
+                isBuyType={isBuyType}
+                setBuyToken={setBuyToken}
                 setPayToken={setPayToken}
                 searchKeyword={importTokenSearchKeyword}
                 setSearchKeyword={setImportTokenSearchKeyword}
