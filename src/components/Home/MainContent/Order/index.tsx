@@ -14,10 +14,11 @@ import Web3 from 'web3';
 import axios from 'axios';
 import TokenListModal from './TokenListModal';
 import ImportTokenModal from './ImportTokenModal';
-import { useGetPoolQuery } from '~store/modules/home/api';
+import {useGetBalancesByAccountQuery, useGetPoolQuery} from '~store/modules/home/api';
 import { Balance } from '../../../../models/balance.model';
 import { getTokenFromList } from '~utils/order.util';
 import Chevron from 'sezy-design/components/icon/solid/chevron';
+import {getFractionDigits} from '~utils/number.util';
 
 const PRICE_INPUT_ID = 1;
 const AMOUNT_INPUT_ID = 2;
@@ -74,6 +75,7 @@ const Order = () => {
     const [isImportTokenModalVisible, setImportTokenModalVisible] = useState(false);
     const [selectedImportToken, setSelectedImportToken] = useState<Balance>({});
     const [importTokenSearchKeyword, setImportTokenSearchKeyword] = useState<string>('');
+    const [myBalance, setMyBalance] = useState<number>(0);
 
     const context = useWeb3React();
     const { account, library } = context;
@@ -81,11 +83,23 @@ const Order = () => {
     // const [pay, setPayAmount] = useState(0);
     // const [buy, setBuyAmount] = useState(0);
 
-    const { approve, isApproved, balance: walletBalance } = useToken(payToken?.address ?? '');
-    const balance = walletBalance ? walletBalance / 1e18 : 0;
-    // const balance = 1.1232123123;
-    // const balance = 100;
+    const { approve, isApproved } = useToken(payToken?.address ?? '');
+    // TODO: recheck after demo
+    // const { approve, isApproved, balance: walletBalance } = useToken(payToken?.address ?? '');
+    // const myBalance = walletBalance ? walletBalance / 1e18 : 0;
+    // const myBalance = 1.1232123123;
+    const { data: balanceData } = useGetBalancesByAccountQuery(account);
+    // const { data: balanceData } = useGetBalancesByAccountQuery('0xc25D94fc3f8D7bD1d88f89802fe075338F71dEC7');
+    const accountBalances: Balance[] = balanceData?.balances ?? [];
     const [pendingTx, setPendingTx] = useState(false);
+
+    useEffect(() => {
+        const payBalance: Balance | undefined = accountBalances.find((balance: Balance) => {
+            return balance?.token?.address?.toLowerCase() === payToken?.address?.toLowerCase();
+        });
+        const updatedMyAccount = +(payBalance?.balance ?? 0) / 1e18;
+        setMyBalance(updatedMyAccount);
+    }, [payToken]);
 
     const setPercentageLabel = (percentage) => {
         if (totalRangeLabelRef.current) {
@@ -174,11 +188,11 @@ const Order = () => {
         const buy = amountInputRef.current.value / priceInputRef.current.value;
         totalInputRef.current.value = buy;
 
-        if (balance) {
-            const rate = pay / balance;
+        if (myBalance) {
+            const rate = pay / myBalance;
             const percentage = rate > 1 ? 100 : rate * 100;
             if (percentage === 100) {
-                amountInputRef.current.value = percentage * balance / 100
+                amountInputRef.current.value = percentage * myBalance / 100
             }
 
             percentageInputRef.current.value = percentage.toFixed(2);
@@ -295,7 +309,7 @@ const Order = () => {
                 <S.OrderBoxDetail>
                     <S.Balance>
                         <span>My balance  </span>
-                        <span>{balance.toFixed(3)} {payToken?.symbol}</span>
+                        <span>{myBalance.toFixed(getFractionDigits(myBalance))} {payToken?.symbol}</span>
                     </S.Balance>
                 </S.OrderBoxDetail>
                 <S.OrderBoxRangeWrapper>
@@ -306,7 +320,7 @@ const Order = () => {
                         max={100}
                         onChange={(e) => {
                             const percentage = e.target.value / 100;
-                            const payAmount = balance * percentage;
+                            const payAmount = myBalance * percentage;
                             amountInputRef.current.value = Math.round(payAmount);
                             totalInputRef.current.value = payAmount / priceInputRef.current.value;
                             percentageInputRef.current.value = e.target.value;
@@ -319,7 +333,7 @@ const Order = () => {
                         postfix={<S.OrderBoxInputRangePercentage>%</S.OrderBoxInputRangePercentage>}
                         onChange={(e) => {
                             const percentage = e.target.value / 100;
-                            const payAmount = balance * percentage;
+                            const payAmount = myBalance * percentage;
                             amountInputRef.current.value = Math.round(payAmount);
                             totalRangeRef.current.value = percentage;
                             totalInputRef.current.value = payAmount / priceInputRef.current.value;
@@ -389,6 +403,7 @@ const Order = () => {
             </S.OrderBox>
             {isOrderModalVisible && <OrderModal isVisible={isOrderModalVisible} setVisible={setOrderModalVisible} />}
             <TokenListModal
+                accountBalances={accountBalances}
                 isVisible={isTokenListModalVisible}
                 setVisible={setTokenListModalVisible}
                 setImportTokenModalVisible={setImportTokenModalVisible}

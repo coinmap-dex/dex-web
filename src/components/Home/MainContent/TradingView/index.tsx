@@ -78,7 +78,7 @@ const numberOnDecimalPartOfPriceAfterZero: string = getNumberOnDecimalPartOfPric
 
 const buildPriceScale = (minPriceRange: number) => {
 	const [wholePart, decimalPart] = minPriceRange.toString().split('.');
-	if (Number(wholePart) === 0) {
+	if (+wholePart === 0) {
 		let priceScale = '1';
 		for (let i = 0; i < decimalPart.length; i++) {
 			if (decimalPart.charAt(i) === '0') {
@@ -109,8 +109,8 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 	}
 
 	static defaultProps: Omit<ChartContainerProps, 'container'> = {
-		symbol: DEFAULT_SYMBOL,
 		// symbol: 'AAPL',
+		symbol: DEFAULT_SYMBOL,
 		// datafeedUrl: 'https://demo-feed-data.tradingview.com',
 		datafeedUrl: 'https://api.dextrading.io/api/v1/tradingview',
 		// datafeedUrl: 'http://localhost:3000/tradingview',	
