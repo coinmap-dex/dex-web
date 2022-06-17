@@ -15,7 +15,9 @@ interface IActionConfirmModalProps {
     setVisible: (boolean) => void,
     setImportTokenModalVisible: (boolean) => void,
     setSelectedImportToken: (token) => void,
+    isBuyType: boolean,
     setPayToken: (paySymbol) => void,
+    setBuyToken: (buySymbol) => void,
     searchKeyword: string,
     setSearchKeyword: (keyWord) => void,
 }
@@ -25,7 +27,9 @@ const TokenListModal = ({
     setVisible,
     setImportTokenModalVisible,
     setSelectedImportToken,
+    isBuyType,
     setPayToken,
+    setBuyToken,
     searchKeyword,
     setSearchKeyword
 }: IActionConfirmModalProps) => {
@@ -34,6 +38,7 @@ const TokenListModal = ({
     const context = useWeb3React();
     const { account } = context;
     const { data: balanceData } = useGetBalancesByAccountQuery(account);
+    // const { data: balanceData } = useGetBalancesByAccountQuery('0xc25D94fc3f8D7bD1d88f89802fe075338F71dEC7');
 
     const mergeAccountBalancesWithStoredBalances = (
         accountBalances: Balance[],
@@ -57,8 +62,12 @@ const TokenListModal = ({
 
     const balances: Balance[] = getBalances();
 
-    const handleTokenItemClick = (payToken) => {
-        setPayToken(payToken);
+    const handleTokenItemClick = (token) => {
+        if (isBuyType) {
+            setPayToken(token);
+        } else {
+            setBuyToken(token)
+        }
         setVisible(false);
     }
 
