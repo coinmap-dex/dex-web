@@ -130,16 +130,16 @@ export default {
     Background1: styled.div`
         @keyframes background1 {
             0% {
-                transform: translateX(-50%);
+                transform: translateX(0%);
             }
             25% {
-                transform: translateX(0%);
-            }
-            50% {
                 transform: translateX(-50%);
             }
-            100% {
+            50% {
                 transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-50%);
             }
         }
         z-index:-1;
@@ -148,7 +148,7 @@ export default {
         left:0;
         animation: background1 100s infinite;
         opacity:0.2;
-        transform: translateX(-50%);
+        transform: translateX(0%);
     `,
     Background2: styled.img`
         @keyframes background2 {
@@ -193,25 +193,25 @@ export default {
         animation: background3 60s infinite;
     `,
     Background4: styled.img`
-        @keyframes background4 {
-            0% {
-                transform: translate(0%, 0%);
-            }
-            25% {
-                transform: translate(-40%,-25%);
-            }
-            50% {
-                transform: translate(0%,0%);
-            }
-            100% {
-                transform: translate(-40%,-25%);
-            }
+    @keyframes background4 {
+        0% {
+            transform: rotate(0deg);
         }
+        25% {
+            transform: rotate(359deg);
+        }
+        50% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(359deg);
+        }
+    }
         z-index:-1;
         position:absolute;
         right:20px;
         bottom:20px;
-        animation: background4 40s infinite;
+        animation: background4 30s infinite;
     `,
     Background5: styled.img`
         @keyframes background5 {
