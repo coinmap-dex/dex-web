@@ -14,11 +14,11 @@ import Web3 from 'web3';
 import axios from 'axios';
 import TokenListModal from './TokenListModal';
 import ImportTokenModal from './ImportTokenModal';
-import {useGetBalancesByAccountQuery, useGetPoolQuery} from '~store/modules/home/api';
+import { useGetBalancesByAccountQuery, useGetPoolQuery } from '~store/modules/home/api';
 import { Balance } from '../../../../models/balance.model';
 import { getTokenFromList } from '~utils/order.util';
 import Chevron from 'sezy-design/components/icon/solid/chevron';
-import {getFractionDigits} from '~utils/number.util';
+import { getFractionDigits } from '~utils/number.util';
 
 const PRICE_INPUT_ID = 1;
 const AMOUNT_INPUT_ID = 2;
@@ -185,7 +185,7 @@ const Order = () => {
 
     const validateApproveButton = (inputTypeId) => {
         const pay = amountInputRef.current.value;
-        const buy = amountInputRef.current.value / priceInputRef.current.value;
+        const buy = isBuyType ? amountInputRef.current.value / priceInputRef.current.value : amountInputRef.current.value * priceInputRef.current.value;
         totalInputRef.current.value = buy;
 
         if (myBalance) {
@@ -322,7 +322,7 @@ const Order = () => {
                             const percentage = e.target.value / 100;
                             const payAmount = myBalance * percentage;
                             amountInputRef.current.value = Math.round(payAmount);
-                            totalInputRef.current.value = payAmount / priceInputRef.current.value;
+                            totalInputRef.current.value = isBuyType ? payAmount / priceInputRef.current.value : payAmount * priceInputRef.current.value;
                             percentageInputRef.current.value = e.target.value;
                             setPercentageLabel(e.target.value);
                         }}
@@ -336,7 +336,7 @@ const Order = () => {
                             const payAmount = myBalance * percentage;
                             amountInputRef.current.value = Math.round(payAmount);
                             totalRangeRef.current.value = percentage;
-                            totalInputRef.current.value = payAmount / priceInputRef.current.value;
+                            totalInputRef.current.value = isBuyType ? payAmount / priceInputRef.current.value : payAmount * priceInputRef.current.value;
                             totalRangeRef.current.value = e.target.value;
                             setPercentageLabel(e.target.value);
                         }}
