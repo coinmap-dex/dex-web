@@ -103,7 +103,7 @@ const OrderModal = ({
             amount: formatAmount(v.payAmount, v.payToken),
             total: formatAmount(v.buyAmount, v.buyToken),
             price: +formatAmount(v.payAmount, v.payToken) / +formatAmount(v.buyAmount, v.buyToken),
-            deadline: moment.unix(v.deadline * 1000).format("DD/MM/YYYY"),
+            deadline: moment.unix(v.deadline).format("DD/MM/YYYY"),
             status: {
                 children: <>
                     {v.status == 0 &&
