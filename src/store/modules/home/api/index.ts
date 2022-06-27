@@ -75,6 +75,9 @@ export const homeApi = createApi({
     getBalancesByAccount: builder.query({
       query: (account) => ({ url: `balances/${account}` }),
     }),
+    getCertikByContract: builder.query({
+      query: (contract) => ({ url: `certik/${contract}` }),
+    }),
     postMetaMaskSignUp: builder.mutation({
       query: (publicAddress) => ({
         url: 'users',
@@ -118,6 +121,7 @@ export const {
   useGetMetaMaskPublicAddressMutation,
   useGetFavoriteListQuery,
   useGetBalancesByAccountQuery,
+  useGetCertikByContractQuery,
   usePostMetaMaskSignUpMutation,
   usePostMetaMaskAuthenticationMutation
 } = homeApi;

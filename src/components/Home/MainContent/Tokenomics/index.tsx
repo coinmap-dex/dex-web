@@ -6,7 +6,10 @@ import * as  S from './styled';
 import * as MS from '../styled';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '~hooks';
-import { useGetTokenomicsQuery, useGetTransactionQuery } from '~store/modules/home/api';
+import {
+    useGetCertikByContractQuery,
+    useGetTokenomicsQuery
+} from '~store/modules/home/api';
 import { thousandSeparator } from '~utils';
 import AuditIcon from '~svg/audit';
 import ExpandBar from '~components/Home/MainContent/Mobile/ExpandBar';
@@ -17,19 +20,24 @@ const Tokenomics = () => {
     const contract = useAppSelector(state => state.home.contract)
     const tokenSymbol = useAppSelector(state => state.home.tokenSymbol)
     const { data, isLoading, error } = useGetTokenomicsQuery(contract);
+    const { data: certikData } = useGetCertikByContractQuery(contract);
+    const { exists: isCertikUrlExist, url: certikUrl } = certikData ?? {};
+    const auditUrl: string = certikUrl ?? data?.audits ?? '';
 
     return <div>
         <MS.MainContentTitleBox>
             <Label>
                 {tokenSymbol}
             </Label>
-            <S.TokenomicsAudit>
-                <div>Audits:</div>
-                <S.TokenomicsAuditIconLink href={data?.audits}>
-                    <img src="./images/audit.png" />
-                    <AuditIcon />
-                </S.TokenomicsAuditIconLink>
-            </S.TokenomicsAudit>
+            {isCertikUrlExist && (
+                <S.TokenomicsAudit>
+                    <div>Audits:</div>
+                    <S.TokenomicsAuditIconLink href={auditUrl} target="_blank">
+                        <img src="./images/audit.png" />
+                        <AuditIcon />
+                    </S.TokenomicsAuditIconLink>
+                </S.TokenomicsAudit>
+            )}
         </MS.MainContentTitleBox>
         <S.TokenomicsContent>
             <S.TokenomicsContentCirculating>
