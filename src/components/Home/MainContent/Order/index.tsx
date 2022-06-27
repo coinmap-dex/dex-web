@@ -28,27 +28,23 @@ const Order = () => {
     const contract = useAppSelector(state => state.home.contract);
     const tokenSymbol = useAppSelector(state => state.home.tokenSymbol);
     const orderToken = useAppSelector(state => state.home.orderToken);
-    // const [buyTokenName, setBuyTokenName] = useState(orderToken);
-    // const [payTokenName, setPayTokenName] = useState(orderToken);
     const [currentPrice, setCurrentPrice] = useState(0);
     const [currentAmount, setCurrentAmount] = useState(0);
 
     const [payToken, setPayToken] = useState<any>({});
     const [buyToken, setBuyToken] = useState<any>({});
-    console.log('==================');
-    console.log('==================');
-    console.log('==================');
-    console.log('==================');
-    console.log(payToken);
+
     const { data: poolData } = useGetPoolQuery(contract);
     const firstPoolPriceUnit = poolData?.pools?.[0]?.name?.split('/')?.[1] ?? '';
 
     useEffect(() => {
-        setPayToken(getTokenFromList(orderToken));
-    }, [orderToken]);
-    useEffect(() => {
         setBuyToken(getTokenFromList(tokenSymbol));
     }, [tokenSymbol]);
+
+    useEffect(() => {
+        setPayToken(getTokenFromList('BUSD'));
+        initInputRef();
+    }, []);
 
     const [isDisabledApproveButton, setDisabledApproveButton] = useState(true);
 
@@ -59,15 +55,6 @@ const Order = () => {
     const totalInputRef: any = React.useRef(null);
     const priceInputRef: any = useRef(null);
     const amountInputRef: any = useRef(null);
-
-    React.useEffect(() => {
-        const percentage = '0';
-        totalRangeRef.current && (totalRangeRef.current.value = percentage);
-        totalInputRef.current && (totalInputRef.current.value = 0);
-        // priceInputRef.current && (priceInputRef.current.value = 0);
-        // amountInputRef.current && (amountInputRef.current.value = 0);
-        percentageInputRef.current && (percentageInputRef.current.value = percentage);
-    }, []);
 
     const [isBuyType, setBuyType] = useState(true);
     const [isOrderModalVisible, setOrderModalVisible] = useState(false);
@@ -100,6 +87,15 @@ const Order = () => {
         const updatedMyAccount = +(payBalance?.balance ?? 0) / 1e18;
         setMyBalance(updatedMyAccount);
     }, [payToken]);
+
+    const initInputRef = () => {
+        const percentage = '0';
+        totalRangeRef.current && (totalRangeRef.current.value = percentage);
+        totalInputRef.current && (totalInputRef.current.value = 0);
+        // priceInputRef.current && (priceInputRef.current.value = 0);
+        // amountInputRef.current && (amountInputRef.current.value = 0);
+        percentageInputRef.current && (percentageInputRef.current.value = percentage);
+    }
 
     const setPercentageLabel = (percentage) => {
         if (totalRangeLabelRef.current) {
