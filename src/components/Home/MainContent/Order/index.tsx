@@ -244,11 +244,11 @@ const Order = () => {
 
     const updatePrice = () => {
         if (priceInputRef.current && lastPrice) {
-            priceInputRef.current.value = isBuyType ? lastPrice : 1/+lastPrice;
+            priceInputRef.current.value = lastPrice;
         } else {
             priceInputRef.current.value = 0;
         }
-        setCurrentPrice(lastPrice);
+        setCurrentPrice(priceInputRef.current.value);
     }
 
     return (
