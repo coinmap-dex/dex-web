@@ -12,7 +12,7 @@ interface IActionConfirmModalProps {
 
 const PopupTableWrapper = ({title, isVisible, setVisible, children}: IActionConfirmModalProps) => {
     return (
-        <Modal isVisible={isVisible} setVisible={setVisible}>
+        <S.Modal isVisible={isVisible} setVisible={setVisible}>
             <S.TableWrapper>
                 <S.TitleContainer>
                     <S.Title>{title}</S.Title>
@@ -22,7 +22,7 @@ const PopupTableWrapper = ({title, isVisible, setVisible, children}: IActionConf
                 </S.TitleContainer>
                 {children}
             </S.TableWrapper>
-        </Modal>
+        </S.Modal>
     )
 }
 

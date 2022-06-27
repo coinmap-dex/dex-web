@@ -1,9 +1,11 @@
-import { Table } from 'sezy-design';
+import { Modal, Table } from 'sezy-design';
 import styled from 'styled-components';
 import breakpoints from '~breakpoints';
 
 export default {
-    TableWrapper: styled.div`
+  Modal: styled(Modal)`
+  `,
+  TableWrapper: styled.div`
       min-width: 92.8rem;
       max-width: 100%;
       display: flex;
@@ -50,7 +52,7 @@ export default {
         }
       }
     `,
-    TitleContainer: styled.div`
+  TitleContainer: styled.div`
       display: flex;
       justify-content: space-between;
       >div>svg {
@@ -58,7 +60,7 @@ export default {
         cursor: pointer;
       }
     `,
-    Title: styled.div`
+  Title: styled.div`
       font-weight: 500;
       font-size: 1.8rem;
       line-height: 2.1rem;
@@ -66,7 +68,7 @@ export default {
       color: #FFFFFF;
       margin: 3rem 0 1.8rem 3.4rem;
     `,
-    TableContent: styled(Table)`
+  TableContent: styled(Table)`
         & th{
             background:transparent;
         }
