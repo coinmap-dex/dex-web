@@ -6,6 +6,7 @@ import Search from "~svg/Search";
 
 export default {
     Table: styled(Table)`
+      max-height: 60vh;
       thead {
         tr {
           th:first-child {
