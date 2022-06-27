@@ -14,7 +14,11 @@ import Web3 from 'web3';
 import axios from 'axios';
 import TokenListModal from './TokenListModal';
 import ImportTokenModal from './ImportTokenModal';
-import { useGetBalancesByAccountQuery, useGetPoolQuery } from '~store/modules/home/api';
+import {
+    useGetBalancesByAccountQuery,
+    useGetPoolQuery,
+    useGetTransactionQuery
+} from '~store/modules/home/api';
 import { Balance } from '../../../../models/balance.model';
 import { getTokenFromList } from '~utils/order.util';
 import Chevron from 'sezy-design/components/icon/solid/chevron';
@@ -36,6 +40,10 @@ const Order = () => {
 
     const { data: poolData } = useGetPoolQuery(contract);
     const firstPoolPriceUnit = poolData?.pools?.[0]?.name?.split('/')?.[1] ?? '';
+
+    const { data: transactionResponseData } = useGetTransactionQuery(contract);
+    const transactionData = [...(transactionResponseData?.transaction || [])]?.reverse();
+    const lastPrice = transactionData?.[0]?.price ?? '';
 
     useEffect(() => {
         setBuyToken(getTokenFromList(tokenSymbol));
@@ -63,6 +71,10 @@ const Order = () => {
     const [selectedImportToken, setSelectedImportToken] = useState<Balance>({});
     const [importTokenSearchKeyword, setImportTokenSearchKeyword] = useState<string>('');
     const [myBalance, setMyBalance] = useState<number>(0);
+
+    useEffect(() => {
+        updatePrice();
+    }, [lastPrice, isBuyType]);
 
     const context = useWeb3React();
     const { account, library } = context;
@@ -205,7 +217,6 @@ const Order = () => {
         if (!isBuyType) {
             setBuyToken(payToken);
             setPayToken(buyToken);
-            priceInputRef.current.value = '';
             amountInputRef.current.value = '';
             totalInputRef.current.value = '';
             percentageInputRef.current.value = '0';
@@ -221,7 +232,6 @@ const Order = () => {
         if (isBuyType) {
             setBuyToken(payToken);
             setPayToken(buyToken);
-            priceInputRef.current.value = '';
             amountInputRef.current.value = '';
             totalInputRef.current.value = '';
             percentageInputRef.current.value = '0';
@@ -230,6 +240,15 @@ const Order = () => {
             // setCurrentAmount(0);
             // setCurrentPrice(0);
         }
+    }
+
+    const updatePrice = () => {
+        if (priceInputRef.current && lastPrice) {
+            priceInputRef.current.value = isBuyType ? lastPrice : 1/+lastPrice;
+        } else {
+            priceInputRef.current.value = 0;
+        }
+        setCurrentPrice(lastPrice);
     }
 
     return (
