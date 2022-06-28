@@ -22,7 +22,7 @@ const Tokenomics = () => {
     const { data, isLoading, error } = useGetTokenomicsQuery(contract);
     const { data: certikData } = useGetCertikByContractQuery(contract);
     const { exists: isCertikUrlExist, url: certikUrl } = certikData ?? {};
-    const auditUrl: string = certikUrl ?? data?.audits ?? '';
+    const auditUrl: string = certikUrl ?? '';
 
     return <div>
         <MS.MainContentTitleBox>
