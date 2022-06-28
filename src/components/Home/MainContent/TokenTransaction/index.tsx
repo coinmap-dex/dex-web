@@ -9,6 +9,7 @@ import { useAppSelector } from '~hooks';
 import { useGetTransactionQuery } from '~store/modules/home/api';
 import ArrowIcon from '~svg/arrow';
 import { thousandSeparator } from '~utils';
+import CompactNumberTooltip from '~components/Partials/CompactNumberTooltip';
 
 const TokenTransaction = () => {
     const { t } = useTranslation();
@@ -33,10 +34,14 @@ const TokenTransaction = () => {
         <S.HighLightDataWrapper>
             <S.HighlightData>
                 <S.HighlightDataMain data-type={priceDirectionMapper[+(lastPrice?.price > secondPrice?.price)]} >
-                    <Label>${lastPrice?.price?.toFixed(5)}</Label>
+                    <Label>
+                        $<CompactNumberTooltip numberInput={lastPrice?.price?.toString()}/>
+                    </Label>
                     <Arrow size='s' direction={priceDirectionMapper[+(lastPrice?.price > secondPrice?.price)] as any} />
                 </S.HighlightDataMain>
-                <S.HighlightDataSub>${secondPrice?.price?.toFixed(5)}</S.HighlightDataSub>
+                <S.HighlightDataSub>
+                    $<CompactNumberTooltip numberInput={secondPrice?.price?.toString()}/>
+                </S.HighlightDataSub>
             </S.HighlightData>
             <S.MoreWrapper>
                 <Dropdown placement='tl' trigger='click'>
@@ -70,7 +75,7 @@ const convertTransactionData = (transactionData) => transactionData?.map(d => ({
     amount: thousandSeparator(d.amount),
     total: thousandSeparator(d.total),
     price: {
-        children: thousandSeparator(d.price),
+        children: <CompactNumberTooltip numberInput={d?.price?.toString()}/>,
         style: {
             color: transactionPriceColorMapper[d.type],
         },
