@@ -40,8 +40,14 @@ const tableWrapperStyle = `
     & td{
         color: #B6BBC3;
     }
-`
+`;
 
+const compactNumberStyle = `
+    .compact-number-tooltip > .compact-number-tooltip {
+        min-width: 7rem;
+        z-index: 1000;
+    }
+`;
 
 const dataType2Style = type => (
     type === 'up'
@@ -89,6 +95,7 @@ export default {
     `,
     DataTable: styled(Table)`
         ${tableWrapperStyle}
+        ${compactNumberStyle}
     `,
     HighLightDataWrapper: styled.div`
         display:flex;
@@ -101,6 +108,7 @@ export default {
         &>*:first-child[data-type=up]{
             margin-right:0.5rem;
         }
+        ${compactNumberStyle}
     `,
     HighlightDataMain: styled(Label)`
         ${props => dataType2Style(props['data-type'])}
