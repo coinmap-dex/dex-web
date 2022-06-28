@@ -380,29 +380,30 @@ const Order = () => {
                     </S.OrderBoxInputLabel>
                 </S.OrderBoxInputWrapper>
                 {
-                    isApproved
-                        ? (
-                            <S.SubmitOrder
-                                className={`button is-info is-fullwidth ${pendingTx ? "is-loading" : ""}`}
-                                isLoading={pendingTx}
-                                isDisabled={isDisabledApproveButton}
-                                {...{ active: isBuyType }}
-                                onClick={async () => {
-                                    setPendingTx(true)
-                                    const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
-                                    const salt = Web3.utils.randomHex(32);
-                                    const pay = amountInputRef.current.value;
-                                    const buy = totalInputRef.current.value;
-                                    const payAmount = amountToBN(pay, payToken?.address, payToken?.decimals).toString();
-                                    const buyAmount = amountToBN(buy, buyToken?.address, buyToken?.decimals).toString();
-                                    const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
-                                    await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
-                                    setPendingTx(false)
-                                }}>
-                                {`${payToken?.symbol} -> ${buyToken?.symbol}`}
-                            </S.SubmitOrder>
-                        )
-                        : (
+                    // isApproved
+                    //     ? (
+                    //         <S.SubmitOrder
+                    //             className={`button is-info is-fullwidth ${pendingTx ? "is-loading" : ""}`}
+                    //             isLoading={pendingTx}
+                    //             isDisabled={isDisabledApproveButton}
+                    //             {...{ active: isBuyType }}
+                    //             onClick={async () => {
+                    //                 setPendingTx(true)
+                    //                 const deadline = Math.round(Date.now() / 1000) + 7 * 24 * 60 * 60;
+                    //                 const salt = Web3.utils.randomHex(32);
+                    //                 const pay = amountInputRef.current.value;
+                    //                 const buy = isBuyType ?  totalInputRef.current.value : 1/totalInputRef.current.value;
+                    //                 const payAmount = amountToBN(pay, payToken?.address, payToken?.decimals).toString();
+                    //                 const buyAmount = amountToBN(buy, buyToken?.address, buyToken?.decimals).toString();
+                    //                 console.log(buy);
+                    //                 // const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
+                    //                 // await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
+                    //                 // setPendingTx(false)
+                    //             }}>
+                    //             {`${payToken?.symbol} -> ${buyToken?.symbol}`}
+                    //         </S.SubmitOrder>
+                    //     )
+                    //     : (
                             <S.SubmitOrder
                                 isDisabled={payToken?.symbol?.toLowerCase() === buyToken?.symbol?.toLowerCase()}
                                 isLoading={pendingTx}
@@ -413,7 +414,7 @@ const Order = () => {
                                 {`${payToken?.symbol} -> ${buyToken?.symbol}`}
                                 {/* {isBuyType ? `${payToken?.symbol} -> ${buyToken?.symbol}` : `${buyToken?.symbol} -> ${payToken?.symbol}`} */}
                             </S.SubmitOrder>
-                        )
+                        // )
                 }
             </S.OrderBox>
             {isOrderModalVisible && <OrderModal isVisible={isOrderModalVisible} setVisible={setOrderModalVisible} />}
