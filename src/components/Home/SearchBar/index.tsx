@@ -46,8 +46,13 @@ const SearchBar = () => {
                 postfix={<S.SearchIcon />}
                 onFocus={onSearchInputFocus}
                 onBlur={onSearchInputFocusOut}
+                onKeyPress={(e) => {
+                    const keyword = e.key;
+                    !keyword.match(/^[a-z0-9]$/) && e.preventDefault();
+                }}
                 onKeyUp={_.debounce(async (e) => {
                     const keyword = e.target.value;
+                    console.log('====== '+ keyword);
                     setKeyword(keyword);
                     const isToken = keyword.match(/^0x([A-Fa-f0-9]{40})$/);
                     if (isToken) {

@@ -92,6 +92,10 @@ const OrderModal = ({
     }, [response]);
 
     const tableData = data.map((v) => {
+        console.log('================');
+        console.log(formatAmount(v.payAmount, v.payToken));
+        console.log(formatAmount(v.buyAmount, v.buyToken));
+        console.log(+formatAmount(v.payAmount, v.payToken) / +formatAmount(v.buyAmount, v.buyToken));
         return {
             // payToken: getTokenName(v.payToken),
             // payAmount: formatAmount(v.payAmount, v.payToken),
