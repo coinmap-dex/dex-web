@@ -9,7 +9,7 @@ import { useWeb3React } from "@web3-react/core";
 import core from "~configs/core";
 import { useForm } from 'react-hook-form';
 import OrderModal from './OrderModal';
-import { amountToBN, increaseDecimalNumber } from '~utils';
+import { amountToBN, formatAmount, increaseDecimalNumber } from '~utils';
 import Web3 from 'web3';
 import axios from 'axios';
 import TokenListModal from './TokenListModal';
@@ -393,8 +393,13 @@ const Order = () => {
                                     const salt = Web3.utils.randomHex(32);
                                     const pay = amountInputRef.current.value;
                                     const buy = isBuyType ?  totalInputRef.current.value : 1/totalInputRef.current.value;
-                                    const payAmount = amountToBN(pay, payToken?.address, payToken?.decimals).toString();
-                                    const buyAmount = amountToBN(buy, buyToken?.address, buyToken?.decimals).toString();
+                                    // const payAmount = amountToBN(pay, payToken?.address, payToken?.decimals).toString();
+                                    // const buyAmount = amountToBN(buy, buyToken?.address, buyToken?.decimals).toString();
+
+                                    const payAmount = pay*1e18;
+                                    const buyAmount = buy*1e18;
+                                    console.log('=====================');
+                                    console.log(payAmount);
                                     const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
                                     await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
                                     setPendingTx(false)
