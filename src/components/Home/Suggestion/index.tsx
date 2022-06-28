@@ -4,6 +4,7 @@ import S from './styled';
 import { useAppDispatch } from '~hooks';
 import { setContract } from '~store/modules/home';
 import ThreeDotsLoader from 'sezy-design/components/icon/solid/threeDotsLoader';
+import { thousandSeparator } from '~utils';
 
 const SearchSuggestion = ({ data, setData, setVisible, isLoading }) => {
     const dispatch = useAppDispatch();
@@ -34,7 +35,7 @@ const SearchSuggestion = ({ data, setData, setVisible, isLoading }) => {
                             <S.RightCol>
                                 <S.RightColHead>
                                     <S.Name>{`${d.name}(${d?.symbol})`}</S.Name>
-                                    <S.holder>Holder: <span>{d.holder}</span></S.holder>
+                                    <S.holder>Holder: <span>{thousandSeparator(d.holder)}</span></S.holder>
                                 </S.RightColHead>
                                 <S.Address>{d.address}</S.Address>
                             </S.RightCol>
