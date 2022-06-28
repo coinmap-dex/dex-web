@@ -74,7 +74,7 @@ const Order = () => {
 
     useEffect(() => {
         updatePrice();
-    }, [lastPrice, isBuyType]);
+    }, [lastPrice]);
 
     const context = useWeb3React();
     const { account, library } = context;
@@ -243,7 +243,7 @@ const Order = () => {
     }
 
     const updatePrice = () => {
-        if (priceInputRef.current && lastPrice) {
+        if ((priceInputRef.current && !(+priceInputRef.current.value)) && lastPrice) {
             priceInputRef.current.value = lastPrice;
         } else {
             priceInputRef.current.value = 0;
