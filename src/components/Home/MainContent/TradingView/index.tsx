@@ -8,9 +8,7 @@ import {
 	ResolutionString,
 } from './charting_library';
 import { connect } from 'react-redux';
-import { TRADING_VIEW } from '../../../../constants/trading-view.constants';
 import { isMobileScreen } from '~utils/screen.util';
-import {getNumberOnDecimalPartOfPriceAfterZero} from '~utils/trading-view.util';
 import {LOCAL_STORAGE} from '../../../../constants/local-storage.constants';
 
 export interface ChartContainerProps {
@@ -54,16 +52,6 @@ const addCheckApiButton = (tvWidget: IChartingLibraryWidget) => {
 	});
 }
 
-const customWidgetPriceScale = (tvWidget: IChartingLibraryWidget) => {
-	tvWidget.activeChart().onDataLoaded().subscribe(null, () => {
-		const minPriceRange: number = tvWidget.activeChart().getPanes()[0].getMainSourcePriceScale()?.getVisiblePriceRange()?.from ?? 0;
-		if (!!minPriceRange) {
-			const priceScale: string = buildPriceScale(minPriceRange);
-			tvWidget.applyOverrides({ 'mainSeriesProperties.minTick': `${priceScale}, 1, false` });
-		}
-	});
-}
-
 const trackChartIntervalChange = (tvWidget: IChartingLibraryWidget) => {
 	tvWidget.activeChart().onIntervalChanged().subscribe(null, (interval) => {
 		localStorage.setItem(LOCAL_STORAGE.CHART_INTERVAL, interval);
@@ -72,26 +60,6 @@ const trackChartIntervalChange = (tvWidget: IChartingLibraryWidget) => {
 
 const customTimezone = (tvWidget: IChartingLibraryWidget) => {
 	tvWidget.activeChart().setTimezone('Asia/Ho_Chi_Minh');
-}
-
-const numberOnDecimalPartOfPriceAfterZero: string = getNumberOnDecimalPartOfPriceAfterZero();
-
-const buildPriceScale = (minPriceRange: number) => {
-	const [wholePart, decimalPart] = minPriceRange.toString().split('.');
-	if (+wholePart === 0) {
-		let priceScale = '1';
-		for (let i = 0; i < decimalPart.length; i++) {
-			if (decimalPart.charAt(i) === '0') {
-				priceScale += '0';
-			} else {
-				break;
-			}
-		}
-		if (priceScale !== '1') {
-			return `${priceScale}${numberOnDecimalPartOfPriceAfterZero}`;
-		}
-	}
-	return TRADING_VIEW.DEFAULT_PRICE_SCALE;
 }
 
 const DEFAULT_SYMBOL = '0x4556a6f454f15c4cd57167a62bda65a6be325d1f~0';
@@ -176,7 +144,6 @@ class TVChartContainer extends React.PureComponent<Partial<ChartContainerProps>,
 		const tvWidget = new widget(widgetOptions);
 
 		tvWidget.onChartReady(() => {
-			customWidgetPriceScale(tvWidget);
 			addCheckApiButton(tvWidget);
 			trackChartIntervalChange(tvWidget);
 			customTimezone(tvWidget);
