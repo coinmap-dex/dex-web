@@ -45,7 +45,15 @@ const tableWrapperStyle = `
 const compactNumberStyle = `
     .compact-number-tooltip > .compact-number-tooltip {
         min-width: 7rem;
-        z-index: 1000;
+        top: 2.1rem;
+        left: 11rem;
+        &:before {
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-right: 5px solid #181818;
+            left: -7%;
+            bottom: 2rem;
+        }
     }
 `;
 
@@ -118,6 +126,17 @@ export default {
             font-weight:500;
             font-size:2.2rem;
             line-height:2.2rem;
+            .compact-number-tooltip > .compact-number-tooltip {
+                top: -0.8rem;
+                left: 50%;
+                &:before {
+                    border-color: #181818 transparent transparent;
+                    border-style: solid;
+                    border-width: 5px 5px 0;
+                    bottom: 0;
+                    left: 50%;
+                }
+            }
         }
     `,
     HighlightDataSub: styled(Label)`
