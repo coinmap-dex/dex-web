@@ -36,8 +36,6 @@ const TokenListModal = ({
 }: IActionConfirmModalProps) => {
     const [searchResultTokens, setSearchResultTokens] = useState<Balance[]>([]);
     const isSearching = !!searchKeyword;
-    const context = useWeb3React();
-    const { account } = context;
 
     const mergeAccountBalancesWithStoredBalances = (
         accountBalances: Balance[],
