@@ -245,10 +245,8 @@ const Order = () => {
     const updatePrice = () => {
         if ((priceInputRef.current && !(+priceInputRef.current.value)) && lastPrice) {
             priceInputRef.current.value = lastPrice;
-        } else {
-            priceInputRef.current.value = 0;
+            setCurrentPrice(priceInputRef.current.value);
         }
-        setCurrentPrice(priceInputRef.current.value);
     }
 
     return (
