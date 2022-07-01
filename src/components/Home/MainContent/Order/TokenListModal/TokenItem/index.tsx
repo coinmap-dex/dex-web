@@ -6,7 +6,7 @@ import {getFractionDigits} from '~utils/number.util';
 
 type TokenItemProps = {
     onClick?: () => void,
-    setSelectedImportToken?: (token) => void,
+    setImportedToken?: (token) => void,
     setImportTokenModalVisible?: (boolean) => void,
     type: TOKEN_ITEM_TYPE,
     balance?: Balance,
@@ -16,7 +16,7 @@ const DEFAULT_LOGO = '../../../images/default-token-logo.png';
 
 const TokenItem = ({
     onClick,
-    setSelectedImportToken,
+    setImportedToken,
     setImportTokenModalVisible,
     type,
     balance
@@ -32,7 +32,7 @@ const TokenItem = ({
     }
     const handleImportButtonClick = () => {
         setImportTokenModalVisible && setImportTokenModalVisible(true);
-        setSelectedImportToken && setSelectedImportToken(balance);
+        setImportedToken && setImportedToken(balance);
     }
     return (
         <S.ItemWrapper style={{ cursor: isSearchType ? '' : 'pointer'}} onClick={onClick}>

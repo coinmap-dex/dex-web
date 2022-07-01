@@ -14,7 +14,7 @@ interface IActionConfirmModalProps {
     isVisible: boolean,
     setVisible: (boolean) => void,
     setImportTokenModalVisible: (boolean) => void,
-    setSelectedImportToken: (token) => void,
+    setImportedToken: (token) => void,
     isBuyType: boolean,
     setPayToken: (paySymbol) => void,
     setBuyToken: (buySymbol) => void,
@@ -27,7 +27,7 @@ const TokenListModal = ({
     isVisible,
     setVisible,
     setImportTokenModalVisible,
-    setSelectedImportToken,
+    setImportedToken,
     isBuyType,
     setPayToken,
     setBuyToken,
@@ -83,7 +83,7 @@ const TokenListModal = ({
                                 key={resultToken?.token?.address}
                                 type={TOKEN_ITEM_TYPE.SEARCH}
                                 balance={resultToken}
-                                setSelectedImportToken={setSelectedImportToken}
+                                setImportedToken={setImportedToken}
                                 setImportTokenModalVisible={setImportTokenModalVisible} />
                         );
                     })}

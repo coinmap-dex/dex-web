@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 
 import S from './styled';
-import { useAppSelector, useToken } from '~hooks';
+import {useAppSelector, useAxios, useToken} from '~hooks';
 import PlusIcon from '~svg/Plus';
 import MinusIcon from '~svg/Minus';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ import {
 import { Balance } from '../../../../models/balance.model';
 import { getTokenFromList } from '~utils/order.util';
 import Chevron from 'sezy-design/components/icon/solid/chevron';
-import { getFractionDigits } from '~utils/number.util';
+import {exponentialToDecimal, getFractionDigits} from '~utils/number.util';
 
 const PRICE_INPUT_ID = 1;
 const AMOUNT_INPUT_ID = 2;
@@ -37,13 +37,6 @@ const Order = () => {
 
     const [payToken, setPayToken] = useState<any>({});
     const [buyToken, setBuyToken] = useState<any>({});
-
-    const { data: poolData } = useGetPoolQuery(contract);
-    const firstPoolPriceUnit = poolData?.pools?.[0]?.name?.split('/')?.[1] ?? '';
-
-    const { data: transactionResponseData } = useGetTransactionQuery(contract);
-    const transactionData = [...(transactionResponseData?.transaction || [])]?.reverse();
-    const lastPrice = transactionData?.[0]?.price ?? '';
 
     useEffect(() => {
         setBuyToken(getTokenFromList(tokenSymbol));
@@ -68,13 +61,19 @@ const Order = () => {
     const [isOrderModalVisible, setOrderModalVisible] = useState(false);
     const [isTokenListModalVisible, setTokenListModalVisible] = useState(false);
     const [isImportTokenModalVisible, setImportTokenModalVisible] = useState(false);
-    const [selectedImportToken, setSelectedImportToken] = useState<Balance>({});
+    const [importedToken, setImportedToken] = useState<Balance>({});
     const [importTokenSearchKeyword, setImportTokenSearchKeyword] = useState<string>('');
     const [myBalance, setMyBalance] = useState<number>(0);
 
+    const { response: priceResponse } = useAxios({
+        method: 'get',
+        url: `https://api.dextrading.io/api/v1/price/${contract}/${isBuyType ? payToken?.address : buyToken?.address}`,
+        headers: JSON.stringify({ accept: '*/*' }) as any,
+    });
+
     useEffect(() => {
-        updatePrice();
-    }, [lastPrice]);
+        updatePrice((priceResponse as any)?.price ?? 0);
+    }, [priceResponse]);
 
     const context = useWeb3React();
     const { account, library } = context;
@@ -242,10 +241,10 @@ const Order = () => {
         }
     }
 
-    const updatePrice = () => {
-        if ((priceInputRef.current && !(+priceInputRef.current.value)) && lastPrice) {
-            priceInputRef.current.value = lastPrice;
-            setCurrentPrice(priceInputRef.current.value);
+    const updatePrice = (price) => {
+        if (priceInputRef.current && price) {
+            priceInputRef.current.value = exponentialToDecimal(price);
+            setCurrentPrice(price);
         }
     }
 
@@ -425,7 +424,7 @@ const Order = () => {
                 isVisible={isTokenListModalVisible}
                 setVisible={setTokenListModalVisible}
                 setImportTokenModalVisible={setImportTokenModalVisible}
-                setSelectedImportToken={setSelectedImportToken}
+                setImportedToken={setImportedToken}
                 isBuyType={isBuyType}
                 setBuyToken={setBuyToken}
                 setPayToken={setPayToken}
@@ -435,7 +434,7 @@ const Order = () => {
             <ImportTokenModal
                 isVisible={isImportTokenModalVisible}
                 setVisible={setImportTokenModalVisible}
-                selectedImportToken={selectedImportToken}
+                importedToken={importedToken}
                 setSearchKeyword={setImportTokenSearchKeyword} />
         </>
     );
