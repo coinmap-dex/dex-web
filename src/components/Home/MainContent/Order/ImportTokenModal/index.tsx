@@ -8,7 +8,7 @@ interface IActionConfirmModalProps {
     isVisible: boolean,
     setVisible: (boolean) => void,
     setSearchKeyword: (keyword) => void,
-    selectedImportToken: Balance
+    importedToken: Balance
 }
 
 const DEFAULT_LOGO = '../../../images/default-token-logo.png';
@@ -17,14 +17,14 @@ const ImportTokenModal = ({
     isVisible,
     setVisible,
     setSearchKeyword,
-    selectedImportToken
+    importedToken
 }: IActionConfirmModalProps) => {
-    const [logo, setLogo] = useState(selectedImportToken?.token?.logo || DEFAULT_LOGO);
-    const address: string = selectedImportToken?.token?.address ?? '';
+    const [logo, setLogo] = useState(importedToken?.token?.logo || DEFAULT_LOGO);
+    const address: string = importedToken?.token?.address ?? '';
     const checkboxRef = useRef(null);
 
     const handleImportButtonClick = () => {
-        setStoredBalances(selectedImportToken);
+        setStoredBalances(importedToken);
         const isViewOnBscScanChecked = !!(checkboxRef?.current as any)?.checked;
         if (isViewOnBscScanChecked) {
             navigateToBscScan();
