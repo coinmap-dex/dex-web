@@ -14,7 +14,7 @@ const Menu = () => {
     const [isLeftMenuActive, setLeftMenuActive] = React.useState(false);
     const [isPopupVisible, setPopupVisible] = React.useState(false);
     const navigateToHome = () => {
-        window.open('/', '_self');
+        window.open('/home', '_self');
     }
     return (
         <>
