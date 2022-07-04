@@ -27,6 +27,17 @@ export const mapBalancesFromSearchResults = (searchResults: SearchResult[]): Bal
     });
 }
 
+export const mapTokenFromSearchResult = (searchResult: SearchResult): Token => {
+    return {
+        address: searchResult.address ?? '',
+        decimals: +searchResult.decimals ?? 0,
+        logo: searchResult.logo ?? '',
+        name: searchResult.name ?? '',
+        symbol: searchResult?.symbol ?? '',
+    } as Token;
+}
+
+
 const priorityBalanceAddresses = [
     '0x242a1fF6eE06f2131B7924Cacb74c7F9E3a5edc9'
 ];

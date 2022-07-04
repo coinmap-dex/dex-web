@@ -127,6 +127,9 @@ export default {
             margin-left:5px;
             fill:orange;
         }
+        &.pay-token, &.buy-token {
+            text-transform: uppercase;
+        }
     `,
     OrderBoxPriceCounter: styled.div`
         width:15rem;
@@ -188,6 +191,7 @@ export default {
         line-height: 2.1rem;
         color: #FDFFFE;
         cursor:pointer;
+        text-transform: uppercase;
         &:hover {
             background: ${props => props['active'] ? '#14B5E5' : '#FF5C70'};
             opacity: 1;

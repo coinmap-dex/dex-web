@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import {Shimmer, Tooltip as SezyTooltip} from 'sezy-design'
 import * as  S from './styled';
 import { useGetOverviewQuery } from '~store/modules/home/api';
-import { useAppSelector, useAxios, useBreakpoint, useCoinmapDex } from '~hooks';
+import { useAppSelector, useBreakpoint } from '~hooks';
 import Star from '~svg/Star';
-import { setTokenSymbol } from '~store/modules/home';
+import {setCurrentToken, setTokenSymbol} from '~store/modules/home';
 import { useDispatch } from 'react-redux';
 import OrderModal from './OrderModal';
-import ChartInfoIcon from '~svg/ChartInfoIcon';
+import {Token} from '../../../models/token.model';
+import {mapTokenFromOverviewData} from '~utils/token.util';
 
 const COPY_MESSAGE = 'Copy';
 const COPIED_MESSAGE = 'Copied!';
@@ -22,6 +23,7 @@ const TokenDetail = () => {
 
     useEffect(() => {
         dispatch(setTokenSymbol(overviewData?.symbol));
+        dispatch(setCurrentToken(mapTokenFromOverviewData(overviewData)));
     }, [overviewData?.symbol]);
 
     const onContractCopyIconClick = () => {
