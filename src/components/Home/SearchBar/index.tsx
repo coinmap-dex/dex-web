@@ -8,6 +8,7 @@ import { useGetSearchMutation } from '~store/modules/home/api';
 import SearchSuggestion from '../Suggestion';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router';
+import {SearchResult} from '../../../models/search-result.model';
 
 const SearchBar = () => {
     const [keyword, setKeyword] = useState<string>('');
@@ -15,7 +16,7 @@ const SearchBar = () => {
     const { address } = useParams();
     const contract = useAppSelector(state => state.home.contract);
     const [requestSearch, { isLoading: isSearchLoading }] = useGetSearchMutation();
-    const [suggetionData, setSuggestionData] = useState([]);
+    const [suggetionData, setSuggestionData] = useState<SearchResult[]>([]);
     const [suggetionVisible, setSuggestionVisible] = useState(false);
     const searchInputRef: any = React.useRef(null);
     const navigate = useNavigate();
@@ -62,9 +63,9 @@ const SearchBar = () => {
                     }
 
                     setSuggestionVisible(true);
-                    const searchResult = ((await requestSearch(keyword)) as any).data;
-                    setSuggestionData(searchResult);
-                    !searchResult?.length && setSuggestionVisible(false);
+                    const searchResults: SearchResult[] = ((await requestSearch(keyword)) as any).data;
+                    setSuggestionData(searchResults);
+                    !searchResults?.length && setSuggestionVisible(false);
                 }, 500)}
             />
             {suggetionVisible && <SearchSuggestion data={suggetionData} setData={setSuggestionData} setVisible={setSuggestionVisible} isLoading={isSearchLoading} />}

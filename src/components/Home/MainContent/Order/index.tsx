@@ -15,35 +15,39 @@ import axios from 'axios';
 import TokenListModal from './TokenListModal';
 import ImportTokenModal from './ImportTokenModal';
 import {
-    useGetBalancesByAccountQuery,
-    useGetPoolQuery,
-    useGetTransactionQuery
+    useGetBalancesByAccountQuery, useGetOverviewQuery
 } from '~store/modules/home/api';
 import { Balance } from '../../../../models/balance.model';
-import { getTokenFromList } from '~utils/order.util';
 import Chevron from 'sezy-design/components/icon/solid/chevron';
 import {exponentialToDecimal, getFractionDigits} from '~utils/number.util';
+import {Token} from '../../../../models/token.model';
+import {mapTokenFromOverviewData} from '~utils/token.util';
 
 const PRICE_INPUT_ID = 1;
 const AMOUNT_INPUT_ID = 2;
+const BUSD_ADDRESS = '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56';
 
 const Order = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const contract = useAppSelector(state => state.home.contract);
-    const tokenSymbol = useAppSelector(state => state.home.tokenSymbol);
-    const orderToken = useAppSelector(state => state.home.orderToken);
+    const currentToken: Token = useAppSelector(state => state.home.currentToken);
+    const { data: defaultPayTokenOverviewData, isLoading, error } = useGetOverviewQuery(BUSD_ADDRESS);
+    const tokenSymbol: string = currentToken?.symbol;
     const [currentPrice, setCurrentPrice] = useState(0);
     const [currentAmount, setCurrentAmount] = useState(0);
 
-    const [payToken, setPayToken] = useState<any>({});
-    const [buyToken, setBuyToken] = useState<any>({});
+    const [payToken, setPayToken] = useState<Token>({} as Token);
+    const [buyToken, setBuyToken] = useState<Token>({} as Token);
 
     useEffect(() => {
-        setBuyToken(getTokenFromList(tokenSymbol));
-    }, [tokenSymbol]);
+        setBuyToken(currentToken);
+    }, [currentToken]);
 
     useEffect(() => {
-        setPayToken(getTokenFromList('BUSD'));
+        setPayToken(mapTokenFromOverviewData(defaultPayTokenOverviewData));
+    }, [defaultPayTokenOverviewData?.symbol]);
+
+    useEffect(() => {
         initInputRef();
     }, []);
 
@@ -311,9 +315,8 @@ const Order = () => {
                         onChange={onInputChange(AMOUNT_INPUT_ID)}
                         onClick={onInputClick(amountInputRef)}
                         onBlur={onInputClickOut(amountInputRef, AMOUNT_INPUT_ID)}
-
                     />
-                    <S.OrderBoxInputLabel onClick={() => isBuyType && setTokenListModalVisible(true)}>
+                    <S.OrderBoxInputLabel className="pay-token" onClick={() => isBuyType && setTokenListModalVisible(true)}>
                         {payToken?.symbol}
                         {isBuyType && <Chevron size='s1' />}
                     </S.OrderBoxInputLabel>
@@ -371,7 +374,7 @@ const Order = () => {
                             // labelRef.current.style.left = '100px';
                         }}
                     />
-                    <S.OrderBoxInputLabel onClick={() => !isBuyType && setTokenListModalVisible(true)}>
+                    <S.OrderBoxInputLabel className="buy-token" onClick={() => !isBuyType && setTokenListModalVisible(true)}>
                         {buyToken?.symbol}
                         {!isBuyType && <Chevron size='s1' />}
                     </S.OrderBoxInputLabel>
