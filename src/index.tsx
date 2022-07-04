@@ -10,6 +10,7 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { Provider as ReduxProvider } from "react-redux";
 // import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import Home2 from "~components/Home2";
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
@@ -29,6 +30,7 @@ const App = (): React.ReactElement => {
             {/* <Router> */}
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home2 />} />
                 <Route path="/:address/*" element={<Home />} />
               </Routes>
             {/* </Router> */}
