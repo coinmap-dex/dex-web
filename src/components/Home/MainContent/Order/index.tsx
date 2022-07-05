@@ -398,12 +398,11 @@ const Order = () => {
                                     // const payAmount = amountToBN(pay, payToken?.address, payToken?.decimals).toString();
                                     // const buyAmount = amountToBN(buy, buyToken?.address, buyToken?.decimals).toString();
 
-                                    const payAmount = pay*1e18;
-                                    const buyAmount = buy*1e18;
-                                    console.log('=====================');
-                                    console.log(payAmount);
+                                    const payAmount = exponentialToDecimal(pay*1e18);
+                                    const buyAmount = exponentialToDecimal(buy*1e18);
+
                                     const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
-                                    await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig })
+                                    await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig });
                                     setPendingTx(false)
                                 }}>
                                 {`${payToken?.symbol} -> ${buyToken?.symbol}`}

@@ -3,7 +3,7 @@ import {NUMBER} from '../constants/number.constants';
 export const getFractionDigits = (num: number): number => {
     let fractionDigits = NUMBER.DEFAULT_FRACTION_DIGITS;
     const convertedNumber = exponentialToDecimal(num);
-    const [wholePart, decimalPart] = convertedNumber.toString().split('.');
+    const [wholePart, decimalPart] = convertedNumber.split('.');
     if (+wholePart === 0 && decimalPart) {
         for (let i = 0; i < decimalPart.length; i++) {
             if (decimalPart.charAt(i) === '0') {
@@ -16,11 +16,11 @@ export const getFractionDigits = (num: number): number => {
     return fractionDigits;
 }
 
-export const exponentialToDecimal = (exponentialNumber: number | string): number | string => {
+export const exponentialToDecimal = (exponentialNumber: number | string): string => {
     const sign = +exponentialNumber < 0 ? "-" : "",
         toStr = exponentialNumber.toString();
     if (!/e/i.test(toStr)) {
-        return exponentialNumber;
+        return exponentialNumber + '';
     }
     const [lead, decimal, pow] = exponentialNumber.toString()
         .replace(/^-/, "")
