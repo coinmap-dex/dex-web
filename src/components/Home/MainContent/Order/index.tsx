@@ -71,7 +71,7 @@ const Order = () => {
 
     const { response: priceResponse } = useAxios({
         method: 'get',
-        url: `https://api.dextrading.io/api/v1/price/${contract}/${isBuyType ? payToken?.address : buyToken?.address}`,
+        url: `https://api.dextrading.io/api/v1/price/${currentToken?.address}/${isBuyType ? payToken?.address : buyToken?.address}`,
         headers: JSON.stringify({ accept: '*/*' }) as any,
     });
 
@@ -144,8 +144,8 @@ const Order = () => {
     }
 
     const onInputClick = (inputRef) => () => {
-        if (!Number(inputRef.current.value)) {
-            inputRef.current.value = '';
+        if (isNaN(inputRef.current.value)) {
+            inputRef.current.value = 0;
         }
     }
 
@@ -172,13 +172,15 @@ const Order = () => {
     }
 
     const handleMinusClick = (inputRef, inputTypeId) => () => {
-        if (!inputRef.current.value) {
+        if (isNaN(inputRef.current.value)) {
             inputRef.current.value = 0;
         }
-        const newValue = increaseDecimalNumber(+inputRef.current.value, -1);
-        inputRef.current.value = newValue > 0 ? newValue : 0;
-        updateCurrentInputStateById(inputTypeId, inputRef.current.value);
-        validateApproveButton(inputTypeId);
+        else {
+            const newValue = increaseDecimalNumber(+inputRef.current.value, -1);
+            inputRef.current.value = newValue > 0 ? newValue : 0;
+            updateCurrentInputStateById(inputTypeId, inputRef.current.value);
+            validateApproveButton(inputTypeId);
+        }
     }
 
     const updateCurrentInputStateById = (inputTypeId, newValue) => {
@@ -246,7 +248,7 @@ const Order = () => {
     }
 
     const updatePrice = (price) => {
-        if (priceInputRef.current && price) {
+        if (priceInputRef.current && !isNaN(price)) {
             priceInputRef.current.value = exponentialToDecimal(price);
             setCurrentPrice(price);
         }
