@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 import S from './styled';
 import { useWeb3React } from '@web3-react/core';
 import { useAxios, useCoinmapDex } from '~hooks';
-import { formatAmount, getTokenName } from '~utils';
+import { formatAmount } from '~utils';
 import PopupTableWrapper from '~components/Partials/PopupTableWrapper';
 import moment from 'moment';
+import axios from 'axios';
+import _ from 'lodash';
+import {Token} from '../../../../../models/token.model';
+import {mapTokenFromOverviewData} from '~utils/token.util';
 
 interface IActionConfirmModalProps {
     isVisible: boolean,
@@ -85,63 +89,64 @@ const OrderModal = ({
     });
     const { cancelOrder } = useCoinmapDex();
     const [data, setData] = useState<any>([]);
+    const [tableData, setTableData] = useState<any>([]);
+    const [tokenList, setTokenList] = useState<Token[]>([]);
+
+    const getTokenOverviewDataList = (response: any[]) => {
+        const responseTokenAddresses: string[] = [];
+        response.forEach(order => {
+            responseTokenAddresses.push(order?.payToken ?? '');
+            responseTokenAddresses.push(order?.buyToken ?? '');
+        });
+        const filterTokenAddresses: string[] = _.uniqBy(responseTokenAddresses).filter(address => !!address);
+        axios.all(filterTokenAddresses.map((address) => axios.get(`https://api.dextrading.io/api/v1/overview/${address}`))).then(
+            (responses) => {
+                const tokens: Token[] = [];
+                (responses as any[]).forEach(res => tokens.push(mapTokenFromOverviewData(res.data)));
+                setTokenList(tokens);
+            })
+    };
+
+    const getTokenName = (address: string): string => {
+        return tokenList.filter(token => token.address.toLowerCase() === address.toLowerCase())[0]?.symbol.toUpperCase();
+    }
+
     useEffect(() => {
         if (response !== null) {
             setData(response);
+            getTokenOverviewDataList(response);
         }
     }, [response]);
 
-    const tableData = data.map((v) => {
-        console.log('================');
-        console.log(formatAmount(v.payAmount, v.payToken));
-        console.log(formatAmount(v.buyAmount, v.buyToken));
-        console.log(+formatAmount(v.payAmount, v.payToken) / +formatAmount(v.buyAmount, v.buyToken));
-        return {
-            // payToken: getTokenName(v.payToken),
-            // payAmount: formatAmount(v.payAmount, v.payToken),
-            // buyToken: getTokenName(v.buyToken),
-            // buyAmount: formatAmount(v.buyAmount, v.buyToken),
-            type: 'limit',
-            payToken: getTokenName(v.payToken),
-            buyToken: getTokenName(v.buyToken),
-            amount: formatAmount(v.payAmount, v.payToken),
-            total: formatAmount(v.buyAmount, v.buyToken),
-            price: +formatAmount(v.payAmount, v.payToken) / +formatAmount(v.buyAmount, v.buyToken),
-            deadline: moment.unix(v.deadline).format("DD/MM/YYYY"),
-            status: {
-                children: <>
-                    {v.status == 0 &&
-                        <span>
+    useEffect(() => {
+        if (tokenList.length > 0) {
+            setTableData(data.map((order) => {
+                return {
+                    type: 'limit',
+                    payToken: getTokenName(order.payToken),
+                    buyToken: getTokenName(order.buyToken),
+                    amount: formatAmount(order.payAmount, order.payToken),
+                    total: formatAmount(order.buyAmount, order.buyToken),
+                    price: +formatAmount(order.payAmount, order.payToken) / +formatAmount(order.buyAmount, order.buyToken),
+                    deadline: moment.unix(order.deadline).format("DD/MM/YYYY"),
+                    status: {
+                        children: <>
+                            {order.status == 0 &&
+                                <span>
                             Open <button
-                                onClick={async () => {
-                                    await cancelOrder(account, v.salt)
-                                }}>x</button>
+                                    onClick={async () => {
+                                        await cancelOrder(account, order.salt)
+                                    }}>x</button>
                         </span>}
-                    {v.status == 1 && <span >Filled</span>}
-                    {v.status == 2 && <span >Canceled</span>}
-                </>
+                            {order.status == 1 && <span >Filled</span>}
+                            {order.status == 2 && <span >Canceled</span>}
+                        </>
 
-            }
+                    }
+                }
+            }));
         }
-    });
-
-    // TODO: Test data - Please remove when complete this task
-    // const tableData = [1, 2, 3, 4, 5].map((v) => {
-    //     return {
-    //         payToken: 'BUSD',
-    //         buyToken: 'BNB',
-    //         type: 'Sell Limit',
-    //         price: '50.00 ≈$50 (BUSD)',
-    //         amount: '28.0000/0.0000 0.00% (BNB)',
-    //         total: '1400.00/$ 1400 ≈0.00/≈$ 0 (BUSD)',
-    //         deadline: '21-09-30',
-    //         status: {
-    //             children: <>
-    //                 <span>Success</span>
-    //             </>
-    //         }
-    //     }
-    // });
+    }, [tokenList]);
 
     return (
         <PopupTableWrapper
