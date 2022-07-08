@@ -41,6 +41,7 @@ const Order = () => {
 
     useEffect(() => {
         setBuyToken(currentToken);
+        refreshData();
     }, [currentToken]);
 
     useEffect(() => {
@@ -107,9 +108,17 @@ const Order = () => {
         const percentage = '0';
         totalRangeRef.current && (totalRangeRef.current.value = percentage);
         totalInputRef.current && (totalInputRef.current.value = 0);
-        // priceInputRef.current && (priceInputRef.current.value = 0);
-        // amountInputRef.current && (amountInputRef.current.value = 0);
         percentageInputRef.current && (percentageInputRef.current.value = percentage);
+    }
+    
+    const refreshData = () => {
+        amountInputRef.current.value = '';
+        totalInputRef.current.value = '';
+        percentageInputRef.current.value = '0';
+        totalRangeRef.current.value = '0';
+        setPercentageLabel(0);
+        setCurrentAmount(0);
+        updatePrice((priceResponse as any)?.price ?? 0);
     }
 
     const setPercentageLabel = (percentage) => {
@@ -222,13 +231,7 @@ const Order = () => {
         if (!isBuyType) {
             setBuyToken(payToken);
             setPayToken(buyToken);
-            amountInputRef.current.value = '';
-            totalInputRef.current.value = '';
-            percentageInputRef.current.value = '0';
-            totalRangeRef.current.value = '0';
-            setPercentageLabel(0);
-            // setCurrentAmount(0);
-            // setCurrentPrice(0);
+            refreshData();
         }
     }
 
@@ -237,13 +240,7 @@ const Order = () => {
         if (isBuyType) {
             setBuyToken(payToken);
             setPayToken(buyToken);
-            amountInputRef.current.value = '';
-            totalInputRef.current.value = '';
-            percentageInputRef.current.value = '0';
-            totalRangeRef.current.value = '0';
-            setPercentageLabel(0);
-            // setCurrentAmount(0);
-            // setCurrentPrice(0);
+            refreshData();
         }
     }
 
@@ -326,7 +323,7 @@ const Order = () => {
                 <S.OrderBoxDetail>
                     <S.Balance>
                         <span>My balance  </span>
-                        <span>{myBalance.toFixed(getFractionDigits(myBalance))} {payToken?.symbol}</span>
+                        <span>{myBalance.toFixed(getFractionDigits(myBalance))} {payToken?.symbol?.toUpperCase()}</span>
                     </S.Balance>
                 </S.OrderBoxDetail>
                 <S.OrderBoxRangeWrapper>
