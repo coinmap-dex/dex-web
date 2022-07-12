@@ -1,6 +1,8 @@
 import { Col, Row, Section } from "sezy-design";
 import styled from "styled-components";
 import breakpoints from "~breakpoints";
+import Slider from "react-slick";
+import NavigationIcon from "~svg/Navigation";
 
 export default {
     HeaderSection: styled(Section)`
@@ -47,6 +49,72 @@ export default {
         @media (max-width: 500px) {
             display:none
         }
+    `,
+    Navigation: styled.div`
+        display:none;
+        @media (max-width: 500px) {
+            display:block;
+        }
+        &>svg{
+            margin-right:8px;
+        }
+    `,
+    NavigationMenu: styled.div`
+        position:fixed;
+        width:100%;
+        height:100%;
+        top:0;
+        left:0;
+        z-index:1000;
+        &>div:first-child{
+            position:absolute;
+            width:100%;
+            height:100%;
+            top:0;
+            left:0;
+        }
+        &>div:last-child{
+            position:absolute;
+            width:80%;
+            height:100%;
+            top:0;
+            left:0;
+            background: #0C122A;
+            padding:24px 12px;
+            &>div:first-child{
+                font-weight: 700;
+                font-size: 14px;
+                line-height: 15px;
+                text-transform: uppercase;
+                color: #616887;
+                margin-bottom:7px;
+            }
+            &>button{
+                border:0;
+                display:block;
+                width:100%;
+                height: 44px;
+                background: linear-gradient(90.11deg, #01C3FE 7.73%, #45FAC5 99.39%);
+                box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+                border-radius: 2px;
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 24px;
+                text-align: center;
+                color: #FFFFFF;
+                margin-top:13px;
+                &:last-child{
+                    background: linear-gradient(270deg, #5D3293 0%, #A23293 100%);
+                }
+            }
+        }
+    `,
+    NavigationMenuItem: styled.a`
+        display:block;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 48px;
+        color: #FFFFFF;
     `,
     Section1: styled(Section)`
         height:637px;
@@ -121,10 +189,16 @@ export default {
             @media (max-width: 500px) {
                 font-size: 16px;
                 line-height: 24px;
+                width:auto;
             }
         }
+        &>div>div:last-child{
+            display:flex;
+            gap: 13px;
+        }
         & button{
-            width: 187px;
+            max-width: 187px;
+            white-space: nowrap;
             height: 44px;
             left: 373px;
             top: 542px;
@@ -137,6 +211,14 @@ export default {
             color: #FFFFFF;
             border:0;
             margin-top:29px;
+            flex:1;
+            &:first-child{
+                display:none;
+                @media (max-width: 500px) {
+                    display:block;
+                    background: linear-gradient(90.11deg, #01C3FE 7.73%, #45FAC5 99.39%);
+                }
+            }
         }
     `,
     Section1Col2: styled(Col)`
@@ -167,17 +249,71 @@ export default {
                 max-width:100%;
             }
         }
+        &:before{
+            @media (max-width: 500px) {
+                background: url('/images/section3.png');
+                content: '';
+                display:block;
+                background-blend-mode: color-dodge;
+                height: 100%;
+                width:100%;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left:0;
+                z-index:0;
+            }
+        }
     `,
     Section2Col1: styled(Col)`
         & svg{
-            max-width:100%;
+            max-width:80%;
+        }
+        &>div>div:last-child{
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 24px;
+            text-align: center;
+            color: #FFFFFF;
+            max-width:470px;
+            margin: 38px auto 0;
+            @media (max-width: 500px) {
+                margin-bottom: 76px;
+            }
+        }
+    `,
+    Section2Donut: styled.div`
+        position: relative;
+        text-align: center;
+        &>div{
+            font-weight: 700;
+            font-size: 120px;
+            line-height: 120px;
+            color: #FFFFFF;
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            display:flex;
+        }
+        & span{
+            font-size:72px;
+            line-height: 72px;
         }
     `,
     Section2Col2: styled(Col)`
         &>div>div{
             display:flex;
+            @media (max-width: 500px) {
+                display:block;
+                text-align: center;
+            }
             &>svg{
                 margin-right:16px;
+                @media (max-width: 500px) {
+                    margin:0;
+                    margin-bottom: 24px;
+                }
             }
             &>div{
                 flex:1;
@@ -186,6 +322,9 @@ export default {
                     font-size: 24px;
                     line-height: 26px;
                     color: #FFFFFF;
+                    @media (max-width: 500px) {
+                        margin-bottom: 16px;
+                    }
                 }
                 &>div:nth-child(2){
                     font-weight: 400;
@@ -203,15 +342,18 @@ export default {
     Section3: styled(Section)`
         position:relative;
         background:#0C122A;
-        padding: 36px 0;
         @media (max-width: 500px) {
-            padding: 12px;
+                padding-top: 30px;
         }
         &>div{
             width:1200px;
             height:100%;
             z-index:1;
             position:relative;
+            padding: 36px 0;
+            @media (max-width: 500px) {
+                padding: 12px;
+            }
             @media (max-width: 1200px) {
                 max-width:100%;
             }
@@ -229,10 +371,7 @@ export default {
             opacity:0.15;
             z-index:0;
             @media (max-width: 500px) {
-                background: url('/images/section3.png');
-                height: 100%;
-                top:0;
-                transform: translateY(0%)
+                background: '';
             }
         }
     `,
@@ -307,6 +446,21 @@ export default {
         & img{
             width: 570px;
             max-width:100%;
+        }
+    `,
+    Section3ItemDesktop: styled(Row)`
+        @media (max-width: 500px) {
+            /* display:none; */
+        }
+    `,
+    Section3ItemMobile: styled(Slider)`
+        display:none;
+        height: 200px;
+        & div{
+            color:#fff;
+        }
+        @media (max-width: 500px) {
+            /* display:block; */
         }
     `,
     Section3Item: styled.div`
@@ -561,11 +715,13 @@ export default {
     Section7: styled(Section)`
         background: #0C122A;
         &>div{
+            width:300px;
             height:100%;
             z-index:1;
             position:relative;
             padding-top:32px;
             @media (max-width: 500px) {
+                width:auto;
                 padding: 40px 12px 12px;
             }
             &>div{
