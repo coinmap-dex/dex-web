@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import S from './styled';
 import UnionIcon from '~svg/Union';
 import { useWeb3React } from '@web3-react/core';
-import { useEagerConnect, useInactiveListener } from '~hooks';
+import {useBreakpoint, useEagerConnect, useInactiveListener} from '~hooks';
 
 import { injected, supportedChainIds } from "~configs/connectors";
 import { InjectedConnector } from '@web3-react/injected-connector';
@@ -18,6 +18,8 @@ const UserWallet = () => {
     chainId = 0,
     library
   } = context;
+
+  const breakpoint = useBreakpoint();
 
   // handle logic to recognize the connector currently being activated
   const [activatingConnector, setActivatingConnector] = useState<InjectedConnector>();
@@ -47,6 +49,8 @@ const UserWallet = () => {
     }, 500);
   }
 
+  const isMobile: boolean = breakpoint('xs') && !breakpoint('md');
+
   return (
     <S.HeaderUserWalletWrapper>
       <S.HeaderUnionIconWrapper>
@@ -61,8 +65,7 @@ const UserWallet = () => {
                 target={"blank_"}
                 onMouseEnter={() => setShownDisconnectButton(true)}
                 onMouseOut={handleHiddenDisconnectButton}
-              >{` ${account.substring(0, 6)}...${account.substring(
-                account.length - 6
+              >{` ${account.substring(0, isMobile ? 3 : 6)}${isMobile ? '..' : '...'}${account.substring(account.length - (isMobile ? 2 : 6)
               )}`}<TokenUpIcon/>
               </S.AccountAddress>
               {isShownDisconnectButton && (

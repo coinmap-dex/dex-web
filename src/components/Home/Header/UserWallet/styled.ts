@@ -72,6 +72,7 @@ export default {
           height: 2rem;
           line-height: 2rem;
           font-size: 1.1rem;
+          margin-left: -2%;
         }
     `,
 }
