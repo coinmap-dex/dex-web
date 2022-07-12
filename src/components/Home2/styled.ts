@@ -52,9 +52,6 @@ export default {
         height:637px;
         position:relative;
         background:#0C122A;
-        @media (max-width: 500px) {
-            padding: 12px;
-        }
         &>div{
             width:1200px;
             height:100%;
@@ -62,6 +59,9 @@ export default {
             align-items: center;
             z-index:1;
             position:relative;
+            @media (max-width: 500px) {
+                padding: 12px;
+            }
             @media (max-width: 1200px) {
                 max-width:100%;
             }
@@ -73,6 +73,7 @@ export default {
             background-blend-mode: color-dodge;
             height: 352px;
             width:100%;
+            max-width:100%;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -227,17 +228,28 @@ export default {
             transform: translateY(-50%);
             opacity:0.15;
             z-index:0;
+            @media (max-width: 500px) {
+                background: url('/images/section3.png');
+                height: 100%;
+                top:0;
+                transform: translateY(0%)
+            }
         }
     `,
     Section3Col1: styled(Col)`
         display:flex;
         align-items: center;
+        &>div{
+            max-width: 100%;
+        }
         &>div>div:nth-child(1){
             font-weight: 600;
             font-size: 18px;
             line-height: 20px;
             color: #FFFFFF;
             margin-bottom:8px;
+            max-width: 100%;
+            text-align: center;
         }
         &>div>div:nth-child(2){
             font-weight: 700;
@@ -245,6 +257,8 @@ export default {
             line-height: 130%;
             text-transform: uppercase;
             color: #FFFFFF;
+            max-width: 100%;
+            text-align: center;
             &>span{
                 background: linear-gradient(90.11deg, #01C3FE 7.73%, #45FAC5 99.39%);
                 -webkit-background-clip: text;
@@ -264,6 +278,8 @@ export default {
             color: #FFFFFF;
             margin-top:13px;
             width:448px;
+            max-width: 100%;
+            text-align: justify;
             @media (max-width: 500px) {
                 font-size: 18px;
             }
@@ -282,6 +298,9 @@ export default {
             color: #FFFFFF;
             border:0;
             margin-top:22px;
+            @media (max-width: 500px) {
+                display:none;
+            }
         }
         `,
     Section3Col2: styled(Col)`
@@ -339,15 +358,15 @@ export default {
     Section4: styled(Section)`
         position:relative;
         background:#0C122A;
-        padding: 36px 0;
-        @media (max-width: 500px) {
-            padding: 12px;
-        }
         &>div{
             width:1200px;
             height:100%;
             z-index:1;
             position:relative;
+            padding: 36px 0;
+            @media (max-width: 500px) {
+                padding: 12px;
+            }
             @media (max-width: 1200px) {
                 max-width:100%;
             }
@@ -364,6 +383,9 @@ export default {
             transform: translateY(-50%);
             z-index:0;
         }
+    `,
+    Section4Row: styled(Row)`
+        justify-content: center;
     `,
     Section4Info: styled.div`
         margin-bottom:80px;
@@ -437,15 +459,15 @@ export default {
     Section5: styled(Section)`
         position:relative;
         background:#0C122A;
-        padding: 36px 0;
-        @media (max-width: 500px) {
-            padding: 12px;
-        }
         &>div{
             width:1200px;
             height:100%;
             z-index:1;
             position:relative;
+            padding: 36px 0;
+            @media (max-width: 500px) {
+                padding: 12px;
+            }
             @media (max-width: 1200px) {
                 max-width:100%;
             }
@@ -488,17 +510,35 @@ export default {
 
     Section6: styled(Section)`
         background: linear-gradient(90.11deg, #01C3FE 7.73%, #45FAC5 99.39%);
-        padding: 91px 0;
-        @media (max-width: 500px) {
-            padding: 12px;
-        }
+        
         &>div{
             width:1200px;
             height:100%;
             z-index:1;
             position:relative;
+            padding: 91px 0;
+            @media (max-width: 500px) {
+                padding: 12px;
+            }
             @media (max-width: 1200px) {
                 max-width:100%;
+            }
+            &>div{
+                @media (max-width: 500px) {
+                    margin:0 !important;
+                }
+                &>div{
+                    @media (max-width: 500px) {
+                        padding:0 !important;
+                    }
+                }
+                &>div:last-child{
+                    &>div{
+                        @media (max-width: 500px) {
+                            text-align:right;
+                        }
+                    }
+                }
             }
         }
         & svg{
@@ -520,17 +560,16 @@ export default {
 
     Section7: styled(Section)`
         background: #0C122A;
-        padding-top:32px;
-        @media (max-width: 500px) {
-            padding: 12px;
-        }
         &>div{
-            width:380px;
             height:100%;
             z-index:1;
             position:relative;
+            padding-top:32px;
+            @media (max-width: 500px) {
+                padding: 40px 12px 12px;
+            }
             &>div{
-                width:300px;
+                /* width:300px; */
                 margin:auto !important;
                 &>div{
                     text-align: center;
