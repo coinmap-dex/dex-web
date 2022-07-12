@@ -45,6 +45,7 @@
     "react-router-dom": "^6.3.0",
     "react-router-redux": "^4.0.8",
     "react-scripts": "^5.0.0",
+    "react-slick": "^0.29.0",
     "recharts": "^2.1.9",
     "redux": "^4.1.0",
     "sezy-design": "^1.6.111",

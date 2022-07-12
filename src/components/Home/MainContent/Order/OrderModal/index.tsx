@@ -120,6 +120,20 @@ const OrderModal = ({
 
     useEffect(() => {
         if (tokenList.length > 0) {
+            const a = data[data.length-1];
+            console.log('============');
+            console.log('============');
+            console.log('============');
+            console.log(a.payAmount);
+            console.log(a.payToken);
+            console.log('------')
+            console.log(formatAmount(a.payAmount, a.payToken));
+            console.log(+formatAmount(a.payAmount, a.payToken));
+            console.log('------')
+            console.log(formatAmount(a.buyAmount, a.buyToken));
+            console.log(+formatAmount(a.buyAmount, a.buyToken));
+            console.log('------')
+            console.log(+formatAmount(a.payAmount, a.payToken) / +formatAmount(a.buyAmount, a.buyToken));
             setTableData(data.map((order) => {
                 return {
                     type: 'limit',
