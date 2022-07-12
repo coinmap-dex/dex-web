@@ -40,7 +40,11 @@ const Order = () => {
     const [buyToken, setBuyToken] = useState<Token>({} as Token);
 
     useEffect(() => {
-        setBuyToken(currentToken);
+        if (isBuyType) {
+            setBuyToken(currentToken);
+        } else {
+            setPayToken(currentToken);
+        }
         refreshData();
     }, [currentToken]);
 
