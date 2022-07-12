@@ -77,3 +77,12 @@ input[type=number] {
   border-radius: 10px;
   border: 1px solid #ffffff36;
 }
+section{
+  box-sizing: border-box;
+}
+section > div{
+  box-sizing: border-box;
+}
+section > div > div{
+  max-width: 100%;
+}
