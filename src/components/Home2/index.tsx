@@ -52,15 +52,15 @@ const Home2 = () => {
         <>
             <S.HeaderSection>
                 <S.Logo src="/images/logo.png" />
-                <S.Menu>
+                {/* <S.Menu>
                     <a href="">Docs</a>
                     <a href="">Community</a>
                     <a href="">Tokens</a>
                     <a href="">News & Tutorial</a>
                     <a href="">Contact</a>
                     <a href=""><button>CONNECT WALLET</button></a>
-                </S.Menu>
-                <S.Navigation onClick={() => setMenuOpened(!isMenuOpened)}>
+                </S.Menu> */}
+                {/* <S.Navigation onClick={() => setMenuOpened(!isMenuOpened)}>
                     <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0 7C0 6.44772 0.447715 6 1 6H19C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H1C0.447715 8 0 7.55228 0 7Z" fill="white" />
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1C0 0.447715 0.447715 0 1 0H19C19.5523 0 20 0.447715 20 1C20 1.55228 19.5523 2 19 2H1C0.447715 2 0 1.55228 0 1Z" fill="white" />
@@ -83,7 +83,7 @@ const Home2 = () => {
                             </S.NavigationMenu>
                         )
                     }
-                </S.Navigation>
+                </S.Navigation> */}
             </S.HeaderSection>
             <S.Section1>
                 <Row>
@@ -314,8 +314,8 @@ const Home2 = () => {
 
             <S.Section4>
                 <S.Section4Info>
-                    <motion.div initial="offscreen" whileInView="onscreen" variants={variants} >Launch Roadmap</motion.div>
-                    <motion.div initial="offscreen" whileInView="onscreen" variants={variants1} >There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</motion.div>
+                    <motion.div initial="offscreen" whileInView="onscreen" variants={variants} >Roadmap</motion.div>
+                    {/* <motion.div initial="offscreen" whileInView="onscreen" variants={variants1} >There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</motion.div> */}
                 </S.Section4Info>
                 <S.Section4Row>
                     <S.Section4ColItem grid={4} gutter={{ xs: 24 }}>
@@ -380,7 +380,7 @@ const Home2 = () => {
                     </Col>
                     <Col grid={16} gutter={{ xs: 24 }}>
                         <motion.div initial="offscreen" whileInView="onscreen" variants={variants1} >
-                            <S.Section6Des>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</S.Section6Des>
+                            <S.Section6Des>Coinmap is a "Trading Ecosystem", founded by a group of Vietnamese passionate traders. Our mission is to shorten the space between individual traders and professional trading organizations with our top-of-the-book analysis instruments.</S.Section6Des>
                         </motion.div>
                     </Col>
                     <Col grid={2} gutter={{ xs: 24 }}>
@@ -395,16 +395,16 @@ const Home2 = () => {
             <S.Section7>
                 <Row>
                     <Col grid={6}>
-                        <motion.img initial="offscreen" whileInView="onscreen" variants={variants} src='/images/fb.png' />
+                        <a href="https://www.facebook.com/CoinmapTrading" target="_blank"><motion.img initial="offscreen" whileInView="onscreen" variants={variants} src='/images/fb.png' /></a>
                     </Col>
                     <Col grid={6}>
-                        <motion.img initial="offscreen" whileInView="onscreen" variants={variants1} src='/images/twitter.png' />
+                        <a href="https://twitter.com/CoinmapDEX" target="_blank"><motion.img initial="offscreen" whileInView="onscreen" variants={variants1} src='/images/twitter.png' /></a>
                     </Col>
                     <Col grid={6}>
-                        <motion.img initial="offscreen" whileInView="onscreen" variants={variants2} src='/images/tele.png' />
+                        <a href="https://t.me/coinmapdextrading" target="_blank"><motion.img initial="offscreen" whileInView="onscreen" variants={variants2} src='/images/tele.png' /></a>
                     </Col>
                     <Col grid={6}>
-                        <motion.img initial="offscreen" whileInView="onscreen" variants={variants3} src='/images/youtube.png' />
+                        <a href="https://www.youtube.com/channel/UCDGZIkyP-MpfhW11juVbsRg" target="_blank"><motion.img initial="offscreen" whileInView="onscreen" variants={variants3} src='/images/youtube.png' /></a>
                     </Col>
                 </Row>
                 <motion.div initial="offscreen" whileInView="onscreen" variants={variants4} >
