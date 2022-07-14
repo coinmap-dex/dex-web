@@ -389,6 +389,9 @@ export default {
             margin-bottom:8px;
             max-width: 100%;
             text-align: center;
+            @media (max-width: 500px) {
+                text-align:left;
+            }
         }
         &>div>div:nth-child(2){
             font-weight: 700;
@@ -407,7 +410,7 @@ export default {
             }
             @media (max-width: 500px) {
                 font-size: 36px;
-                text-align:center;
+                text-align:left;
             }
         }
         &>div>div:nth-child(3){
