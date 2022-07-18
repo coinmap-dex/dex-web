@@ -22,6 +22,21 @@ export const FooterSection = styled(Section)`
 export const FooterLogo= styled.img`
     width: 20.2rem;
     height: 3.8rem;
+    padding-right: 6rem;
+`;
+
+export const FooterLeftWrapper = styled.div`
+    display: flex;
+`;
+
+export const FooterSocialIcons = styled.div`
+    border-left: #181E2F 1px solid;
+    padding-left: 2rem;
+    display: flex;
+    align-items: center;
+    a {
+        margin-right: 2rem;
+    }
 `;
 
 export const FooterCopyright= styled.span`
