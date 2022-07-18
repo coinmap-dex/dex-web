@@ -86,3 +86,10 @@ section > div{
 section > div > div{
   max-width: 100%;
 }
+
+body>div>canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}

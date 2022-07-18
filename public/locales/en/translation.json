@@ -9,20 +9,20 @@
     },
     "shark":{
         "title":"shark moves",
-        "totalBalance":"Tổng token 100 ví cá mập",
-        "totalTransactionHighValue":"Hành vi các ví ảnh hưởng mạnh tới giá token.",
-        "totalTransaction":"Hành vi 100 ví cá mập"
+        "totalBalance":"Top 100 wallet's total token.",
+        "totalTransactionHighValue":"Remarkable wallet's movement.",
+        "totalTransaction":"Top 100 wallet's buy and sell."
     },
     "volume":{
         "title":"volume",
-        "totalTransaction":"Tổng số lượng giao dịch",
-        "totalAmountBuyByNewWallet":"Tổng token mua từ ví mới",
-        "totalAmountSell":"Tổng token bán ra"
+        "totalTransaction":"TOTAL VOLUME",
+        "totalAmountBuyByNewWallet":"TOTAL FIRST-TIME BUY",
+        "totalAmountSell":"TOTAL TOKEN SELL"
     },
     "pool":{
         "title":"pool",
-        "totalAmount":"Tổng tiền Pool",
-        "price":"Giá Token"
+        "totalAmount":"POOL VALUE",
+        "price":"CURRENT TOKEN PRICE"
     },
     "tokenomics":{
         "circulatingSupply":"circulating supply",
@@ -41,9 +41,9 @@
         "twitter":"twitter"
     },
     "wallets":{
-        "title1":"Các ví giao dịch nhiều nhất",
-        "title2":"Các ví lợi nhuận nhiều nhất theo usd",
-        "title3":"Các ví lợi nhuận nhiều nhất theo %",
+        "title1":"TOP TRADING VOLUME WALLET",
+        "title2":"TOP PROFITABLE WALLET (USD)",
+        "title3":"TOP PROFITABLE WALLET (PERCENT)",
         "telegram":"telegram",
         "twitter":"twitter"
     }

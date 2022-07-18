@@ -8,6 +8,7 @@ import '~css/fonts';
 import '~css/variables';
 import { motion, useAnimation, Variants } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import {Helmet} from "react-helmet";
 import Slider from "react-slick";
 
 const Home2 = () => {
@@ -50,6 +51,9 @@ const Home2 = () => {
 
     return (
         <>
+            <Helmet>
+              <script src="/js/three.js" type="text/javascript" />
+            </Helmet>
             <S.HeaderSection>
                 <S.Logo src="/images/logo.png" />
                 {/* <S.Menu>

@@ -233,7 +233,7 @@ export default {
     Section2: styled(Section)`
         height:637px;
         position:relative;
-        background:#0C122A;
+        /* background:#0C122A; */
         @media (max-width: 500px) {
             padding: 12px;
             height:auto;
