@@ -9,7 +9,7 @@ import { useWeb3React } from "@web3-react/core";
 import core from "~configs/core";
 import { useForm } from 'react-hook-form';
 import OrderModal from './OrderModal';
-import { amountToBN, formatAmount, increaseDecimalNumber } from '~utils';
+import { increaseDecimalNumber } from '~utils';
 import Web3 from 'web3';
 import axios from 'axios';
 import TokenListModal from './TokenListModal';
@@ -22,6 +22,13 @@ import Chevron from 'sezy-design/components/icon/solid/chevron';
 import {exponentialToDecimal, getFractionDigits} from '~utils/number.util';
 import {Token} from '../../../../models/token.model';
 import {mapTokenFromOverviewData} from '~utils/token.util';
+
+/**
+ * Limit Order Calculation
+ * totalInputRef = isBuyType ? amountInputRef / priceInputRef : amountInputRef x priceInputRef
+ * buyAmount = isBuyType ? totalInputRef : 1 / totalInputRef
+ * payAmount = amountInputRef
+ */
 
 const PRICE_INPUT_ID = 1;
 const AMOUNT_INPUT_ID = 2;
@@ -406,8 +413,21 @@ const Order = () => {
                                     console.log(buy);
                                     console.log(buy*1e18);
                                     console.log(buyAmount);
-                                    // const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt))
-                                    // await axios.post('https://api.dextrading.io/api/v1/limitorder/create', { maker: account, payToken: payToken?.address, buyToken: buyToken?.address, payAmount, buyAmount, deadline, salt, sig });
+                                    const sig = await library.provider.request(signData(account, payToken?.address, buyToken?.address, payAmount, buyAmount, deadline, salt));
+                                    await axios.post(
+                                        'https://api.dextrading.io/api/v1/limitorder/create',
+                                        {
+                                            isBuy: isBuyType,
+                                            maker: account,
+                                            payToken: payToken?.address,
+                                            buyToken: buyToken?.address,
+                                            payAmount,
+                                            buyAmount,
+                                            deadline,
+                                            salt,
+                                            sig
+                                        }
+                                    );
                                     setPendingTx(false)
                                 }}>
                                 {`${payToken?.symbol} -> ${buyToken?.symbol}`}
@@ -482,4 +502,4 @@ const signData = (maker, payToken, buyToken, payAmount, buyAmount, deadline, sal
     })]
 });
 
-export default Order
+export default Order;

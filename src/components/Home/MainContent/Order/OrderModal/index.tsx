@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import S from './styled';
 import { useWeb3React } from '@web3-react/core';
-import { useAxios, useCoinmapDex } from '~hooks';
-import { formatAmount } from '~utils';
+import {useAppSelector, useAxios, useCoinmapDex} from '~hooks';
 import PopupTableWrapper from '~components/Partials/PopupTableWrapper';
 import moment from 'moment';
 import axios from 'axios';
@@ -87,6 +86,8 @@ const OrderModal = ({
         url: `https://api.dextrading.io/api/v1/limitorder?account=${account}`,
         headers: JSON.stringify({ accept: '*/*' }) as any,
     });
+    const currentToken: Token = useAppSelector(state => state.home.currentToken);
+    const currentTokenAddress = currentToken.address ?? '';
     const { cancelOrder } = useCoinmapDex();
     const [data, setData] = useState<any>([]);
     const [tableData, setTableData] = useState<any>([]);
@@ -120,28 +121,26 @@ const OrderModal = ({
 
     useEffect(() => {
         if (tokenList.length > 0) {
-            const a = data[data.length-1];
-            console.log('============');
-            console.log('============');
-            console.log('============');
-            console.log(a.payAmount);
-            console.log(a.payToken);
-            console.log('------')
-            console.log(formatAmount(a.payAmount, a.payToken));
-            console.log(+formatAmount(a.payAmount, a.payToken));
-            console.log('------')
-            console.log(formatAmount(a.buyAmount, a.buyToken));
-            console.log(+formatAmount(a.buyAmount, a.buyToken));
-            console.log('------')
-            console.log(+formatAmount(a.payAmount, a.payToken) / +formatAmount(a.buyAmount, a.buyToken));
             setTableData(data.map((order) => {
+                const isBuyType: boolean = order.isBuy !== undefined
+                    ? order.isBuy
+                    : order.buyToken?.toLowerCase() === currentTokenAddress.toLowerCase();
+                const payAmount = +order.payAmount / 1e18;
+                const buyAmount = +order.buyAmount / 1e18;
+                const amount = payAmount;
+                const total = isBuyType ? buyAmount : 1 / buyAmount;
+                const price = isBuyType ? payAmount / total : total / payAmount;
                 return {
-                    type: 'limit',
+                    type: {
+                        children: isBuyType
+                            ? <span style={{ color: '#26E1CD' }}>Buy Limit</span>
+                            : <span style={{ color: '#EF505A' }}>Sell Limit</span>
+                    },
                     payToken: getTokenName(order.payToken),
                     buyToken: getTokenName(order.buyToken),
-                    amount: formatAmount(order.payAmount, order.payToken),
-                    total: formatAmount(order.buyAmount, order.buyToken),
-                    price: +formatAmount(order.payAmount, order.payToken) / +formatAmount(order.buyAmount, order.buyToken),
+                    amount,
+                    total,
+                    price,
                     deadline: moment.unix(order.deadline).format("DD/MM/YYYY"),
                     status: {
                         children: <>
